@@ -1,0 +1,20 @@
+{
+  "name": "asteron-retention-agent-worker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Cloudflare Worker wiring Asteron's retention-agent reasoning core to Gemini 2.5 Flash (primary) / Groq llama-3.3-70b (fallback).",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "build:data": "node data/build_dataset.mjs && node detection/detect.mjs",
+    "build:dashboard": "node dashboard/build.mjs",
+    "test:local": "node test/local_test.mjs",
+    "test:dashboard": "node test/dashboard_smoke_test.mjs && node test/dashboard_flow_test.mjs",
+    "test": "npm run test:local && npm run test:dashboard"
+  },
+  "devDependencies": {
+    "wrangler": "^3.90.0",
+    "jsdom": "^25.0.0"
+  }
+}

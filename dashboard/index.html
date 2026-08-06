@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Asteron Retention Agent — Dealer Queue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#171B1F; --paper:#ECEEE9; --panel:#FFFFFF; --panel-alt:#F5F6F2;
+    --steel:#6B7478; --steel-soft:#D8DBD6; --steel-softer:#E7E9E4;
+    --amber:#E3A61E; --amber-ink:#6B4A02; --amber-bg:#FBEBC9;
+    --rust:#C0501C; --rust-ink:#7A2E0E; --rust-bg:#F6DED0;
+    --teal:#2B6E5E; --teal-ink:#173E33; --teal-bg:#D9EAE4;
+    --focus:#1C6FEB;
+    --font-display:'Oswald','Arial Narrow',sans-serif;
+    --font-mono:'JetBrains Mono',ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+    --font-body:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper); color:var(--ink); font-family:var(--font-body);
+    font-size:14px; line-height:1.5; min-height:100vh;
+  }
+  a{color:inherit;}
+  button{font-family:inherit; font-size:inherit; cursor:pointer;}
+  :focus-visible{outline:3px solid var(--focus); outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+
+  .eyebrow{
+    font-family:var(--font-display); text-transform:uppercase; letter-spacing:.14em;
+    font-size:11px; color:var(--steel); font-weight:600;
+  }
+
+  /* ---------- Top bar ---------- */
+  header.topbar{
+    background:var(--ink); color:#EEEFEA; padding:14px 20px;
+    display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+    border-bottom:3px solid var(--amber);
+  }
+  header.topbar .brand{display:flex; flex-direction:column; gap:2px; margin-right:auto;}
+  header.topbar .brand .mark{
+    font-family:var(--font-display); font-weight:700; font-size:19px;
+    letter-spacing:.03em; text-transform:uppercase;
+  }
+  header.topbar .brand .sub{
+    font-family:var(--font-mono); font-size:11px; color:#B9BDB5; letter-spacing:.02em;
+  }
+  .config{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .config label{font-family:var(--font-mono); font-size:11px; color:#B9BDB5; text-transform:uppercase; letter-spacing:.06em;}
+  .config input[type=text]{
+    font-family:var(--font-mono); font-size:12px; padding:7px 9px; width:280px;
+    background:#20242A; border:1px solid #3A3F45; color:#EEEFEA; border-radius:2px;
+  }
+  .config input[type=text]::placeholder{color:#6B7478;}
+  .btn{
+    font-family:var(--font-display); font-weight:600; text-transform:uppercase; letter-spacing:.05em;
+    font-size:12px; padding:8px 14px; border-radius:2px; border:1.5px solid transparent;
+    display:inline-flex; align-items:center; gap:6px; white-space:nowrap;
+  }
+  .btn-amber{background:var(--amber); color:#2B1C00; border-color:var(--amber);}
+  .btn-amber:hover{filter:brightness(1.06);}
+  .btn-ghost{background:transparent; color:#EEEFEA; border-color:#4A4F55;}
+  .btn-ghost:hover{border-color:#8A8F95;}
+  .btn-teal{background:var(--teal); color:#EAF6F1; border-color:var(--teal);}
+  .btn-rust{background:var(--rust); color:#FDEDE3; border-color:var(--rust);}
+  .btn-outline{background:var(--panel); color:var(--ink); border-color:var(--steel-soft);}
+  .btn-outline:hover{border-color:var(--steel);}
+  .btn:disabled{opacity:.5; cursor:not-allowed;}
+  .conn-status{font-family:var(--font-mono); font-size:11px; color:#B9BDB5;}
+  .conn-status .dot{display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:5px; background:var(--steel);}
+  .conn-status.ok .dot{background:#5FCB9D;}
+  .conn-status.bad .dot{background:var(--rust);}
+
+  /* ---------- Status board strip ---------- */
+  .status-board{
+    display:flex; gap:0; background:var(--panel); border-bottom:1px solid var(--steel-soft);
+    overflow-x:auto;
+  }
+  .status-board .cell{
+    flex:1; min-width:130px; padding:10px 16px; border-right:1px solid var(--steel-soft);
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .status-board .cell:last-child{border-right:none;}
+  .status-board .count{font-family:var(--font-display); font-size:22px; font-weight:700;}
+  .status-board .label{font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--steel);}
+
+  /* ---------- Layout ---------- */
+  .layout{display:grid; grid-template-columns:340px 1fr; gap:0; align-items:start;}
+  @media (max-width:860px){ .layout{grid-template-columns:1fr;} }
+
+  /* ---------- Queue ---------- */
+  .queue{
+    padding:14px; border-right:1px solid var(--steel-soft); min-height:70vh;
+  }
+  .queue h2{margin:2px 0 10px; }
+  .queue-list{display:flex; flex-direction:column; gap:8px;}
+  .ticket{
+    background:var(--panel); border:1px solid var(--steel-soft); border-left:4px solid var(--steel);
+    padding:10px 11px; text-align:left; width:100%; border-radius:1px;
+  }
+  .ticket:hover{border-color:var(--steel);}
+  .ticket.selected{outline:2px solid var(--focus); outline-offset:-1px;}
+  .ticket.status-pending{border-left-color:var(--steel);}
+  .ticket.status-awaiting_info{border-left-color:var(--amber);}
+  .ticket.status-diagnosed{border-left-color:var(--teal);}
+  .ticket.status-review_flagged{border-left-color:var(--rust);}
+  .ticket.status-approved{border-left-color:var(--teal); opacity:.72;}
+  .ticket.status-rejected{border-left-color:var(--rust); opacity:.55;}
+  .ticket.status-loading{border-left-color:var(--amber);}
+  .ticket-head{display:flex; justify-content:space-between; align-items:baseline; gap:8px;}
+  .ticket-no{font-family:var(--font-mono); font-weight:600; font-size:12.5px;}
+  .ticket-meta{font-family:var(--font-mono); font-size:11px; color:var(--steel); margin-top:4px;}
+  .ticket-flags{font-size:11px; color:var(--steel); margin-top:5px; line-height:1.4;}
+
+  .mini-badge{
+    font-family:var(--font-mono); font-size:9.5px; text-transform:uppercase; letter-spacing:.06em;
+    padding:2px 6px; border-radius:2px; border:1px solid currentColor;
+  }
+  .mini-badge.pending{color:var(--steel);}
+  .mini-badge.awaiting_info{color:var(--amber-ink); background:var(--amber-bg); border-color:var(--amber);}
+  .mini-badge.diagnosed{color:var(--teal-ink); background:var(--teal-bg); border-color:var(--teal);}
+  .mini-badge.review_flagged{color:var(--rust-ink); background:var(--rust-bg); border-color:var(--rust);}
+  .mini-badge.approved{color:var(--teal-ink); background:var(--teal-bg); border-color:var(--teal);}
+  .mini-badge.rejected{color:var(--rust-ink); background:var(--rust-bg); border-color:var(--rust);}
+  .mini-badge.loading{color:var(--amber-ink); background:var(--amber-bg); border-color:var(--amber);}
+
+  /* ---------- Detail panel ---------- */
+  .detail{padding:20px 24px; min-height:70vh;}
+  .detail-empty{color:var(--steel); font-style:italic; padding:40px 0;}
+  .job-head{display:flex; justify-content:space-between; align-items:flex-start; gap:14px; flex-wrap:wrap; margin-bottom:14px;}
+  .job-no{font-family:var(--font-mono); font-size:22px; font-weight:600; letter-spacing:.01em;}
+  .stamp{
+    font-family:var(--font-display); text-transform:uppercase; letter-spacing:.1em; font-size:12px;
+    font-weight:700; padding:6px 12px; border:2px solid currentColor; border-radius:2px;
+    transform:rotate(-1.5deg); display:inline-block;
+  }
+  .stamp.pending{color:var(--steel);}
+  .stamp.awaiting_info{color:var(--amber-ink);}
+  .stamp.diagnosed{color:var(--teal-ink);}
+  .stamp.review_flagged{color:var(--rust-ink);}
+  .stamp.approved{color:var(--teal-ink);}
+  .stamp.rejected{color:var(--rust-ink);}
+  .stamp.loading{color:var(--amber-ink);}
+
+  .flag-chips{display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 4px;}
+  .flag-chip{
+    font-family:var(--font-mono); font-size:10.5px; background:var(--panel-alt);
+    border:1px solid var(--steel-soft); border-radius:2px; padding:3px 7px; color:var(--steel);
+  }
+
+  section.panel{
+    background:var(--panel); border:1px solid var(--steel-soft); border-radius:2px;
+    padding:16px 18px; margin-bottom:14px;
+  }
+  section.panel h3{
+    font-family:var(--font-display); text-transform:uppercase; letter-spacing:.08em; font-size:12.5px;
+    margin:0 0 12px; color:var(--steel); border-bottom:1px dashed var(--steel-soft); padding-bottom:8px;
+  }
+  .record-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px 20px;}
+  @media (max-width:560px){ .record-grid{grid-template-columns:1fr;} }
+  .field{display:flex; justify-content:space-between; gap:10px; border-bottom:1px dotted var(--steel-softer); padding:4px 0;}
+  .field .k{font-family:var(--font-mono); font-size:11px; color:var(--steel); text-transform:uppercase; letter-spacing:.03em;}
+  .field .v{font-family:var(--font-mono); font-size:12.5px; text-align:right;}
+  .field .v.missing{color:var(--rust); font-style:italic;}
+
+  .slip{
+    background:var(--panel-alt); border-left:3px solid var(--steel-soft); padding:8px 10px;
+    margin-top:8px; font-size:12.5px; font-style:italic;
+  }
+  .slip .slip-meta{display:block; font-family:var(--font-mono); font-style:normal; font-size:10.5px; color:var(--steel); margin-top:4px;}
+
+  .action-row{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+
+  .question-box{
+    background:var(--amber-bg); border:1px solid var(--amber); border-radius:2px; padding:14px 16px;
+  }
+  .question-box p{margin:0 0 10px; font-weight:600; color:var(--amber-ink);}
+  .answer-row{display:flex; gap:8px; flex-wrap:wrap;}
+  .answer-row input[type=text]{
+    flex:1; min-width:220px; font-family:var(--font-body); font-size:13px; padding:8px 10px;
+    border:1px solid var(--steel-soft); border-radius:2px;
+  }
+
+  .review-banner{
+    background:var(--rust-bg); border:1px solid var(--rust); color:var(--rust-ink);
+    border-radius:2px; padding:10px 12px; margin-bottom:12px; font-size:12.5px;
+  }
+  .review-banner strong{display:block; font-family:var(--font-display); text-transform:uppercase; letter-spacing:.05em; font-size:11.5px; margin-bottom:4px;}
+  .review-banner ul{margin:4px 0 0; padding-left:18px;}
+
+  .conf-meter{background:var(--steel-softer); border-radius:3px; height:8px; overflow:hidden; margin:6px 0 2px;}
+  .conf-meter > div{height:100%; background:var(--teal);}
+  .conf-label{font-family:var(--font-mono); font-size:11px; color:var(--steel);}
+
+  .evidence-list{margin:8px 0 0; padding-left:18px;}
+  .evidence-list li{margin-bottom:5px; font-size:13px;}
+
+  .draft-msg{
+    background:var(--panel-alt); border:1px solid var(--steel-soft); border-radius:2px; padding:10px 12px; margin-top:10px;
+  }
+  .draft-msg textarea{
+    width:100%; font-family:var(--font-body); font-size:13px; padding:8px; border:1px solid var(--steel-soft);
+    border-radius:2px; resize:vertical; min-height:70px;
+  }
+  .draft-meta{font-family:var(--font-mono); font-size:10.5px; color:var(--steel); margin-bottom:6px; text-transform:uppercase; letter-spacing:.04em;}
+
+  .provider-note{font-family:var(--font-mono); font-size:10.5px; color:var(--steel); margin-top:10px;}
+
+  .log{max-height:220px; overflow-y:auto; font-family:var(--font-mono); font-size:11.5px;}
+  .log-row{display:grid; grid-template-columns:64px 1fr; gap:10px; padding:5px 0; border-bottom:1px dotted var(--steel-softer);}
+  .log-row .time{color:var(--steel);}
+  .log-empty{color:var(--steel); font-style:italic;}
+
+  .error-banner{
+    background:var(--rust-bg); border:1px solid var(--rust); color:var(--rust-ink);
+    padding:10px 12px; border-radius:2px; margin-bottom:12px; font-size:12.5px;
+  }
+
+  footer.note{
+    padding:16px 24px 30px; font-size:11.5px; color:var(--steel); max-width:820px;
+    font-family:var(--font-mono);
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="mark">Asteron Retention Agent</span>
+    <span class="sub">Dealer service queue — retention diagnosis &amp; intervention</span>
+  </div>
+  <div class="config">
+    <label for="workerUrl">Worker URL</label>
+    <input type="text" id="workerUrl" placeholder="https://asteron-retention-agent.&lt;subdomain&gt;.workers.dev" />
+    <button class="btn btn-ghost" id="testConnBtn" type="button">Test connection</button>
+    <span class="conn-status" id="connStatus"><span class="dot"></span>not tested</span>
+  </div>
+  <button class="btn btn-outline" id="resetBtn" type="button">Reset session</button>
+</header>
+
+<div class="status-board" id="statusBoard"></div>
+
+<div class="layout">
+  <div class="queue">
+    <div class="eyebrow" style="margin-bottom:6px;">Flagged today</div>
+    <h2 style="font-family:var(--font-display); text-transform:uppercase; letter-spacing:.04em; font-size:16px; margin:0 0 12px;">Job queue</h2>
+    <div class="queue-list" id="queueList"></div>
+  </div>
+
+  <div class="detail" id="detail">
+    <div class="detail-empty">Select a job from the queue to view the customer record and run a diagnosis.</div>
+  </div>
+</div>
+
+<footer class="note">
+  Demo scope: "Approve" / "Edit &amp; approve" / "Reject" only update this dashboard's local session state and audit log —
+  no SMS, email, or call is actually sent to a customer. In production, Approve would hand off to the send/log stage
+  (README.md's pipeline stage 6) behind the same human-approval gate shown here. Nothing in this session persists
+  after a page reload — there's no backend database behind this dashboard, only the Worker's stateless /diagnose endpoint.
+</footer>
+
+<script>
+// ======================================================================
+// Data injected at build time by dashboard/build.mjs from
+// data/flagged_customers.json and src/playbook.json — this file
+// (index.html) is generated output. Edit dashboard/index.template.html
+// and re-run `node dashboard/build.mjs`, not this file directly.
+// ======================================================================
+const FLAGGED_CUSTOMERS = [{"customer_id":"AST-20001","flags":["delivery_booking_status_unknown"],"record":{"customer_id":"AST-20001","vehicle_category":"suv","purchase_date":"2026-06-05","last_service_date":null,"service_visit_count":0,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2026-07-05","first_service_booked_at_delivery":null,"unified_id_present":false,"authorized_discount_range":[0,1500]}},{"customer_id":"AST-20002","flags":["delivery_booking_status_unknown"],"record":{"customer_id":"AST-20002","vehicle_category":"ev","purchase_date":"2026-07-05","last_service_date":null,"service_visit_count":0,"complaint_text":[],"survey_scores":[],"app_last_login_date":null,"first_service_booked_at_delivery":null,"unified_id_present":false,"authorized_discount_range":[0,1500]}},{"customer_id":"AST-20003","flags":["service_overdue: 10mo since last service (expected every 6mo)"],"record":{"customer_id":"AST-20003","vehicle_category":"sedan","purchase_date":"2025-06-05","last_service_date":"2025-10-05","service_visit_count":1,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2025-11-05","first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":[0,2000]}},{"customer_id":"AST-20004","flags":["service_overdue: 15mo since last service (expected every 6mo)","app_inactive_18mo"],"record":{"customer_id":"AST-20004","vehicle_category":"hatchback","purchase_date":"2024-12-05","last_service_date":"2025-05-05","service_visit_count":2,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2025-02-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,1200]}},{"customer_id":"AST-20005","flags":["has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20005","vehicle_category":"hatchback","purchase_date":"2024-08-05","last_service_date":"2026-05-05","service_visit_count":2,"complaint_text":["Visit on record: customer said the final bill was much higher than the quote and felt not informed beforehand."],"survey_scores":[{"visit_date":"2026-05-05","score":3,"comment":"unexpected charges"}],"app_last_login_date":"2026-04-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,2000]}},{"customer_id":"AST-20006","flags":["has_complaint_on_record"],"record":{"customer_id":"AST-20006","vehicle_category":"suv","purchase_date":"2025-02-05","last_service_date":"2026-03-05","service_visit_count":1,"complaint_text":["Customer felt uninformed about a charge added to the service bill without prior notice."],"survey_scores":[{"visit_date":"2026-03-05","score":4,"comment":"surprised by add-on charge"}],"app_last_login_date":"2026-02-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,1500]}},{"customer_id":"AST-20018","flags":["app_never_used_past_year_1","has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20018","vehicle_category":"suv","purchase_date":"2024-10-05","last_service_date":"2026-01-05","service_visit_count":2,"complaint_text":["Customer said the estimate quoted on the phone did not match the amount charged at pickup."],"survey_scores":[{"visit_date":"2026-01-05","score":3,"comment":"cost mismatch"}],"app_last_login_date":null,"first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,1600]}},{"customer_id":"AST-20022","flags":["has_complaint_on_record"],"record":{"customer_id":"AST-20022","vehicle_category":"suv","purchase_date":"2025-01-05","last_service_date":"2026-06-05","service_visit_count":3,"complaint_text":["Customer raised concern that pricing wasn't explained clearly before work started."],"survey_scores":[{"visit_date":"2026-06-05","score":4,"comment":"unclear pricing"}],"app_last_login_date":"2026-06-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,1700]}},{"customer_id":"AST-20007","flags":["app_never_used_past_year_1","has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20007","vehicle_category":"sedan","purchase_date":"2025-05-05","last_service_date":"2026-04-05","service_visit_count":2,"complaint_text":["Customer complained about a long wait and being unable to get a convenient appointment slot."],"survey_scores":[{"visit_date":"2026-04-05","score":3,"comment":"slow, no slots available"}],"app_last_login_date":null,"first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":[0,1800]}},{"customer_id":"AST-20008","flags":["has_complaint_on_record"],"record":{"customer_id":"AST-20008","vehicle_category":"suv","purchase_date":"2025-09-05","last_service_date":"2026-06-05","service_visit_count":1,"complaint_text":["Customer said the appointment was delayed significantly beyond the scheduled time."],"survey_scores":[],"app_last_login_date":"2026-05-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,1400]}},{"customer_id":"AST-20020","flags":["app_never_used_past_year_1","has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20020","vehicle_category":"ev","purchase_date":"2025-07-05","last_service_date":"2026-02-05","service_visit_count":2,"complaint_text":["Customer noted they could not get a slot for two weeks and found the wait inconvenient."],"survey_scores":[{"visit_date":"2026-02-05","score":3,"comment":"wait too long"}],"app_last_login_date":null,"first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":[0,1900]}},{"customer_id":"AST-20009","flags":["has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20009","vehicle_category":"ev","purchase_date":"2025-10-05","last_service_date":"2026-07-05","service_visit_count":3,"complaint_text":["First visit: customer reported the charging port connection felt loose and intermittent.","Second visit, same issue: customer said the charging port fault was not fully resolved and recurred."],"survey_scores":[{"visit_date":"2026-07-05","score":2,"comment":"same charging fault again"}],"app_last_login_date":"2026-07-05","first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":[0,2500]}},{"customer_id":"AST-20010","flags":["has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20010","vehicle_category":"hatchback","purchase_date":"2025-11-05","last_service_date":"2026-06-05","service_visit_count":2,"complaint_text":["Customer reported a rattling noise from the dashboard was not fixed after the visit."],"survey_scores":[{"visit_date":"2026-06-05","score":1,"comment":"issue not fixed, very unhappy"}],"app_last_login_date":"2026-05-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,1300]}},{"customer_id":"AST-20019","flags":["has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20019","vehicle_category":"sedan","purchase_date":"2025-08-05","last_service_date":"2026-07-05","service_visit_count":2,"complaint_text":["Customer reported a persistent AC noise.","Return visit: customer said the same AC noise is still present after the repair."],"survey_scores":[{"visit_date":"2026-07-05","score":2,"comment":"same noise as before"}],"app_last_login_date":"2026-06-05","first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":null}},{"customer_id":"AST-20011","flags":["no_first_service_booked_at_delivery"],"record":{"customer_id":"AST-20011","vehicle_category":"sedan","purchase_date":"2026-03-05","last_service_date":null,"service_visit_count":0,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2026-04-05","first_service_booked_at_delivery":false,"unified_id_present":false,"authorized_discount_range":[0,1000]}},{"customer_id":"AST-20012","flags":["never_serviced: 8mo since purchase, first service expected within 6mo","no_first_service_booked_at_delivery"],"record":{"customer_id":"AST-20012","vehicle_category":"suv","purchase_date":"2025-12-05","last_service_date":null,"service_visit_count":0,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2026-01-05","first_service_booked_at_delivery":false,"unified_id_present":true,"authorized_discount_range":[0,1500]}},{"customer_id":"AST-20023","flags":["never_serviced: 6mo since purchase, first service expected within 6mo","no_first_service_booked_at_delivery"],"record":{"customer_id":"AST-20023","vehicle_category":"sedan","purchase_date":"2026-02-05","last_service_date":null,"service_visit_count":0,"complaint_text":[],"survey_scores":[],"app_last_login_date":null,"first_service_booked_at_delivery":false,"unified_id_present":false,"authorized_discount_range":[0,1100]}},{"customer_id":"AST-20015","flags":["service_overdue: 16mo since last service (expected every 6mo)","app_inactive_20mo","has_complaint_on_record"],"record":{"customer_id":"AST-20015","vehicle_category":"suv","purchase_date":"2024-04-05","last_service_date":"2025-04-05","service_visit_count":2,"complaint_text":["Dealer follow-up: no concerns were raised by the customer during their visit(s)."],"survey_scores":[],"app_last_login_date":"2024-12-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,1600]}},{"customer_id":"AST-20016","flags":["app_never_used_past_year_1","has_complaint_on_record"],"record":{"customer_id":"AST-20016","vehicle_category":"ev","purchase_date":"2024-10-05","last_service_date":"2025-06-05","service_visit_count":1,"complaint_text":["Dealer follow-up: no concerns were raised by the customer during their visit(s)."],"survey_scores":[],"app_last_login_date":null,"first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":[0,2200]}},{"customer_id":"AST-20013","flags":["service_overdue: 19mo since last service (expected every 6mo)","app_inactive_21mo","warranty_expiring_in_2mo"],"record":{"customer_id":"AST-20013","vehicle_category":"hatchback","purchase_date":"2023-10-05","last_service_date":"2025-01-05","service_visit_count":1,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2024-11-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,900]}},{"customer_id":"AST-20014","flags":["service_overdue: 24mo since last service (expected every 6mo)","app_inactive_26mo","warranty_expired_4mo_ago"],"record":{"customer_id":"AST-20014","vehicle_category":"sedan","purchase_date":"2023-04-05","last_service_date":"2024-08-05","service_visit_count":1,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2024-06-05","first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":[0,1000]}},{"customer_id":"AST-20021","flags":["service_overdue: 18mo since last service (expected every 6mo)","app_inactive_19mo","warranty_expiring_in_3mo"],"record":{"customer_id":"AST-20021","vehicle_category":"hatchback","purchase_date":"2023-11-05","last_service_date":"2025-02-05","service_visit_count":1,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2025-01-05","first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":[0,1100]}},{"customer_id":"AST-20017","flags":["has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20017","vehicle_category":"hatchback","purchase_date":"2025-03-05","last_service_date":"2026-03-05","service_visit_count":3,"complaint_text":["Customer complained the estimate was higher than quoted.","Customer also mentioned the wait for a service slot was longer than expected."],"survey_scores":[{"visit_date":"2026-03-05","score":3,"comment":"cost and wait, both frustrating"}],"app_last_login_date":"2026-02-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,2000]}}];
+const CATEGORY_META = {"A":{"name":"Delivery handoff failure","playbook_code":"schedule_warm_call"},"B":{"name":"Cost or transparency distrust","playbook_code":"transparent_quote"},"C":{"name":"Convenience or wait-time friction","playbook_code":"priority_slot"},"D":{"name":"Genuine quality dissatisfaction","playbook_code":"escalate_human_only"},"E":{"name":"Silent drift","playbook_code":"soft_reminder"},"F":{"name":"Competitive defection risk","playbook_code":"value_package"}};
+const DEFAULT_WORKER_URL = "https://asteron-retention-agent.aces4iimb.workers.dev";
+
+// ---------------------------------------------------------------------
+// State (in-memory only — deliberately no localStorage/sessionStorage,
+// see .dev.vars.example / README for why. Reload = fresh session.)
+// ---------------------------------------------------------------------
+const state = {
+  workingRecords: new Map(),   // customer_id -> mutable record clone
+  status: new Map(),           // customer_id -> status string
+  results: new Map(),          // customer_id -> last /diagnose response body
+  errors: new Map(),           // customer_id -> last error message
+  log: [],                     // {time, id, action, detail}
+  selectedId: null,
+  editingDraft: false
+};
+
+for (const c of FLAGGED_CUSTOMERS) {
+  state.workingRecords.set(c.customer_id, deepClone(c.record));
+  state.status.set(c.customer_id, "pending");
+}
+
+function deepClone(obj) {
+  // Records are plain JSON (strings/numbers/arrays/objects/null) — no
+  // Dates, functions, or cycles — so JSON round-trip is a safe, simple
+  // deep clone without depending on structuredClone's availability.
+  return JSON.parse(JSON.stringify(obj));
+}
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function nowLabel() {
+  const d = new Date();
+  return d.toTimeString().slice(0, 5);
+}
+function addLog(id, action, detail) {
+  state.log.unshift({ time: nowLabel(), id, action, detail: detail || "" });
+  renderLog();
+}
+function statusLabel(s) {
+  return { pending: "Pending", awaiting_info: "Awaiting info", diagnosed: "Diagnosed",
+    review_flagged: "Needs review", approved: "Approved", rejected: "Rejected", loading: "Diagnosing…" }[s] || s;
+}
+function workerUrl() {
+  return document.getElementById("workerUrl").value.trim().replace(/\/+$/, "");
+}
+
+// ---------------------------------------------------------------------
+// Rendering
+// ---------------------------------------------------------------------
+function renderAll() {
+  renderStatusBoard();
+  renderQueue();
+  renderDetail();
+  renderLog();
+}
+
+function renderStatusBoard() {
+  const counts = { pending: 0, awaiting_info: 0, diagnosed: 0, review_flagged: 0, approved: 0, rejected: 0, loading: 0 };
+  for (const s of state.status.values()) counts[s] = (counts[s] || 0) + 1;
+  const cells = [
+    ["pending", "Pending"], ["awaiting_info", "Awaiting info"], ["diagnosed", "Diagnosed"],
+    ["review_flagged", "Needs review"], ["approved", "Approved"], ["rejected", "Rejected"]
+  ];
+  document.getElementById("statusBoard").innerHTML = cells.map(([key, label]) =>
+    `<div class="cell"><span class="count">${counts[key]}</span><span class="label">${esc(label)}</span></div>`
+  ).join("");
+}
+
+function renderQueue() {
+  const list = document.getElementById("queueList");
+  list.innerHTML = FLAGGED_CUSTOMERS.map((c) => {
+    const status = state.status.get(c.customer_id);
+    const rec = state.workingRecords.get(c.customer_id);
+    const selected = state.selectedId === c.customer_id ? "selected" : "";
+    return `
+      <button type="button" class="ticket status-${status} ${selected}" data-id="${esc(c.customer_id)}">
+        <div class="ticket-head">
+          <span class="ticket-no">JOB #${esc(c.customer_id)}</span>
+          <span class="mini-badge ${status}">${esc(statusLabel(status))}</span>
+        </div>
+        <div class="ticket-meta">${esc(rec.vehicle_category?.toUpperCase() || "")} · ${c.flags.length} flag${c.flags.length === 1 ? "" : "s"}</div>
+        <div class="ticket-flags">${esc(c.flags[0] || "")}${c.flags.length > 1 ? ` +${c.flags.length - 1} more` : ""}</div>
+      </button>`;
+  }).join("");
+  list.querySelectorAll(".ticket").forEach((el) => {
+    el.addEventListener("click", () => selectCustomer(el.dataset.id));
+  });
+}
+
+function fieldRow(label, value, isMissing) {
+  return `<div class="field"><span class="k">${esc(label)}</span><span class="v${isMissing ? " missing" : ""}">${esc(value)}</span></div>`;
+}
+
+function renderRecordPanel(rec) {
+  const rows = [
+    fieldRow("Vehicle category", rec.vehicle_category, false),
+    fieldRow("Purchase date", rec.purchase_date, false),
+    fieldRow("Service visits", rec.service_visit_count, false),
+    fieldRow("Last service date", rec.last_service_date ?? "— missing —", rec.last_service_date == null),
+    fieldRow("First service booked at delivery", rec.first_service_booked_at_delivery === null ? "— unknown —" : (rec.first_service_booked_at_delivery ? "Yes" : "No"), rec.first_service_booked_at_delivery === null),
+    fieldRow("Unified customer ID", rec.unified_id_present ? "Linked" : "Not linked", !rec.unified_id_present),
+    fieldRow("App last login", rec.app_last_login_date ?? "— missing —", rec.app_last_login_date == null),
+    fieldRow("Authorized discount range", rec.authorized_discount_range ? `₹${rec.authorized_discount_range[0]}–₹${rec.authorized_discount_range[1]}` : "— missing —", !rec.authorized_discount_range)
+  ].join("");
+
+  const complaints = (rec.complaint_text || []).map((t) => `<div class="slip">"${esc(t)}"</div>`).join("");
+  const surveys = (rec.survey_scores || []).map((s) =>
+    `<div class="slip">Score ${esc(s.score)}/5${s.comment ? ` — "${esc(s.comment)}"` : ""}<span class="slip-meta">Visit ${esc(s.visit_date || "")}</span></div>`
+  ).join("");
+
+  return `
+    <section class="panel">
+      <h3>Customer record</h3>
+      <div class="record-grid">${rows}</div>
+      ${complaints || surveys ? `<div style="margin-top:12px;">${complaints}${surveys}</div>` : ""}
+    </section>`;
+}
+
+function renderQuestionBox(id, question) {
+  const isDelivery = /at the time of delivery/i.test(question);
+  const isConcerns = /raise any concerns/i.test(question);
+  let answers;
+  if (isDelivery) {
+    answers = `
+      <button class="btn btn-amber" data-answer="Yes">Yes</button>
+      <button class="btn btn-outline" data-answer="No">No</button>
+      <button class="btn btn-outline" data-answer="Unsure">Unsure</button>`;
+  } else if (isConcerns) {
+    answers = `
+      <button class="btn btn-amber" data-answer="Cost">Cost</button>
+      <button class="btn btn-amber" data-answer="Wait time">Wait time</button>
+      <button class="btn btn-amber" data-answer="Quality">Quality</button>
+      <button class="btn btn-outline" data-answer="None noted">None noted</button>`;
+  } else {
+    answers = `
+      <input type="text" id="freeAnswerInput" placeholder="Type the dealer's answer…" />
+      <button class="btn btn-amber" data-answer="__free__">Submit</button>`;
+  }
+  return `
+    <section class="panel">
+      <h3>Needs dealer input</h3>
+      <div class="question-box">
+        <p>${esc(question)}</p>
+        <div class="answer-row" id="answerRow">${answers}</div>
+      </div>
+    </section>`;
+}
+
+function renderDiagnosisPanel(id, res) {
+  const out = res.output;
+  const cat = CATEGORY_META[out.diagnosis.primary_category] || { name: out.diagnosis.primary_category };
+  const secCat = out.diagnosis.secondary_category ? (CATEGORY_META[out.diagnosis.secondary_category]?.name || out.diagnosis.secondary_category) : null;
+  const conf = Math.max(0, Math.min(100, out.diagnosis.confidence));
+
+  const reviewBanner = out.review_flag ? `
+    <div class="review-banner">
+      <strong>Flagged for review</strong>
+      This diagnosis needs a human look before anything happens — the Worker's own validation caught something the model missed.
+      ${res.validation_notes && res.validation_notes.length ? `<ul>${res.validation_notes.map((n) => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}
+    </div>` : "";
+
+  const evidence = out.diagnosis.evidence.map((e) => `<li>${esc(e)}</li>`).join("");
+
+  let draftBlock = "";
+  if (out.draft_message) {
+    draftBlock = `
+      <div class="draft-msg">
+        <div class="draft-meta">Draft — ${esc(out.draft_message.channel)}${out.draft_message.discount_offered ? ` · discount offered: ₹${esc(out.draft_message.discount_offered)}` : ""}</div>
+        <textarea id="draftText">${esc(out.draft_message.text)}</textarea>
+      </div>`;
+  }
+
+  const isEscalateOnly = out.recommended_action.requires_human_review_only;
+  const actions = isEscalateOnly
+    ? `<button class="btn btn-teal" data-action="approve">Mark reviewed by service manager</button>`
+    : `
+      <button class="btn btn-teal" data-action="approve">Approve &amp; send</button>
+      ${out.draft_message ? `<button class="btn btn-outline" data-action="edit">Edit before sending</button>` : ""}
+      <button class="btn btn-rust" data-action="reject">Reject</button>`;
+
+  return `
+    <section class="panel">
+      <h3>Diagnosis</h3>
+      ${reviewBanner}
+      <div><strong>${esc(out.diagnosis.primary_category)} — ${esc(cat.name || "")}</strong>${secCat ? ` <span style="color:var(--steel); font-weight:400;">(secondary: ${esc(secCat)})</span>` : ""}</div>
+      <div class="conf-meter"><div style="width:${conf}%; background:${out.review_flag ? "var(--rust)" : "var(--teal)"};"></div></div>
+      <div class="conf-label">Confidence: ${conf}/100</div>
+      <ul class="evidence-list">${evidence}</ul>
+      <div style="margin-top:10px;"><strong>${esc(out.recommended_action.playbook_code)}</strong> — ${esc(out.recommended_action.description)}</div>
+      ${draftBlock}
+      <div class="action-row" style="margin-top:14px;">${actions}</div>
+      <div class="provider-note">Diagnosed via ${esc(res.provider || "unknown provider")}</div>
+    </section>`;
+}
+
+function renderDetail() {
+  const el = document.getElementById("detail");
+  const id = state.selectedId;
+  if (!id) {
+    el.innerHTML = `<div class="detail-empty">Select a job from the queue to view the customer record and run a diagnosis.</div>`;
+    return;
+  }
+  const c = FLAGGED_CUSTOMERS.find((x) => x.customer_id === id);
+  const rec = state.workingRecords.get(id);
+  const status = state.status.get(id);
+  const err = state.errors.get(id);
+  const res = state.results.get(id);
+
+  let body = "";
+  body += `<div class="flag-chips">${c.flags.map((f) => `<span class="flag-chip">${esc(f)}</span>`).join("")}</div>`;
+
+  if (err) {
+    body += `<div class="error-banner"><strong style="display:block; font-family:var(--font-display); text-transform:uppercase; font-size:11.5px; letter-spacing:.05em; margin-bottom:4px;">Couldn't reach the Worker</strong>${esc(err)}</div>`;
+  }
+
+  body += renderRecordPanel(rec);
+
+  if (status === "loading") {
+    body += `<section class="panel"><h3>Diagnosis</h3><p style="color:var(--steel);">Running diagnosis…</p></section>`;
+  } else if (res && res.needs_human_input && !res.output) {
+    body += renderQuestionBox(id, res.human_question);
+  } else if (res && res.output) {
+    body += renderDiagnosisPanel(id, res);
+  } else {
+    body += `<section class="panel"><h3>Diagnosis</h3><div class="action-row"><button class="btn btn-amber" id="runDiagBtn">Run diagnosis</button></div></section>`;
+  }
+
+  el.innerHTML = `
+    <div class="job-head">
+      <span class="job-no">JOB #${esc(id)}</span>
+      <span class="stamp ${status}">${esc(statusLabel(status))}</span>
+    </div>
+    ${body}
+    <section class="panel">
+      <h3>Audit log — this job</h3>
+      <div class="log" id="jobLog"></div>
+    </section>`;
+
+  const runBtn = document.getElementById("runDiagBtn");
+  if (runBtn) runBtn.addEventListener("click", () => runDiagnosis(id));
+
+  const answerRow = document.getElementById("answerRow");
+  if (answerRow) {
+    answerRow.querySelectorAll("[data-answer]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const val = btn.dataset.answer;
+        if (val === "__free__") {
+          const input = document.getElementById("freeAnswerInput");
+          submitAnswer(id, res.human_question, input.value.trim() || "No answer given");
+        } else {
+          submitAnswer(id, res.human_question, val);
+        }
+      });
+    });
+  }
+
+  const actionRow = el.querySelector(".action-row [data-action]");
+  el.querySelectorAll("[data-action]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const action = btn.dataset.action;
+      if (action === "approve") approveJob(id);
+      else if (action === "reject") rejectJob(id);
+      else if (action === "edit") editDraft(id);
+    });
+  });
+
+  renderJobLog(id);
+}
+
+function renderJobLog(id) {
+  const el = document.getElementById("jobLog");
+  if (!el) return;
+  const rows = state.log.filter((r) => r.id === id);
+  el.innerHTML = rows.length
+    ? rows.map((r) => `<div class="log-row"><span class="time">${esc(r.time)}</span><span>${esc(r.action)}${r.detail ? ` — ${esc(r.detail)}` : ""}</span></div>`).join("")
+    : `<div class="log-empty">No actions yet on this job.</div>`;
+}
+
+function renderLog() {
+  renderStatusBoard();
+  if (state.selectedId) renderJobLog(state.selectedId);
+}
+
+// ---------------------------------------------------------------------
+// Actions
+// ---------------------------------------------------------------------
+function selectCustomer(id) {
+  state.selectedId = id;
+  renderQueue();
+  renderDetail();
+}
+
+async function runDiagnosis(id) {
+  const url = workerUrl();
+  if (!url) {
+    state.errors.set(id, "Enter the Worker URL at the top of the page first (from `wrangler deploy`, or http://localhost:8787 for `wrangler dev`).");
+    renderDetail();
+    return;
+  }
+  state.status.set(id, "loading");
+  state.errors.delete(id);
+  renderQueue();
+  renderDetail();
+
+  try {
+    const resp = await fetch(`${url}/diagnose`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(state.workingRecords.get(id))
+    });
+    if (!resp.ok) throw new Error(`Worker responded ${resp.status}`);
+    const body = await resp.json();
+    state.results.set(id, body);
+
+    if (body.needs_human_input && !body.output) {
+      state.status.set(id, "awaiting_info");
+      addLog(id, "Diagnosis requested dealer input", body.human_question);
+    } else if (body.output && body.output.review_flag) {
+      state.status.set(id, "review_flagged");
+      addLog(id, "Diagnosed — flagged for review", `${body.output.diagnosis.primary_category} via ${body.provider || "?"}`);
+    } else if (body.output) {
+      state.status.set(id, "diagnosed");
+      addLog(id, "Diagnosed", `${body.output.diagnosis.primary_category} via ${body.provider || "?"}, confidence ${body.output.diagnosis.confidence}`);
+    } else {
+      state.status.set(id, "pending");
+    }
+  } catch (e) {
+    state.status.set(id, "pending");
+    state.errors.set(id, e.message + " — check the Worker URL is correct and the Worker is deployed/running.");
+    addLog(id, "Diagnosis failed", e.message);
+  }
+  renderQueue();
+  renderDetail();
+}
+
+function submitAnswer(id, question, answer) {
+  const rec = state.workingRecords.get(id);
+  if (/at the time of delivery/i.test(question)) {
+    rec.first_service_booked_at_delivery = answer === "Yes" ? true : false; // "Unsure" treated as not-confirmed
+    addLog(id, "Dealer answered delivery-booking question", answer);
+  } else if (/raise any concerns/i.test(question)) {
+    const noteMap = {
+      "Cost": "Dealer follow-up: customer indicated a cost-related concern during their visit(s), though no formal complaint was filed.",
+      "Wait time": "Dealer follow-up: customer indicated a wait-time/appointment convenience concern during their visit(s), though no formal complaint was filed.",
+      "Quality": "Dealer follow-up: customer indicated a quality/workmanship concern during their visit(s), though no formal complaint was filed.",
+      "None noted": "Dealer follow-up: no concerns were raised by the customer during their visit(s)."
+    };
+    rec.complaint_text = [...(rec.complaint_text || []), noteMap[answer] || `Dealer follow-up: ${answer}`];
+    addLog(id, "Dealer answered concerns question", answer);
+  } else {
+    rec.complaint_text = [...(rec.complaint_text || []), `Dealer response to agent's question ("${question}"): ${answer}`];
+    addLog(id, "Dealer answered agent's question", answer);
+  }
+  state.results.delete(id);
+  runDiagnosis(id);
+}
+
+function approveJob(id) {
+  if (state.editingDraft) {
+    const textarea = document.getElementById("draftText");
+    if (textarea) {
+      const res = state.results.get(id);
+      const before = res.output.draft_message.text;
+      res.output.draft_message.text = textarea.value;
+      addLog(id, "Draft edited before approval", before === textarea.value ? "(no change)" : "text updated");
+    }
+    state.editingDraft = false;
+  }
+  state.status.set(id, "approved");
+  addLog(id, "Approved by dealer (simulated — no message actually sent)");
+  renderQueue();
+  renderDetail();
+}
+
+function rejectJob(id) {
+  state.status.set(id, "rejected");
+  addLog(id, "Rejected by dealer");
+  renderQueue();
+  renderDetail();
+}
+
+function editDraft(id) {
+  state.editingDraft = true;
+  addLog(id, "Dealer opened draft for editing");
+  // Detail already renders an editable textarea; approveJob() picks up
+  // its value. No separate save step needed — Approve commits the edit.
+}
+
+async function testConnection() {
+  const url = workerUrl();
+  const statusEl = document.getElementById("connStatus");
+  if (!url) {
+    statusEl.className = "conn-status bad";
+    statusEl.innerHTML = `<span class="dot"></span>enter a Worker URL first`;
+    return;
+  }
+  statusEl.className = "conn-status";
+  statusEl.innerHTML = `<span class="dot"></span>testing…`;
+  try {
+    const resp = await fetch(`${url}/health`);
+    const body = await resp.json();
+    const providers = Object.entries(body.providers_configured || {}).filter(([, v]) => v).map(([k]) => k);
+    statusEl.className = "conn-status ok";
+    statusEl.innerHTML = `<span class="dot"></span>connected — ${providers.length ? providers.join(", ") : "no providers configured"}`;
+  } catch (e) {
+    statusEl.className = "conn-status bad";
+    statusEl.innerHTML = `<span class="dot"></span>unreachable (${esc(e.message)})`;
+  }
+}
+
+function resetSession() {
+  state.workingRecords.clear();
+  state.status.clear();
+  state.results.clear();
+  state.errors.clear();
+  state.log = [];
+  state.selectedId = null;
+  for (const c of FLAGGED_CUSTOMERS) {
+    state.workingRecords.set(c.customer_id, deepClone(c.record));
+    state.status.set(c.customer_id, "pending");
+  }
+  renderAll();
+}
+
+document.getElementById("workerUrl").value = DEFAULT_WORKER_URL;
+document.getElementById("testConnBtn").addEventListener("click", testConnection);
+document.getElementById("resetBtn").addEventListener("click", resetSession);
+
+renderAll();
+if (FLAGGED_CUSTOMERS.length) selectCustomer(FLAGGED_CUSTOMERS[0].customer_id);
+</script>
+</body>
+</html>

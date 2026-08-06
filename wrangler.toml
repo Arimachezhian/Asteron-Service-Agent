@@ -1,0 +1,15 @@
+name = "asteron-retention-agent"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# Secrets — set these with `wrangler secret put NAME`, never write real
+# keys into this file (or any file that gets committed to the repo):
+#
+#   GEMINI_API_KEY   — free key from Google AI Studio (aistudio.google.com)
+#   GROQ_API_KEY     — free key from console.groq.com, used only as a
+#                      fallback if Gemini errors out or its quota is hit
+#
+# Both are read from env in src/llm_client.js. If GEMINI_API_KEY is
+# unset, the Worker skips straight to Groq; if neither is set, every
+# /diagnose call still responds (never a 500) with a review_flag=true
+# fallback so a demo request always gets something the dashboard can show.

@@ -1,0 +1,36 @@
+name: Nightly retention detection
+
+# Matches PROJECT_HANDOFF.md's tech-stack table: "GitHub Actions (scheduled)
+# — Runs the Detection stage nightly, commits flagged-customer list back
+# to the repo — real running code, not a slide claim." Detection itself
+# stays rule-based (detection/detect.mjs) — no AI, no API key, nothing to
+# configure here beyond the schedule.
+
+on:
+  schedule:
+    - cron: "0 2 * * *"   # 02:00 UTC nightly (07:30 IST)
+  workflow_dispatch: {}     # manual "Run workflow" button, useful for the demo
+
+permissions:
+  contents: write
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run detection
+        run: node detection/detect.mjs
+
+      - name: Commit flagged list if changed
+        run: |
+          if ! git diff --quiet -- data/flagged_customers.json; then
+            git config user.name "asteron-retention-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add data/flagged_customers.json
+            git commit -m "chore: nightly detection run ($(date -u +%Y-%m-%d))"
+            git push
+          else
+            echo "No change in flagged_customers.json — nothing to commit."
+          fi

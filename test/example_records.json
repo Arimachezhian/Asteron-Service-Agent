@@ -1,0 +1,46 @@
+[
+  {
+    "_expected_outcome": "skipLLM: true — never visited, delivery booking unknown, triggers the delivery-booking question",
+    "customer_id": "AST-10432",
+    "vehicle_category": "suv",
+    "purchase_date": "2025-02-14",
+    "last_service_date": null,
+    "service_visit_count": 0,
+    "complaint_text": [],
+    "survey_scores": [],
+    "app_last_login_date": "2025-03-01",
+    "first_service_booked_at_delivery": null,
+    "unified_id_present": false,
+    "authorized_discount_range": [0, 1500]
+  },
+  {
+    "_expected_outcome": "skipLLM: false — proceeds to Gemini, likely category B (cost complaint present)",
+    "customer_id": "AST-10891",
+    "vehicle_category": "hatchback",
+    "purchase_date": "2023-06-01",
+    "last_service_date": "2024-05-10",
+    "service_visit_count": 2,
+    "complaint_text": [
+      "Visit on 2024-05-10: customer said the final bill was much higher than the quote and felt not informed beforehand."
+    ],
+    "survey_scores": [{ "visit_date": "2024-05-10", "score": 3, "comment": "unexpected charges" }],
+    "app_last_login_date": "2024-06-02",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": true,
+    "authorized_discount_range": [0, 2000]
+  },
+  {
+    "_expected_outcome": "skipLLM: true — has visits but zero sentiment signal, triggers the concerns question",
+    "customer_id": "AST-11207",
+    "vehicle_category": "ev",
+    "purchase_date": "2024-01-20",
+    "last_service_date": "2024-08-15",
+    "service_visit_count": 1,
+    "complaint_text": [],
+    "survey_scores": [],
+    "app_last_login_date": null,
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": false,
+    "authorized_discount_range": [0, 1000]
+  }
+]

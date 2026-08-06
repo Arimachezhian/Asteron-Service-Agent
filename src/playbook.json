@@ -1,0 +1,79 @@
+{
+  "version": "1.0",
+  "description": "Fixed diagnosis-to-intervention mapping for the retention agent. This is the single source of truth — the system prompt and the dashboard UI both read from this file so the playbook can never drift out of sync between what the model is told and what the frontend displays.",
+  "categories": [
+    {
+      "code": "A",
+      "name": "Delivery handoff failure",
+      "trigger_signals": [
+        "first_service_booked_at_delivery is false or unresolved",
+        "no complaint_text on record"
+      ],
+      "playbook_code": "schedule_warm_call",
+      "action_description": "Route to the customer's original selling advisor for a warm call plus a complimentary inspection offer.",
+      "requires_human_review_only": false,
+      "channel_options": ["call_brief", "sms"]
+    },
+    {
+      "code": "B",
+      "name": "Cost or transparency distrust",
+      "trigger_signals": [
+        "complaint_text or survey comment references pricing, unexpected charges, or feeling uninformed"
+      ],
+      "playbook_code": "transparent_quote",
+      "action_description": "Offer a fixed-price, itemized, photo-documented estimate ahead of the next visit.",
+      "requires_human_review_only": false,
+      "channel_options": ["email", "sms"]
+    },
+    {
+      "code": "C",
+      "name": "Convenience or wait-time friction",
+      "trigger_signals": [
+        "complaint_text or survey comment references appointment delay, wait time, or slot availability"
+      ],
+      "playbook_code": "priority_slot",
+      "action_description": "Offer a priority or express appointment slot, or a pickup-and-drop-off convenience service.",
+      "requires_human_review_only": false,
+      "channel_options": ["sms", "email"]
+    },
+    {
+      "code": "D",
+      "name": "Genuine quality dissatisfaction",
+      "trigger_signals": [
+        "repeated complaints referencing the same underlying issue",
+        "low survey score tied to a specific visit"
+      ],
+      "playbook_code": "escalate_human_only",
+      "action_description": "Escalate to the service manager for direct human review. No customer-facing message is auto-drafted for this category.",
+      "requires_human_review_only": true,
+      "channel_options": []
+    },
+    {
+      "code": "E",
+      "name": "Silent drift",
+      "trigger_signals": [
+        "no complaint_text or survey comments at all",
+        "service visits stopped with no recorded reason"
+      ],
+      "playbook_code": "soft_reminder",
+      "action_description": "Send a personalized reminder referencing the customer's specific vehicle and service history, with a light, no-pressure offer.",
+      "requires_human_review_only": false,
+      "channel_options": ["sms", "app_notification"]
+    },
+    {
+      "code": "F",
+      "name": "Competitive defection risk",
+      "trigger_signals": [
+        "vehicle age approaching or past typical warranty expiry",
+        "profile suggests price sensitivity",
+        "no strong signal pointing to categories A through D"
+      ],
+      "playbook_code": "value_package",
+      "action_description": "Offer a competitive service value package, explicitly timed around the warranty window, framed against independent-garage pricing.",
+      "requires_human_review_only": false,
+      "channel_options": ["email", "sms"]
+    }
+  ],
+  "confidence_threshold_for_review": 60,
+  "confidence_penalty_per_inferred_field": 15
+}

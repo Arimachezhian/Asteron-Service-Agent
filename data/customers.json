@@ -1,0 +1,496 @@
+[
+  {
+    "_demo_intent": "skipLLM -> delivery-booking question (never visited, booking status unknown)",
+    "customer_id": "AST-20001",
+    "vehicle_category": "suv",
+    "purchase_date": "2026-06-05",
+    "last_service_date": null,
+    "service_visit_count": 0,
+    "complaint_text": [],
+    "survey_scores": [],
+    "app_last_login_date": "2026-07-05",
+    "first_service_booked_at_delivery": null,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      1500
+    ]
+  },
+  {
+    "_demo_intent": "skipLLM -> delivery-booking question (never visited, booking status unknown)",
+    "customer_id": "AST-20002",
+    "vehicle_category": "ev",
+    "purchase_date": "2026-07-05",
+    "last_service_date": null,
+    "service_visit_count": 0,
+    "complaint_text": [],
+    "survey_scores": [],
+    "app_last_login_date": null,
+    "first_service_booked_at_delivery": null,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      1500
+    ]
+  },
+  {
+    "_demo_intent": "skipLLM -> concerns question (has visits, no complaint/survey on record)",
+    "customer_id": "AST-20003",
+    "vehicle_category": "sedan",
+    "purchase_date": "2025-06-05",
+    "last_service_date": "2025-10-05",
+    "service_visit_count": 1,
+    "complaint_text": [],
+    "survey_scores": [],
+    "app_last_login_date": "2025-11-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": true,
+    "authorized_discount_range": [
+      0,
+      2000
+    ]
+  },
+  {
+    "_demo_intent": "skipLLM -> concerns question (has visits, no complaint/survey on record)",
+    "customer_id": "AST-20004",
+    "vehicle_category": "hatchback",
+    "purchase_date": "2024-12-05",
+    "last_service_date": "2025-05-05",
+    "service_visit_count": 2,
+    "complaint_text": [],
+    "survey_scores": [],
+    "app_last_login_date": "2025-02-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      1200
+    ]
+  },
+  {
+    "_demo_intent": "skipLLM -> concerns question (fully complete otherwise, to show completeness isn't the only gate)",
+    "customer_id": "AST-20024",
+    "vehicle_category": "ev",
+    "purchase_date": "2025-04-05",
+    "last_service_date": "2025-07-05",
+    "service_visit_count": 1,
+    "complaint_text": [],
+    "survey_scores": [],
+    "app_last_login_date": "2026-06-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      1800
+    ]
+  },
+  {
+    "_demo_intent": "-> category B (cost complaint, complete record)",
+    "customer_id": "AST-20005",
+    "vehicle_category": "hatchback",
+    "purchase_date": "2024-08-05",
+    "last_service_date": "2026-05-05",
+    "service_visit_count": 2,
+    "complaint_text": [
+      "Visit on record: customer said the final bill was much higher than the quote and felt not informed beforehand."
+    ],
+    "survey_scores": [
+      {
+        "visit_date": "2026-05-05",
+        "score": 3,
+        "comment": "unexpected charges"
+      }
+    ],
+    "app_last_login_date": "2026-04-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      2000
+    ]
+  },
+  {
+    "_demo_intent": "-> category B (cost complaint, unified ID missing)",
+    "customer_id": "AST-20006",
+    "vehicle_category": "suv",
+    "purchase_date": "2025-02-05",
+    "last_service_date": "2026-03-05",
+    "service_visit_count": 1,
+    "complaint_text": [
+      "Customer felt uninformed about a charge added to the service bill without prior notice."
+    ],
+    "survey_scores": [
+      {
+        "visit_date": "2026-03-05",
+        "score": 4,
+        "comment": "surprised by add-on charge"
+      }
+    ],
+    "app_last_login_date": "2026-02-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      1500
+    ]
+  },
+  {
+    "_demo_intent": "-> category B, incomplete record (missing app_last_login_date)",
+    "customer_id": "AST-20018",
+    "vehicle_category": "suv",
+    "purchase_date": "2024-10-05",
+    "last_service_date": "2026-01-05",
+    "service_visit_count": 2,
+    "complaint_text": [
+      "Customer said the estimate quoted on the phone did not match the amount charged at pickup."
+    ],
+    "survey_scores": [
+      {
+        "visit_date": "2026-01-05",
+        "score": 3,
+        "comment": "cost mismatch"
+      }
+    ],
+    "app_last_login_date": null,
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      1600
+    ]
+  },
+  {
+    "_demo_intent": "-> category B, fully complete",
+    "customer_id": "AST-20022",
+    "vehicle_category": "suv",
+    "purchase_date": "2025-01-05",
+    "last_service_date": "2026-06-05",
+    "service_visit_count": 3,
+    "complaint_text": [
+      "Customer raised concern that pricing wasn't explained clearly before work started."
+    ],
+    "survey_scores": [
+      {
+        "visit_date": "2026-06-05",
+        "score": 4,
+        "comment": "unclear pricing"
+      }
+    ],
+    "app_last_login_date": "2026-06-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      1700
+    ]
+  },
+  {
+    "_demo_intent": "-> category C (wait-time complaint, complete record)",
+    "customer_id": "AST-20007",
+    "vehicle_category": "sedan",
+    "purchase_date": "2025-05-05",
+    "last_service_date": "2026-04-05",
+    "service_visit_count": 2,
+    "complaint_text": [
+      "Customer complained about a long wait and being unable to get a convenient appointment slot."
+    ],
+    "survey_scores": [
+      {
+        "visit_date": "2026-04-05",
+        "score": 3,
+        "comment": "slow, no slots available"
+      }
+    ],
+    "app_last_login_date": null,
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": true,
+    "authorized_discount_range": [
+      0,
+      1800
+    ]
+  },
+  {
+    "_demo_intent": "-> category C (appointment delay)",
+    "customer_id": "AST-20008",
+    "vehicle_category": "suv",
+    "purchase_date": "2025-09-05",
+    "last_service_date": "2026-06-05",
+    "service_visit_count": 1,
+    "complaint_text": [
+      "Customer said the appointment was delayed significantly beyond the scheduled time."
+    ],
+    "survey_scores": [],
+    "app_last_login_date": "2026-05-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      1400
+    ]
+  },
+  {
+    "_demo_intent": "-> category C, incomplete record (missing app_last_login_date)",
+    "customer_id": "AST-20020",
+    "vehicle_category": "ev",
+    "purchase_date": "2025-07-05",
+    "last_service_date": "2026-02-05",
+    "service_visit_count": 2,
+    "complaint_text": [
+      "Customer noted they could not get a slot for two weeks and found the wait inconvenient."
+    ],
+    "survey_scores": [
+      {
+        "visit_date": "2026-02-05",
+        "score": 3,
+        "comment": "wait too long"
+      }
+    ],
+    "app_last_login_date": null,
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": true,
+    "authorized_discount_range": [
+      0,
+      1900
+    ]
+  },
+  {
+    "_demo_intent": "-> category D (repeated complaint, same issue)",
+    "customer_id": "AST-20009",
+    "vehicle_category": "ev",
+    "purchase_date": "2025-10-05",
+    "last_service_date": "2026-07-05",
+    "service_visit_count": 3,
+    "complaint_text": [
+      "First visit: customer reported the charging port connection felt loose and intermittent.",
+      "Second visit, same issue: customer said the charging port fault was not fully resolved and recurred."
+    ],
+    "survey_scores": [
+      {
+        "visit_date": "2026-07-05",
+        "score": 2,
+        "comment": "same charging fault again"
+      }
+    ],
+    "app_last_login_date": "2026-07-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": true,
+    "authorized_discount_range": [
+      0,
+      2500
+    ]
+  },
+  {
+    "_demo_intent": "-> category D (low survey score tied to a specific visit)",
+    "customer_id": "AST-20010",
+    "vehicle_category": "hatchback",
+    "purchase_date": "2025-11-05",
+    "last_service_date": "2026-06-05",
+    "service_visit_count": 2,
+    "complaint_text": [
+      "Customer reported a rattling noise from the dashboard was not fixed after the visit."
+    ],
+    "survey_scores": [
+      {
+        "visit_date": "2026-06-05",
+        "score": 1,
+        "comment": "issue not fixed, very unhappy"
+      }
+    ],
+    "app_last_login_date": "2026-05-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      1300
+    ]
+  },
+  {
+    "_demo_intent": "-> category D, incomplete record (missing authorized_discount_range)",
+    "customer_id": "AST-20019",
+    "vehicle_category": "sedan",
+    "purchase_date": "2025-08-05",
+    "last_service_date": "2026-07-05",
+    "service_visit_count": 2,
+    "complaint_text": [
+      "Customer reported a persistent AC noise.",
+      "Return visit: customer said the same AC noise is still present after the repair."
+    ],
+    "survey_scores": [
+      {
+        "visit_date": "2026-07-05",
+        "score": 2,
+        "comment": "same noise as before"
+      }
+    ],
+    "app_last_login_date": "2026-06-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": true,
+    "authorized_discount_range": null
+  },
+  {
+    "_demo_intent": "-> category A (booking explicitly declined, not unknown; no complaint on record)",
+    "customer_id": "AST-20011",
+    "vehicle_category": "sedan",
+    "purchase_date": "2026-03-05",
+    "last_service_date": null,
+    "service_visit_count": 0,
+    "complaint_text": [],
+    "survey_scores": [],
+    "app_last_login_date": "2026-04-05",
+    "first_service_booked_at_delivery": false,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      1000
+    ]
+  },
+  {
+    "_demo_intent": "-> category A (booking explicitly declined)",
+    "customer_id": "AST-20012",
+    "vehicle_category": "suv",
+    "purchase_date": "2025-12-05",
+    "last_service_date": null,
+    "service_visit_count": 0,
+    "complaint_text": [],
+    "survey_scores": [],
+    "app_last_login_date": "2026-01-05",
+    "first_service_booked_at_delivery": false,
+    "unified_id_present": true,
+    "authorized_discount_range": [
+      0,
+      1500
+    ]
+  },
+  {
+    "_demo_intent": "-> category A, incomplete record (missing app_last_login_date)",
+    "customer_id": "AST-20023",
+    "vehicle_category": "sedan",
+    "purchase_date": "2026-02-05",
+    "last_service_date": null,
+    "service_visit_count": 0,
+    "complaint_text": [],
+    "survey_scores": [],
+    "app_last_login_date": null,
+    "first_service_booked_at_delivery": false,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      1100
+    ]
+  },
+  {
+    "_demo_intent": "-> category E (silent drift; complaint_text pre-populated with a 'no concerns' dealer note so it doesn't re-trigger skipLLM)",
+    "customer_id": "AST-20015",
+    "vehicle_category": "suv",
+    "purchase_date": "2024-04-05",
+    "last_service_date": "2025-04-05",
+    "service_visit_count": 2,
+    "complaint_text": [
+      "Dealer follow-up: no concerns were raised by the customer during their visit(s)."
+    ],
+    "survey_scores": [],
+    "app_last_login_date": "2024-12-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      1600
+    ]
+  },
+  {
+    "_demo_intent": "-> category E (silent drift, complete record otherwise)",
+    "customer_id": "AST-20016",
+    "vehicle_category": "ev",
+    "purchase_date": "2024-10-05",
+    "last_service_date": "2025-06-05",
+    "service_visit_count": 1,
+    "complaint_text": [
+      "Dealer follow-up: no concerns were raised by the customer during their visit(s)."
+    ],
+    "survey_scores": [],
+    "app_last_login_date": null,
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": true,
+    "authorized_discount_range": [
+      0,
+      2200
+    ]
+  },
+  {
+    "_demo_intent": "-> category F (approaching warranty expiry, price-sensitive profile, app inactive)",
+    "customer_id": "AST-20013",
+    "vehicle_category": "hatchback",
+    "purchase_date": "2023-10-05",
+    "last_service_date": "2025-01-05",
+    "service_visit_count": 1,
+    "complaint_text": [],
+    "survey_scores": [],
+    "app_last_login_date": "2024-11-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      900
+    ]
+  },
+  {
+    "_demo_intent": "-> category F (past warranty window, thin engagement)",
+    "customer_id": "AST-20014",
+    "vehicle_category": "sedan",
+    "purchase_date": "2023-04-05",
+    "last_service_date": "2024-08-05",
+    "service_visit_count": 1,
+    "complaint_text": [],
+    "survey_scores": [],
+    "app_last_login_date": "2024-06-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": true,
+    "authorized_discount_range": [
+      0,
+      1000
+    ]
+  },
+  {
+    "_demo_intent": "-> category F, fully complete record",
+    "customer_id": "AST-20021",
+    "vehicle_category": "hatchback",
+    "purchase_date": "2023-11-05",
+    "last_service_date": "2025-02-05",
+    "service_visit_count": 1,
+    "complaint_text": [],
+    "survey_scores": [],
+    "app_last_login_date": "2025-01-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": true,
+    "authorized_discount_range": [
+      0,
+      1100
+    ]
+  },
+  {
+    "_demo_intent": "-> genuinely mixed B/C signal (tests secondary_category)",
+    "customer_id": "AST-20017",
+    "vehicle_category": "hatchback",
+    "purchase_date": "2025-03-05",
+    "last_service_date": "2026-03-05",
+    "service_visit_count": 3,
+    "complaint_text": [
+      "Customer complained the estimate was higher than quoted.",
+      "Customer also mentioned the wait for a service slot was longer than expected."
+    ],
+    "survey_scores": [
+      {
+        "visit_date": "2026-03-05",
+        "score": 3,
+        "comment": "cost and wait, both frustrating"
+      }
+    ],
+    "app_last_login_date": "2026-02-05",
+    "first_service_booked_at_delivery": true,
+    "unified_id_present": false,
+    "authorized_discount_range": [
+      0,
+      2000
+    ]
+  }
+]

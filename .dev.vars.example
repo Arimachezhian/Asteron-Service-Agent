@@ -1,0 +1,6 @@
+# Copy this file to .dev.vars (which is gitignored) for local `wrangler dev`.
+# For the deployed Worker, use `wrangler secret put GEMINI_API_KEY` /
+# `wrangler secret put GROQ_API_KEY` instead — .dev.vars is local-only.
+
+GEMINI_API_KEY=your-gemini-key-from-aistudio.google.com
+GROQ_API_KEY=your-groq-key-from-console.groq.com

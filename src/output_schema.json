@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RetentionAgentDiagnosisOutput",
+  "type": "object",
+  "required": ["customer_id", "diagnosis", "needs_human_input", "recommended_action", "review_flag"],
+  "properties": {
+    "customer_id": { "type": "string" },
+    "diagnosis": {
+      "type": "object",
+      "required": ["primary_category", "evidence", "confidence"],
+      "properties": {
+        "primary_category": { "enum": ["A", "B", "C", "D", "E", "F"] },
+        "secondary_category": { "enum": ["A", "B", "C", "D", "E", "F", null] },
+        "evidence": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "Every item must be traceable to a field in the input record."
+        },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "needs_human_input": { "type": "boolean" },
+    "human_question": { "type": ["string", "null"] },
+    "recommended_action": {
+      "type": "object",
+      "required": ["playbook_code", "description", "requires_human_review_only"],
+      "properties": {
+        "playbook_code": {
+          "enum": [
+            "schedule_warm_call",
+            "transparent_quote",
+            "priority_slot",
+            "escalate_human_only",
+            "soft_reminder",
+            "value_package"
+          ]
+        },
+        "description": { "type": "string" },
+        "requires_human_review_only": { "type": "boolean" }
+      }
+    },
+    "draft_message": {
+      "type": ["object", "null"],
+      "properties": {
+        "channel": { "enum": ["sms", "email", "call_brief", "app_notification"] },
+        "text": { "type": "string" },
+        "discount_offered": { "type": ["number", "null"] }
+      }
+    },
+    "review_flag": {
+      "type": "boolean",
+      "description": "True when confidence is below the threshold and no resolvable ambiguity question applies."
+    }
+  },
+  "additionalProperties": false,
+  "x_worker_side_validation_rules": [
+    "If recommended_action.playbook_code == 'escalate_human_only', draft_message MUST be null.",
+    "If needs_human_input == true, draft_message MUST be null.",
+    "If draft_message.discount_offered is present, it MUST fall within the record's authorized_discount_range — reject and flag for review if not.",
+    "Every string in diagnosis.evidence is spot-checked against the input record's observed/inferred fields; if a citation can't be matched, set review_flag = true rather than forwarding the output."
+  ]
+}
