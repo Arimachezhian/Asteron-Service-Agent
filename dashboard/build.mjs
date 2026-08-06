@@ -31,15 +31,24 @@ const workerUrl = workerUrlArg ? workerUrlArg.split("=").slice(1).join("=") : ""
 const template = readFileSync(new URL("./index.template.html", import.meta.url), "utf8");
 const flaggedFile = JSON.parse(readFileSync(new URL("../data/flagged_customers.json", import.meta.url), "utf8"));
 const playbook = JSON.parse(readFileSync(new URL("../src/playbook.json", import.meta.url), "utf8"));
+const flaggedLeadsFile = JSON.parse(readFileSync(new URL("../data/flagged_leads.json", import.meta.url), "utf8"));
+const leadPlaybook = JSON.parse(readFileSync(new URL("../src/lead_playbook.json", import.meta.url), "utf8"));
 
 const categoryMeta = {};
 for (const cat of playbook.categories) {
   categoryMeta[cat.code] = { name: cat.name, playbook_code: cat.playbook_code };
 }
 
+const tierMeta = {};
+for (const tier of leadPlaybook.tiers) {
+  tierMeta[tier.code] = { name: tier.name, playbook_code: tier.playbook_code };
+}
+
 let output = template
   .replace("/*__FLAGGED_DATA__*/[]", JSON.stringify(flaggedFile.flagged))
   .replace("/*__CATEGORY_META__*/{}", JSON.stringify(categoryMeta))
+  .replace("/*__FLAGGED_LEADS_DATA__*/[]", JSON.stringify(flaggedLeadsFile.flagged))
+  .replace("/*__TIER_META__*/{}", JSON.stringify(tierMeta))
   .replace('/*__WORKER_URL_DEFAULT__*/""', JSON.stringify(workerUrl));
 
 writeFileSync(new URL("./index.html", import.meta.url), output);
@@ -47,4 +56,6 @@ writeFileSync(new URL("./index.html", import.meta.url), output);
 console.log(`Built dashboard/index.html`);
 console.log(`  embedded ${flaggedFile.flagged.length} flagged customers (as of ${flaggedFile.as_of_date})`);
 console.log(`  embedded ${Object.keys(categoryMeta).length} category definitions from playbook.json`);
+console.log(`  embedded ${flaggedLeadsFile.flagged.length} flagged leads`);
+console.log(`  embedded ${Object.keys(tierMeta).length} priority-tier definitions from lead_playbook.json`);
 console.log(`  default Worker URL: ${workerUrl || "(none — dealer enters it in the dashboard)"}`);

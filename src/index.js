@@ -13,7 +13,8 @@
  *              -> JSON response
  *
  * Routes:
- *   POST /diagnose   body: one raw customer record (see test/example_records.json)
+ *   POST /diagnose   body: one raw customer record (see test/example_records.json) — retention agent
+ *   POST /triage      body: one raw lead record (see test/example_leads.json) — lead-response agent
  *   GET  /health      liveness check, no LLM call, reports which providers are configured
  *
  * CORS is wide open (Access-Control-Allow-Origin: *) since this is a
@@ -27,6 +28,11 @@ import { buildSystemInstruction } from "./system_prompt.js";
 import { diagnose as callLLM } from "./llm_client.js";
 import { validateAndEnforce, buildReviewFallback } from "./validate.js";
 import outputSchema from "./output_schema.json";
+
+import { checkLeadCompleteness } from "./lead_completeness_check.js";
+import { buildLeadSystemInstruction } from "./lead_system_prompt.js";
+import { validateLeadAndEnforce, buildLeadReviewFallback } from "./lead_validate.js";
+import leadOutputSchema from "./lead_output_schema.json";
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -63,7 +69,11 @@ export default {
       return handleDiagnose(request, env);
     }
 
-    return json({ ok: false, error: "Not found. POST /diagnose or GET /health." }, 404);
+    if (request.method === "POST" && url.pathname === "/triage") {
+      return handleTriage(request, env);
+    }
+
+    return json({ ok: false, error: "Not found. POST /diagnose, POST /triage, or GET /health." }, 404);
   }
 };
 
@@ -120,6 +130,86 @@ async function handleDiagnose(request, env) {
   // Stage: schema + worker-side validation. Never trust the model's JSON
   // on its own, even though generationConfig asked for structured output.
   const validated = validateAndEnforce(parsed, check.record);
+
+  if (!validated.ok) {
+    return json({
+      ok: true,
+      llm_called: true,
+      provider,
+      needs_human_input: true,
+      human_question: null,
+      record: check.record,
+      output: validated.fallback,
+      validation_notes: [validated.reason]
+    });
+  }
+
+  return json({
+    ok: true,
+    llm_called: true,
+    provider,
+    needs_human_input: validated.output.needs_human_input,
+    human_question: validated.output.human_question,
+    record: check.record,
+    output: validated.output,
+    validation_notes: validated.notes
+  });
+}
+
+// ----------------------------------------------------------------------
+// Lead-response agent — same pipeline shape as handleDiagnose above,
+// different reasoning-core module set (lead_* files). Kept as a
+// separate function rather than a parameterized shared one: the two
+// agents' record shapes, taxonomies, and validation rules are different
+// enough that a shared abstraction would need almost as many branches
+// as just having two functions — and two plain functions are easier to
+// reason about under time pressure, and safer not to break the
+// already-working /diagnose route while adding this one.
+// ----------------------------------------------------------------------
+async function handleTriage(request, env) {
+  let raw;
+  try {
+    raw = await request.json();
+  } catch {
+    return json({ ok: false, error: "Request body must be valid JSON." }, 400);
+  }
+
+  const check = checkLeadCompleteness(raw);
+
+  if (check.skipLLM) {
+    return json({
+      ok: true,
+      llm_called: false,
+      provider: null,
+      needs_human_input: check.needsHumanInput,
+      human_question: check.humanQuestion,
+      record: check.record,
+      output: null
+    });
+  }
+
+  const systemInstruction = buildLeadSystemInstruction(leadOutputSchema);
+  const userContent = JSON.stringify(check.record, null, 2);
+
+  let parsed, provider;
+  try {
+    const result = await callLLM(systemInstruction, userContent, env);
+    parsed = result.parsed;
+    provider = result.provider;
+  } catch (e) {
+    return json({
+      ok: true,
+      llm_called: true,
+      provider: null,
+      needs_human_input: true,
+      human_question: null,
+      record: check.record,
+      output: buildLeadReviewFallback(check.record, `Triage unavailable: ${e.message}`),
+      validation_notes: [`Both LLM providers failed: ${e.message}`]
+    });
+  }
+
+  const validated = validateLeadAndEnforce(parsed, check.record);
 
   if (!validated.ok) {
     return json({

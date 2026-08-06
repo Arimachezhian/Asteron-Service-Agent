@@ -28,13 +28,13 @@ function check(label, cond) {
 
 console.log("== initial render ==");
 check("no window errors on load", errors.length === 0);
-check("queue rendered 23 tickets", document.querySelectorAll(".ticket").length === 23);
-check("status board rendered 6 cells", document.querySelectorAll(".status-board .cell").length === 6);
+check("queue rendered 23 tickets", document.querySelectorAll("#queueList .ticket").length === 23);
+check("status board rendered 6 cells", document.querySelectorAll("#statusBoard .cell").length === 6);
 check("first ticket auto-selected", document.querySelector(".ticket.selected") !== null);
 check("detail panel shows a job number", /JOB #AST-\d+/.test(document.getElementById("detail").textContent));
 
 console.log("\n== clicking through tickets ==");
-const tickets = [...document.querySelectorAll(".ticket")];
+const tickets = [...document.querySelectorAll("#queueList .ticket")];
 let clickErrors = 0;
 for (const t of tickets) {
   try {
@@ -45,6 +45,38 @@ for (const t of tickets) {
   }
 }
 check(`clicked all ${tickets.length} tickets with no exceptions`, clickErrors === 0);
+
+console.log("\n== lead-response tab ==");
+const tabLeadBtn = document.getElementById("tabBtnLead");
+check("Lead Response Agent tab button exists", !!tabLeadBtn);
+tabLeadBtn.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true }));
+check("lead view becomes visible after tab click", document.getElementById("view-lead").style.display !== "none");
+check("retention view hides after tab click", document.getElementById("view-retention").style.display === "none");
+check("lead queue rendered 14 tickets", document.querySelectorAll("#leadQueueList .ticket").length === 14);
+check("lead status board rendered 6 cells", document.querySelectorAll("#leadStatusBoard .cell").length === 6);
+check("a lead is auto-selected", document.querySelector("#leadQueueList .ticket.selected") !== null);
+
+let leadClickErrors = 0;
+for (const t of [...document.querySelectorAll("#leadQueueList .ticket")]) {
+  try {
+    t.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true }));
+  } catch (e) {
+    leadClickErrors++;
+    console.log(`  FAIL — clicking lead ${t.dataset.id}: ${e.message}`);
+  }
+}
+check(`clicked all 14 lead tickets with no exceptions`, leadClickErrors === 0);
+
+const tabRetentionBtn = document.getElementById("tabBtnRetention");
+tabRetentionBtn.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true }));
+check("switching back to retention tab restores its view", document.getElementById("view-retention").style.display !== "none");
+if (errors.length > 0) console.log("  errors captured:", JSON.stringify(errors));
+// Note: this check can flake in sandboxed/offline environments specifically
+// because the Google Fonts <link> in <head> fails to load (no internet
+// access here) and jsdom's async resource-error timing isn't fully
+// deterministic relative to when this assertion runs. Not a real app bug —
+// re-run if this fails and nothing else did.
+check("no window errors across the whole tab-switching flow", errors.length === 0);
 
 console.log("\n== triggering runDiagnosis with no Worker URL set (expected error path) ==");
 document.getElementById("workerUrl").value = "";

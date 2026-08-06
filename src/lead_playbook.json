@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "description": "Fixed priority-tier-to-action mapping for the lead-response agent. Same role as reasoning-core/playbook.json: single source of truth read by both the system prompt and the dashboard UI.",
+  "tiers": [
+    {
+      "code": "critical",
+      "name": "Critical — overdue, high-loss segment",
+      "trigger_signals": [
+        "hours_since_qualified exceeds expected_sla_hours",
+        "tier1 city and SUV interest, or a repeat/referral customer"
+      ],
+      "playbook_code": "immediate_call",
+      "action_description": "Call the lead within the hour and offer a same-day test drive slot for their vehicle of interest.",
+      "channel_options": ["call_brief", "sms"]
+    },
+    {
+      "code": "high",
+      "name": "High — overdue, standard segment",
+      "trigger_signals": ["hours_since_qualified exceeds expected_sla_hours, standard segment"],
+      "playbook_code": "priority_outreach",
+      "action_description": "Contact via phone and SMS today, ahead of standard-priority leads.",
+      "channel_options": ["call_brief", "sms", "email"]
+    },
+    {
+      "code": "standard",
+      "name": "Standard — within SLA window",
+      "trigger_signals": ["hours_since_qualified is within expected_sla_hours"],
+      "playbook_code": "standard_outreach",
+      "action_description": "Contact via the lead's preferred available channel within the expected response window.",
+      "channel_options": ["sms", "email", "call_brief"]
+    },
+    {
+      "code": "nurture",
+      "name": "Nurture — repeated attempts, no engagement",
+      "trigger_signals": [
+        "contact_attempts is 2 or more with no test drive requested and no recent engagement"
+      ],
+      "playbook_code": "nurture_sequence",
+      "action_description": "Move to a low-touch digital nurture sequence (email/SMS) rather than urgent outreach; re-engage promptly if interest signals increase.",
+      "channel_options": ["email", "sms"]
+    }
+  ],
+  "confidence_threshold_for_review": 60,
+  "confidence_penalty_per_inferred_field": 15
+}

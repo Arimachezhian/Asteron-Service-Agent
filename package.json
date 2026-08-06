@@ -7,9 +7,9 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
-    "build:data": "node data/build_dataset.mjs && node detection/detect.mjs",
+    "build:data": "node data/build_dataset.mjs && node detection/detect.mjs && node data/build_leads_dataset.mjs && node detection/detect_leads.mjs",
     "build:dashboard": "node dashboard/build.mjs",
-    "test:local": "node test/local_test.mjs",
+    "test:local": "node test/local_test.mjs && node test/lead_local_test.mjs",
     "test:dashboard": "node test/dashboard_smoke_test.mjs && node test/dashboard_flow_test.mjs",
     "test": "npm run test:local && npm run test:dashboard"
   },

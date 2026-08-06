@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LeadTriageOutput",
+  "type": "object",
+  "required": ["lead_id", "triage", "needs_human_input", "recommended_action", "review_flag"],
+  "properties": {
+    "lead_id": { "type": "string" },
+    "triage": {
+      "type": "object",
+      "required": ["priority_tier", "evidence", "confidence"],
+      "properties": {
+        "priority_tier": { "enum": ["critical", "high", "standard", "nurture"] },
+        "evidence": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "Every item must be traceable to a field in the input record."
+        },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "needs_human_input": { "type": "boolean" },
+    "human_question": { "type": ["string", "null"] },
+    "recommended_action": {
+      "type": "object",
+      "required": ["playbook_code", "description"],
+      "properties": {
+        "playbook_code": {
+          "enum": ["immediate_call", "priority_outreach", "standard_outreach", "nurture_sequence"]
+        },
+        "description": { "type": "string" }
+      }
+    },
+    "draft_message": {
+      "type": ["object", "null"],
+      "properties": {
+        "channel": { "enum": ["sms", "email", "call_brief"] },
+        "text": { "type": "string" }
+      }
+    },
+    "review_flag": { "type": "boolean" }
+  },
+  "additionalProperties": false,
+  "x_worker_side_validation_rules": [
+    "If needs_human_input == true, draft_message MUST be null.",
+    "recommended_action.playbook_code MUST match priority_tier's fixed mapping in lead_playbook.json.",
+    "Every string in triage.evidence is spot-checked against the input record's observed/inferred fields; if a citation can't be matched, set review_flag = true rather than forwarding the output."
+  ]
+}
