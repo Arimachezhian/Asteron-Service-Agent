@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-10T06:36:50.684Z",
+  "generated_at": "2026-08-10T06:42:56.954Z",
   "worker_url": "https://asteron-retention-agent.aces4iimb.workers.dev",
   "total_scored": 14,
   "scored": [
@@ -13,7 +13,7 @@
         "lead_id": "LEAD-3001",
         "vehicle_category": "suv",
         "source": "digital",
-        "qualified_at": "2026-08-07T08:57:49.512Z",
+        "qualified_at": "2026-08-10T04:41:43.522Z",
         "city_tier": "tier1",
         "contact_phone_available": false,
         "contact_email_available": false,
@@ -43,7 +43,7 @@
             "status": "observed"
           },
           "qualified_at": {
-            "value": "2026-08-07T08:57:49.512Z",
+            "value": "2026-08-10T04:41:43.522Z",
             "status": "observed"
           },
           "city_tier": {
@@ -79,7 +79,7 @@
             "status": "observed"
           },
           "hours_since_qualified": {
-            "value": 69.6,
+            "value": 2,
             "status": "observed"
           },
           "expected_sla_hours": {
@@ -91,7 +91,7 @@
         "recommended_dealer": null,
         "auto_send": false,
         "output": null,
-        "_elapsedMs": 1137
+        "_elapsedMs": 519
       }
     },
     {
@@ -103,7 +103,7 @@
         "lead_id": "LEAD-3002",
         "vehicle_category": "hatchback",
         "source": "walk-in",
-        "qualified_at": "2026-08-07T05:57:49.513Z",
+        "qualified_at": "2026-08-10T01:41:43.523Z",
         "city_tier": "tier2",
         "contact_phone_available": false,
         "contact_email_available": false,
@@ -133,7 +133,7 @@
             "status": "observed"
           },
           "qualified_at": {
-            "value": "2026-08-07T05:57:49.513Z",
+            "value": "2026-08-10T01:41:43.523Z",
             "status": "observed"
           },
           "city_tier": {
@@ -169,7 +169,7 @@
             "status": "observed"
           },
           "hours_since_qualified": {
-            "value": 72.6,
+            "value": 5,
             "status": "observed"
           },
           "expected_sla_hours": {
@@ -181,7 +181,7 @@
         "recommended_dealer": null,
         "auto_send": false,
         "output": null,
-        "_elapsedMs": 142
+        "_elapsedMs": 139
       }
     },
     {
@@ -193,7 +193,7 @@
         "lead_id": "LEAD-3003",
         "vehicle_category": "suv",
         "source": "digital",
-        "qualified_at": "2026-08-07T07:57:49.513Z",
+        "qualified_at": "2026-08-10T03:41:43.523Z",
         "city_tier": "tier1",
         "contact_phone_available": true,
         "contact_email_available": true,
@@ -223,7 +223,7 @@
             "status": "observed"
           },
           "qualified_at": {
-            "value": "2026-08-07T07:57:49.513Z",
+            "value": "2026-08-10T03:41:43.523Z",
             "status": "observed"
           },
           "city_tier": {
@@ -259,7 +259,7 @@
             "status": "observed"
           },
           "hours_since_qualified": {
-            "value": 70.6,
+            "value": 3,
             "status": "observed"
           },
           "expected_sla_hours": {
@@ -306,7 +306,7 @@
         "validation_notes": [
           "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"SUV segment\"]"
         ],
-        "_elapsedMs": 925
+        "_elapsedMs": 1148
       }
     },
     {
@@ -318,7 +318,7 @@
         "lead_id": "LEAD-3004",
         "vehicle_category": "sedan",
         "source": "referral",
-        "qualified_at": "2026-08-07T02:57:49.513Z",
+        "qualified_at": "2026-08-09T22:41:43.523Z",
         "city_tier": "tier2",
         "contact_phone_available": true,
         "contact_email_available": false,
@@ -348,7 +348,7 @@
             "status": "observed"
           },
           "qualified_at": {
-            "value": "2026-08-07T02:57:49.513Z",
+            "value": "2026-08-09T22:41:43.523Z",
             "status": "observed"
           },
           "city_tier": {
@@ -384,7 +384,7 @@
             "status": "observed"
           },
           "hours_since_qualified": {
-            "value": 75.6,
+            "value": 8,
             "status": "observed"
           },
           "expected_sla_hours": {
@@ -410,8 +410,8 @@
             "lead_score": "medium",
             "evidence": [
               "Repeat customer",
-              "Referral source",
               "Tier2 city",
+              "No test drive requested",
               "Within expected response window"
             ],
             "confidence": 100
@@ -429,7 +429,7 @@
           "review_flag": false
         },
         "validation_notes": [],
-        "_elapsedMs": 805
+        "_elapsedMs": 937
       }
     },
     {
@@ -441,7 +441,7 @@
         "lead_id": "LEAD-3005",
         "vehicle_category": "ev",
         "source": "referral",
-        "qualified_at": "2026-08-07T05:57:49.513Z",
+        "qualified_at": "2026-08-10T01:41:43.523Z",
         "city_tier": "tier1",
         "contact_phone_available": true,
         "contact_email_available": true,
@@ -471,7 +471,7 @@
             "status": "observed"
           },
           "qualified_at": {
-            "value": "2026-08-07T05:57:49.513Z",
+            "value": "2026-08-10T01:41:43.523Z",
             "status": "observed"
           },
           "city_tier": {
@@ -507,7 +507,7 @@
             "status": "observed"
           },
           "hours_since_qualified": {
-            "value": 72.6,
+            "value": 5,
             "status": "observed"
           },
           "expected_sla_hours": {
@@ -535,7 +535,7 @@
               "Tier-1 city",
               "Referral customer",
               "EV segment",
-              "No prior contact attempts"
+              "Zero contact attempts"
             ],
             "confidence": 100
           },
@@ -546,15 +546,15 @@
             "description": "Call the lead within the hour and offer a same-day test drive slot."
           },
           "draft_message": {
-            "channel": "call_brief",
-            "text": "Hello, this is Asteron Select Bandra. We've received your inquiry and will be in touch within the hour to discuss your EV interests."
+            "channel": "sms",
+            "text": "Hello, thank you for your inquiry. Asteron Select Bandra will respond within 8 hours."
           },
           "review_flag": false
         },
         "validation_notes": [
           "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"EV segment\"]"
         ],
-        "_elapsedMs": 934
+        "_elapsedMs": 978
       }
     },
     {
@@ -566,7 +566,7 @@
         "lead_id": "LEAD-3006",
         "vehicle_category": "hatchback",
         "source": "digital",
-        "qualified_at": "2026-08-06T08:57:49.513Z",
+        "qualified_at": "2026-08-09T04:41:43.523Z",
         "city_tier": "tier2",
         "contact_phone_available": true,
         "contact_email_available": true,
@@ -596,7 +596,7 @@
             "status": "observed"
           },
           "qualified_at": {
-            "value": "2026-08-06T08:57:49.513Z",
+            "value": "2026-08-09T04:41:43.523Z",
             "status": "observed"
           },
           "city_tier": {
@@ -632,7 +632,7 @@
             "status": "observed"
           },
           "hours_since_qualified": {
-            "value": 93.6,
+            "value": 26,
             "status": "observed"
           },
           "expected_sla_hours": {
@@ -672,14 +672,14 @@
           },
           "draft_message": {
             "channel": "sms",
-            "text": "Thank you for your inquiry. Asteron Coastal Kochi will respond within 24 hours."
+            "text": "Hello, thank you for your inquiry. Asteron Coastal Kochi will respond within 24 hours."
           },
           "review_flag": false
         },
         "validation_notes": [
           "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"New customer\"]"
         ],
-        "_elapsedMs": 861
+        "_elapsedMs": 1054
       }
     },
     {
@@ -691,7 +691,7 @@
         "lead_id": "LEAD-3007",
         "vehicle_category": "sedan",
         "source": "digital",
-        "qualified_at": "2026-08-07T01:57:49.513Z",
+        "qualified_at": "2026-08-09T21:41:43.523Z",
         "city_tier": "tier1",
         "contact_phone_available": true,
         "contact_email_available": false,
@@ -721,7 +721,7 @@
             "status": "observed"
           },
           "qualified_at": {
-            "value": "2026-08-07T01:57:49.513Z",
+            "value": "2026-08-09T21:41:43.523Z",
             "status": "observed"
           },
           "city_tier": {
@@ -757,7 +757,7 @@
             "status": "observed"
           },
           "hours_since_qualified": {
-            "value": 76.6,
+            "value": 9,
             "status": "observed"
           },
           "expected_sla_hours": {
@@ -784,7 +784,7 @@
             "evidence": [
               "Tier-1 city",
               "New customer",
-              "No test drive requested",
+              "No prior contact attempts",
               "Within expected response window"
             ],
             "confidence": 100
@@ -797,14 +797,14 @@
           },
           "draft_message": {
             "channel": "sms",
-            "text": "Thank you for your inquiry. Asteron Motors Koramangala will respond within 8 hours."
+            "text": "Thank you for your inquiry. Asteron Motors Koramangala will respond within the next few hours."
           },
           "review_flag": false
         },
         "validation_notes": [
           "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"New customer\"]"
         ],
-        "_elapsedMs": 965
+        "_elapsedMs": 832
       }
     },
     {
@@ -816,7 +816,7 @@
         "lead_id": "LEAD-3008",
         "vehicle_category": "suv",
         "source": "walk-in",
-        "qualified_at": "2026-08-06T09:57:49.513Z",
+        "qualified_at": "2026-08-09T05:41:43.523Z",
         "city_tier": "tier3",
         "contact_phone_available": true,
         "contact_email_available": true,
@@ -846,7 +846,7 @@
             "status": "observed"
           },
           "qualified_at": {
-            "value": "2026-08-06T09:57:49.513Z",
+            "value": "2026-08-09T05:41:43.523Z",
             "status": "observed"
           },
           "city_tier": {
@@ -882,7 +882,7 @@
             "status": "observed"
           },
           "hours_since_qualified": {
-            "value": 92.6,
+            "value": 25,
             "status": "observed"
           },
           "expected_sla_hours": {
@@ -907,8 +907,9 @@
           "scoring": {
             "lead_score": "high",
             "evidence": [
-              "Overdue lead: 92.6 hours elapsed against 24-hour expected SLA.",
-              "Walk-in SUV inquiry with zero prior contact attempts."
+              "Overdue lead at 25 hours against 24-hour SLA.",
+              "Zero contact attempts recorded.",
+              "SUV inquiry from walk-in source."
             ],
             "confidence": 85
           },
@@ -919,13 +920,13 @@
             "description": "Call the lead within the hour and offer a same-day test drive slot."
           },
           "draft_message": {
-            "channel": "email",
-            "text": "Thank you for visiting Asteron Motors. We have received your SUV inquiry and assigned your request to Asteron Foothills Dehradun, who will be in touch shortly."
+            "channel": "sms",
+            "text": "Hello! Thank you for visiting Asteron Motors regarding your SUV inquiry. Asteron Foothills Dehradun has received your details and will be calling you shortly."
           },
           "review_flag": false
         },
         "validation_notes": [],
-        "_elapsedMs": 9291
+        "_elapsedMs": 11434
       }
     },
     {
@@ -937,7 +938,7 @@
         "lead_id": "LEAD-3010",
         "vehicle_category": "suv",
         "source": "digital",
-        "qualified_at": "2026-08-07T08:57:49.513Z",
+        "qualified_at": "2026-08-10T04:41:43.523Z",
         "city_tier": "tier1",
         "contact_phone_available": true,
         "contact_email_available": true,
@@ -967,7 +968,7 @@
             "status": "observed"
           },
           "qualified_at": {
-            "value": "2026-08-07T08:57:49.513Z",
+            "value": "2026-08-10T04:41:43.523Z",
             "status": "observed"
           },
           "city_tier": {
@@ -1003,7 +1004,7 @@
             "status": "observed"
           },
           "hours_since_qualified": {
-            "value": 69.6,
+            "value": 2,
             "status": "observed"
           },
           "expected_sla_hours": {
@@ -1029,7 +1030,7 @@
             "lead_score": "high",
             "evidence": [
               "Tier-1 city",
-              "SUV lead",
+              "SUV segment",
               "Test drive requested",
               "Zero contact attempts"
             ],
@@ -1048,9 +1049,9 @@
           "review_flag": false
         },
         "validation_notes": [
-          "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"SUV lead\"]"
+          "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"SUV segment\"]"
         ],
-        "_elapsedMs": 802
+        "_elapsedMs": 848
       }
     },
     {
@@ -1062,7 +1063,7 @@
         "lead_id": "LEAD-3012",
         "vehicle_category": "ev",
         "source": "referral",
-        "qualified_at": "2026-08-07T07:57:49.513Z",
+        "qualified_at": "2026-08-10T03:41:43.523Z",
         "city_tier": "tier2",
         "contact_phone_available": true,
         "contact_email_available": true,
@@ -1092,7 +1093,7 @@
             "status": "observed"
           },
           "qualified_at": {
-            "value": "2026-08-07T07:57:49.513Z",
+            "value": "2026-08-10T03:41:43.523Z",
             "status": "observed"
           },
           "city_tier": {
@@ -1128,7 +1129,7 @@
             "status": "observed"
           },
           "hours_since_qualified": {
-            "value": 70.6,
+            "value": 3,
             "status": "observed"
           },
           "expected_sla_hours": {
@@ -1153,10 +1154,10 @@
           "scoring": {
             "lead_score": "high",
             "evidence": [
-              "Referral customer.",
-              "Inquiry response time overdue against expected SLA window."
+              "Referral customer lead",
+              "EV vehicle category inquiry"
             ],
-            "confidence": 85
+            "confidence": 100
           },
           "needs_human_input": false,
           "human_question": null,
@@ -1166,14 +1167,12 @@
           },
           "draft_message": {
             "channel": "sms",
-            "text": "Hello! Thank you for reaching out to Asteron Motors. Your inquiry has been received by Asteron Select Bandra, and our team will contact you shortly."
+            "text": "Hello! Thank you for reaching out to Asteron Motors regarding your EV inquiry. Your request has been assigned to Asteron Select Bandra, and a representative will call you within the hour."
           },
           "review_flag": false
         },
-        "validation_notes": [
-          "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"Inquiry response time overdue against expected SLA window.\"]"
-        ],
-        "_elapsedMs": 7403
+        "validation_notes": [],
+        "_elapsedMs": 9391
       }
     },
     {
@@ -1185,12 +1184,12 @@
         "lead_id": "LEAD-3013",
         "vehicle_category": "hatchback",
         "source": "digital",
-        "qualified_at": "2026-08-03T10:57:49.513Z",
+        "qualified_at": "2026-08-06T06:41:43.523Z",
         "city_tier": "tier2",
         "contact_phone_available": true,
         "contact_email_available": true,
         "contact_attempts": 2,
-        "last_contact_attempt_at": "2026-08-05T18:57:49.513Z",
+        "last_contact_attempt_at": "2026-08-08T14:41:43.523Z",
         "customer_type": "new",
         "test_drive_requested": false,
         "notes": [
@@ -1201,7 +1200,7 @@
       "result": {
         "ok": true,
         "llm_called": true,
-        "provider": "gemini-3.6-flash",
+        "provider": "groq-llama-3.3-70b",
         "needs_human_input": false,
         "human_question": null,
         "record": {
@@ -1218,7 +1217,7 @@
             "status": "observed"
           },
           "qualified_at": {
-            "value": "2026-08-03T10:57:49.513Z",
+            "value": "2026-08-06T06:41:43.523Z",
             "status": "observed"
           },
           "city_tier": {
@@ -1238,7 +1237,7 @@
             "status": "observed"
           },
           "last_contact_attempt_at": {
-            "value": "2026-08-05T18:57:49.513Z",
+            "value": "2026-08-08T14:41:43.523Z",
             "status": "observed"
           },
           "customer_type": {
@@ -1257,7 +1256,7 @@
             "status": "observed"
           },
           "hours_since_qualified": {
-            "value": 163.6,
+            "value": 96,
             "status": "observed"
           },
           "expected_sla_hours": {
@@ -1282,26 +1281,26 @@
           "scoring": {
             "lead_score": "low",
             "evidence": [
-              "Two contact attempts on record.",
-              "No test drive requested.",
-              "Customer requested follow-up later without recent engagement."
+              "2 contact attempts with no test drive requested",
+              "Customer asked to be contacted later, no follow-up since",
+              "96 hours since qualified, exceeding expected SLA"
             ],
-            "confidence": 100
+            "confidence": 85
           },
           "needs_human_input": false,
           "human_question": null,
           "recommended_action": {
             "playbook_code": "nurture_sequence",
-            "description": "Move to a low-touch digital nurture sequence (email/SMS); re-engage promptly if interest signals increase."
+            "description": "Move to a low-touch digital nurture sequence"
           },
           "draft_message": {
-            "channel": "email",
-            "text": "Thank you for reaching out to Asteron Motors regarding your hatchback inquiry. Your message has been received by Asteron Coastal Kochi, and our team will be in touch with you shortly."
+            "channel": "sms",
+            "text": "Hi, this is Asteron Coastal Kochi. We received your inquiry and will be in touch within 24 hours."
           },
           "review_flag": false
         },
         "validation_notes": [],
-        "_elapsedMs": 9650
+        "_elapsedMs": 873
       }
     },
     {
@@ -1313,12 +1312,12 @@
         "lead_id": "LEAD-3014",
         "vehicle_category": "sedan",
         "source": "digital",
-        "qualified_at": "2026-08-02T00:57:49.513Z",
+        "qualified_at": "2026-08-04T20:41:43.523Z",
         "city_tier": "tier3",
         "contact_phone_available": true,
         "contact_email_available": true,
         "contact_attempts": 3,
-        "last_contact_attempt_at": "2026-08-05T08:57:49.513Z",
+        "last_contact_attempt_at": "2026-08-08T04:41:43.523Z",
         "customer_type": "new",
         "test_drive_requested": false,
         "notes": [
@@ -1330,7 +1329,7 @@
       "result": {
         "ok": true,
         "llm_called": true,
-        "provider": "groq-llama-3.3-70b",
+        "provider": "gemini-3.6-flash",
         "needs_human_input": false,
         "human_question": null,
         "record": {
@@ -1347,7 +1346,7 @@
             "status": "observed"
           },
           "qualified_at": {
-            "value": "2026-08-02T00:57:49.513Z",
+            "value": "2026-08-04T20:41:43.523Z",
             "status": "observed"
           },
           "city_tier": {
@@ -1367,7 +1366,7 @@
             "status": "observed"
           },
           "last_contact_attempt_at": {
-            "value": "2026-08-05T08:57:49.513Z",
+            "value": "2026-08-08T04:41:43.523Z",
             "status": "observed"
           },
           "customer_type": {
@@ -1387,7 +1386,7 @@
             "status": "observed"
           },
           "hours_since_qualified": {
-            "value": 197.6,
+            "value": 130,
             "status": "observed"
           },
           "expected_sla_hours": {
@@ -1412,26 +1411,26 @@
           "scoring": {
             "lead_score": "low",
             "evidence": [
-              "3 contact attempts with no test drive requested",
-              "Customer said not ready to decide yet",
-              "Hours since qualified (197.6) exceeds expected SLA hours (24)"
+              "3 contact attempts logged with no test drive requested.",
+              "Customer stated they are not ready to decide yet.",
+              "Inquiry is for a sedan in a tier-3 city."
             ],
-            "confidence": 85
+            "confidence": 100
           },
           "needs_human_input": false,
           "human_question": null,
           "recommended_action": {
             "playbook_code": "nurture_sequence",
-            "description": "Move to a low-touch digital nurture sequence"
+            "description": "Move to a low-touch digital nurture sequence (email/SMS); re-engage promptly if interest signals increase."
           },
           "draft_message": {
-            "channel": "sms",
-            "text": "Thank you for your inquiry. Asteron Foothills Dehradun will respond within 24 hours."
+            "channel": "email",
+            "text": "Hello, thank you for reaching out to Asteron Motors regarding your sedan inquiry. We have received your request and matched you with Asteron Foothills Dehradun. We will keep you updated with updates and info as you evaluate your options."
           },
           "review_flag": false
         },
         "validation_notes": [],
-        "_elapsedMs": 824
+        "_elapsedMs": 7739
       }
     },
     {
@@ -1444,12 +1443,12 @@
         "lead_id": "LEAD-3015",
         "vehicle_category": "suv",
         "source": "digital",
-        "qualified_at": "2026-08-02T20:57:49.513Z",
+        "qualified_at": "2026-08-05T16:41:43.523Z",
         "city_tier": "tier1",
         "contact_phone_available": true,
         "contact_email_available": true,
         "contact_attempts": 2,
-        "last_contact_attempt_at": "2026-08-05T23:57:49.513Z",
+        "last_contact_attempt_at": "2026-08-08T19:41:43.523Z",
         "customer_type": "new",
         "test_drive_requested": false,
         "notes": [
@@ -1477,7 +1476,7 @@
             "status": "observed"
           },
           "qualified_at": {
-            "value": "2026-08-02T20:57:49.513Z",
+            "value": "2026-08-05T16:41:43.523Z",
             "status": "observed"
           },
           "city_tier": {
@@ -1497,7 +1496,7 @@
             "status": "observed"
           },
           "last_contact_attempt_at": {
-            "value": "2026-08-05T23:57:49.513Z",
+            "value": "2026-08-08T19:41:43.523Z",
             "status": "observed"
           },
           "customer_type": {
@@ -1516,7 +1515,7 @@
             "status": "observed"
           },
           "hours_since_qualified": {
-            "value": 177.6,
+            "value": 110,
             "status": "observed"
           },
           "expected_sla_hours": {
@@ -1541,9 +1540,9 @@
           "scoring": {
             "lead_score": "low",
             "evidence": [
-              "Two contact attempts made with no test drive requested.",
-              "Customer stated they already bought elsewhere during contact attempt.",
-              "Direct disengagement signal takes priority over tier-1 SUV segment."
+              "Two contact attempts logged without a test drive.",
+              "Customer stated they already bought elsewhere.",
+              "Direct disengagement signal weighs over tier-1 SUV segment."
             ],
             "confidence": 100
           },
@@ -1555,14 +1554,14 @@
           },
           "draft_message": {
             "channel": "email",
-            "text": "Thank you for contacting Asteron Motors. Your SUV inquiry has been received and routed to Asteron Hub Whitefield. Please let us know if we can assist you with any future vehicle needs."
+            "text": "Thank you for reaching out to Asteron Motors regarding your SUV inquiry. We have received your request and matched you with Asteron Hub Whitefield, who will follow up within 4 hours."
           },
           "review_flag": false
         },
         "validation_notes": [
-          "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"Direct disengagement signal takes priority over tier-1 SUV segment.\"]"
+          "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"Direct disengagement signal weighs over tier-1 SUV segment.\"]"
         ],
-        "_elapsedMs": 11516
+        "_elapsedMs": 9643
       }
     },
     {
@@ -1574,7 +1573,7 @@
         "lead_id": "LEAD-3016",
         "vehicle_category": "suv",
         "source": "walk-in",
-        "qualified_at": "2026-08-07T08:57:49.513Z",
+        "qualified_at": "2026-08-10T04:41:43.523Z",
         "city_tier": "tier1",
         "contact_phone_available": true,
         "contact_email_available": false,
@@ -1604,7 +1603,7 @@
             "status": "observed"
           },
           "qualified_at": {
-            "value": "2026-08-07T08:57:49.513Z",
+            "value": "2026-08-10T04:41:43.523Z",
             "status": "observed"
           },
           "city_tier": {
@@ -1640,7 +1639,7 @@
             "status": "observed"
           },
           "hours_since_qualified": {
-            "value": 69.7,
+            "value": 2,
             "status": "observed"
           },
           "expected_sla_hours": {
@@ -1663,31 +1662,32 @@
         "output": {
           "lead_id": "LEAD-3016",
           "scoring": {
-            "lead_score": "high",
+            "lead_score": "medium",
             "evidence": [
               "Tier-1 city",
-              "SUV lead",
-              "Zero contact attempts",
-              "Recent qualification"
+              "SUV segment",
+              "Walk-in source",
+              "No prior contact attempts",
+              "Within expected response window"
             ],
             "confidence": 100
           },
           "needs_human_input": false,
           "human_question": null,
           "recommended_action": {
-            "playbook_code": "immediate_call",
-            "description": "Call the lead within the hour and offer a same-day test drive slot."
+            "playbook_code": "standard_outreach",
+            "description": "Contact via the lead's preferred available channel within the expected response window."
           },
           "draft_message": {
             "channel": "sms",
-            "text": "Thank you for your interest in Asteron Motors. Your inquiry has been received by Asteron Hub Whitefield. We will get back to you within 4 hours."
+            "text": "Thank you for visiting Asteron Hub Whitefield. We've received your inquiry and will get back to you within 4 hours."
           },
           "review_flag": false
         },
         "validation_notes": [
-          "Note (non-blocking): 2 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"SUV lead\",\"Recent qualification\"]"
+          "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"SUV segment\"]"
         ],
-        "_elapsedMs": 951
+        "_elapsedMs": 942
       }
     }
   ]
