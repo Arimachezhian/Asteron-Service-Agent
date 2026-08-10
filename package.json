@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Cloudflare Worker wiring Asteron's retention-agent reasoning core to Gemini 2.5 Flash (primary) / Groq llama-3.3-70b (fallback).",
+  "description": "Cloudflare Worker wiring Asteron's retention + lead-response reasoning cores to Groq llama-3.3-70b (primary) / Gemini 3.6 Flash (fallback).",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "build:data": "node data/build_dataset.mjs && node detection/detect.mjs && node data/build_leads_dataset.mjs && node detection/detect_leads.mjs",
+    "score:leads": "node detection/score_leads.mjs",
     "build:dashboard": "node dashboard/build.mjs",
-    "test:local": "node test/local_test.mjs && node test/lead_local_test.mjs",
-    "test:dashboard": "node test/dashboard_smoke_test.mjs && node test/dashboard_flow_test.mjs",
+    "test:local": "node test/local_test.mjs && node test/lead_local_test.mjs && node test/dealer_router_test.mjs",
+    "test:dashboard": "node test/dashboard_smoke_test.mjs && node test/dashboard_flow_test.mjs && node test/dashboard_new_features_test.mjs && node test/dashboard_ux_polish_test.mjs",
     "test": "npm run test:local && npm run test:dashboard"
   },
   "devDependencies": {

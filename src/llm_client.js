@@ -1,12 +1,13 @@
 /**
  * llm_client.js
  *
- * Calls Gemini 2.5 Flash first (primary, per PROJECT_HANDOFF.md: 1,500
- * req/day free, no card, 1M token context). Falls back to Groq's
- * llama-3.3-70b on ANY Gemini failure — network error, non-2xx, quota
- * exhausted, or unparsable output — so a live demo doesn't die mid-run
- * because of one provider's rate limit. Same prompt/record sent to both;
- * only the request/response shape differs per provider's API.
+ * Calls Groq's llama-3.3-70b first (primary) — observed faster response
+ * times than Gemini during live testing, so it's the default path.
+ * Falls back to Gemini 3.6 Flash on ANY Groq failure — network error,
+ * non-2xx, quota exhausted, or unparsable output — so a live demo
+ * doesn't die mid-run because of one provider having a bad moment.
+ * Same prompt/record sent to both; only the request/response shape
+ * differs per provider's API.
  */
 
 const GEMINI_URL = (model, apiKey) =>
@@ -30,7 +31,7 @@ function tryParseJSON(text) {
   }
 }
 
-async function callGemini(systemPrompt, userContent, apiKey, model = "gemini-2.5-flash") {
+async function callGemini(systemPrompt, userContent, apiKey, model = "gemini-3.6-flash") {
   const resp = await fetch(GEMINI_URL(model, apiKey), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -87,7 +88,7 @@ async function callGroq(systemPrompt, userContent, apiKey, model = "llama-3.3-70
 }
 
 /**
- * Tries Gemini, then Groq, in order. Returns { parsed, provider } on
+ * Tries Groq, then Gemini, in order. Returns { parsed, provider } on
  * success. Throws only if both providers fail (or aren't configured) —
  * the caller (index.js) turns that into a review_flag=true fallback
  * rather than a 500, so a request never dead-ends with an opaque error.
@@ -95,17 +96,10 @@ async function callGroq(systemPrompt, userContent, apiKey, model = "llama-3.3-70
 export async function diagnose(systemPrompt, userContent, env) {
   const errors = [];
 
-  if (env.GEMINI_API_KEY) {
-    try {
-      const parsed = await callGemini(systemPrompt, userContent, env.GEMINI_API_KEY);
-      return { parsed, provider: "gemini-2.5-flash" };
-    } catch (e) {
-      errors.push(`gemini: ${e.message}`);
-    }
-  } else {
-    errors.push("gemini: no GEMINI_API_KEY configured");
-  }
-
+  // Groq first: in practice, Gemini 3.6 Flash's response time was slow
+  // enough to notice during live testing, while Groq's llama-3.3-70b
+  // consistently returned faster — swapped the order based on that
+  // real-world observation, not just a theoretical preference.
   if (env.GROQ_API_KEY) {
     try {
       const parsed = await callGroq(systemPrompt, userContent, env.GROQ_API_KEY);
@@ -115,6 +109,17 @@ export async function diagnose(systemPrompt, userContent, env) {
     }
   } else {
     errors.push("groq: no GROQ_API_KEY configured");
+  }
+
+  if (env.GEMINI_API_KEY) {
+    try {
+      const parsed = await callGemini(systemPrompt, userContent, env.GEMINI_API_KEY);
+      return { parsed, provider: "gemini-3.6-flash" };
+    } catch (e) {
+      errors.push(`gemini: ${e.message}`);
+    }
+  } else {
+    errors.push("gemini: no GEMINI_API_KEY configured");
   }
 
   throw new Error(`All providers failed — ${errors.join(" | ")}`);

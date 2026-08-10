@@ -58,7 +58,7 @@ see **two tabs** at the top: "Retention Agent" and "Lead Response
 Agent." Click the second one — you'll see a queue of flagged leads.
 Click one, click "Run triage," and watch for:
 - The "📡 Calling Gemini live..." loading message
-- A live diagnosis coming back with a `● Live AI call — gemini-2.5-flash
+- A live diagnosis coming back with a `● Live AI call — gemini-3.6-flash
   · responded in X.Xs` badge
 - "View raw agent response" — click to expand and see the actual JSON
   Gemini returned

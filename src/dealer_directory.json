@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "description": "Mock dealer outlet directory for the lead-routing feature. Fictional, per the case's own note that all names/figures are fictional. Spans the case's own city-tier framing (loss concentrated in the top-20 cities) with deliberate variety in specialization, current load, and historical SLA compliance so the routing algorithm has genuinely different outlets to choose between, not a rubber-stamp single option per tier.",
+  "dealers": [
+    { "dealer_id": "AST-D-MUM-01", "name": "Asteron Select Bandra", "city": "Mumbai", "city_tier": "tier1", "specializations": ["suv", "ev"], "current_load": 3, "sla_compliance_pct": 88 },
+    { "dealer_id": "AST-D-MUM-02", "name": "Asteron Prime Andheri", "city": "Mumbai", "city_tier": "tier1", "specializations": ["sedan", "hatchback"], "current_load": 7, "sla_compliance_pct": 61 },
+    { "dealer_id": "AST-D-BLR-01", "name": "Asteron Hub Whitefield", "city": "Bengaluru", "city_tier": "tier1", "specializations": ["suv"], "current_load": 2, "sla_compliance_pct": 92 },
+    { "dealer_id": "AST-D-BLR-02", "name": "Asteron Motors Koramangala", "city": "Bengaluru", "city_tier": "tier1", "specializations": ["ev", "sedan"], "current_load": 5, "sla_compliance_pct": 74 },
+    { "dealer_id": "AST-D-DEL-01", "name": "Asteron Central CP", "city": "Delhi", "city_tier": "tier1", "specializations": ["suv", "sedan"], "current_load": 8, "sla_compliance_pct": 55 },
+    { "dealer_id": "AST-D-DEL-02", "name": "Asteron North Rohini", "city": "Delhi", "city_tier": "tier1", "specializations": ["hatchback", "ev"], "current_load": 4, "sla_compliance_pct": 80 },
+    { "dealer_id": "AST-D-KOC-01", "name": "Asteron Coastal Kochi", "city": "Kochi", "city_tier": "tier2", "specializations": ["sedan", "hatchback"], "current_load": 3, "sla_compliance_pct": 85 },
+    { "dealer_id": "AST-D-NAG-01", "name": "Asteron Deccan Nagpur", "city": "Nagpur", "city_tier": "tier2", "specializations": ["suv", "hatchback"], "current_load": 6, "sla_compliance_pct": 68 },
+    { "dealer_id": "AST-D-DDN-01", "name": "Asteron Foothills Dehradun", "city": "Dehradun", "city_tier": "tier3", "specializations": ["hatchback", "sedan"], "current_load": 1, "sla_compliance_pct": 95 }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-06T10:56:36.858Z",
+  "generated_at": "2026-08-07T10:57:49.559Z",
   "total_leads": 18,
   "flagged_count": 14,
   "flagged": [
@@ -7,14 +7,13 @@
       "lead_id": "LEAD-3001",
       "flags": [
         "no_contact_method",
-        "overdue: 30.0h since qualified, expected within 4h",
         "high_loss_segment: tier1 city + SUV interest"
       ],
       "record": {
         "lead_id": "LEAD-3001",
         "vehicle_category": "suv",
         "source": "digital",
-        "qualified_at": "2026-08-05T04:56:11.674Z",
+        "qualified_at": "2026-08-07T08:57:49.512Z",
         "city_tier": "tier1",
         "contact_phone_available": false,
         "contact_email_available": false,
@@ -34,7 +33,7 @@
         "lead_id": "LEAD-3002",
         "vehicle_category": "hatchback",
         "source": "walk-in",
-        "qualified_at": "2026-08-06T05:56:11.694Z",
+        "qualified_at": "2026-08-07T05:57:49.513Z",
         "city_tier": "tier2",
         "contact_phone_available": false,
         "contact_email_available": false,
@@ -48,14 +47,13 @@
     {
       "lead_id": "LEAD-3003",
       "flags": [
-        "overdue: 28.0h since qualified, expected within 4h",
         "high_loss_segment: tier1 city + SUV interest"
       ],
       "record": {
         "lead_id": "LEAD-3003",
         "vehicle_category": "suv",
         "source": "digital",
-        "qualified_at": "2026-08-05T06:56:11.694Z",
+        "qualified_at": "2026-08-07T07:57:49.513Z",
         "city_tier": "tier1",
         "contact_phone_available": true,
         "contact_email_available": true,
@@ -69,14 +67,13 @@
     {
       "lead_id": "LEAD-3004",
       "flags": [
-        "overdue: 30.0h since qualified, expected within 24h",
         "repeat_customer"
       ],
       "record": {
         "lead_id": "LEAD-3004",
         "vehicle_category": "sedan",
         "source": "referral",
-        "qualified_at": "2026-08-05T04:56:11.694Z",
+        "qualified_at": "2026-08-07T02:57:49.513Z",
         "city_tier": "tier2",
         "contact_phone_available": true,
         "contact_email_available": false,
@@ -90,14 +87,13 @@
     {
       "lead_id": "LEAD-3005",
       "flags": [
-        "overdue: 26.0h since qualified, expected within 8h",
         "referral_customer"
       ],
       "record": {
         "lead_id": "LEAD-3005",
         "vehicle_category": "ev",
         "source": "referral",
-        "qualified_at": "2026-08-05T08:56:11.694Z",
+        "qualified_at": "2026-08-07T05:57:49.513Z",
         "city_tier": "tier1",
         "contact_phone_available": true,
         "contact_email_available": true,
@@ -111,13 +107,13 @@
     {
       "lead_id": "LEAD-3006",
       "flags": [
-        "overdue: 30.0h since qualified, expected within 24h"
+        "overdue: 26.0h since qualified, expected within 24h"
       ],
       "record": {
         "lead_id": "LEAD-3006",
         "vehicle_category": "hatchback",
         "source": "digital",
-        "qualified_at": "2026-08-05T04:56:11.694Z",
+        "qualified_at": "2026-08-06T08:57:49.513Z",
         "city_tier": "tier2",
         "contact_phone_available": true,
         "contact_email_available": true,
@@ -131,13 +127,13 @@
     {
       "lead_id": "LEAD-3007",
       "flags": [
-        "overdue: 10.0h since qualified, expected within 8h"
+        "overdue: 9.0h since qualified, expected within 8h"
       ],
       "record": {
         "lead_id": "LEAD-3007",
         "vehicle_category": "sedan",
         "source": "digital",
-        "qualified_at": "2026-08-06T00:56:11.694Z",
+        "qualified_at": "2026-08-07T01:57:49.513Z",
         "city_tier": "tier1",
         "contact_phone_available": true,
         "contact_email_available": false,
@@ -151,13 +147,13 @@
     {
       "lead_id": "LEAD-3008",
       "flags": [
-        "overdue: 27.0h since qualified, expected within 24h"
+        "overdue: 25.0h since qualified, expected within 24h"
       ],
       "record": {
         "lead_id": "LEAD-3008",
         "vehicle_category": "suv",
         "source": "walk-in",
-        "qualified_at": "2026-08-05T07:56:11.694Z",
+        "qualified_at": "2026-08-06T09:57:49.513Z",
         "city_tier": "tier3",
         "contact_phone_available": true,
         "contact_email_available": true,
@@ -177,7 +173,7 @@
         "lead_id": "LEAD-3010",
         "vehicle_category": "suv",
         "source": "digital",
-        "qualified_at": "2026-08-06T08:56:11.694Z",
+        "qualified_at": "2026-08-07T08:57:49.513Z",
         "city_tier": "tier1",
         "contact_phone_available": true,
         "contact_email_available": true,
@@ -197,7 +193,7 @@
         "lead_id": "LEAD-3012",
         "vehicle_category": "ev",
         "source": "referral",
-        "qualified_at": "2026-08-06T07:56:11.694Z",
+        "qualified_at": "2026-08-07T07:57:49.513Z",
         "city_tier": "tier2",
         "contact_phone_available": true,
         "contact_email_available": true,
@@ -217,12 +213,12 @@
         "lead_id": "LEAD-3013",
         "vehicle_category": "hatchback",
         "source": "digital",
-        "qualified_at": "2026-07-29T02:56:11.694Z",
+        "qualified_at": "2026-08-03T10:57:49.513Z",
         "city_tier": "tier2",
         "contact_phone_available": true,
         "contact_email_available": true,
         "contact_attempts": 2,
-        "last_contact_attempt_at": "2026-08-02T10:56:11.694Z",
+        "last_contact_attempt_at": "2026-08-05T18:57:49.513Z",
         "customer_type": "new",
         "test_drive_requested": false,
         "notes": [
@@ -240,12 +236,12 @@
         "lead_id": "LEAD-3014",
         "vehicle_category": "sedan",
         "source": "digital",
-        "qualified_at": "2026-07-24T22:56:11.694Z",
+        "qualified_at": "2026-08-02T00:57:49.513Z",
         "city_tier": "tier3",
         "contact_phone_available": true,
         "contact_email_available": true,
         "contact_attempts": 3,
-        "last_contact_attempt_at": "2026-08-01T10:56:11.694Z",
+        "last_contact_attempt_at": "2026-08-05T08:57:49.513Z",
         "customer_type": "new",
         "test_drive_requested": false,
         "notes": [
@@ -265,12 +261,12 @@
         "lead_id": "LEAD-3015",
         "vehicle_category": "suv",
         "source": "digital",
-        "qualified_at": "2026-07-27T00:56:11.694Z",
+        "qualified_at": "2026-08-02T20:57:49.513Z",
         "city_tier": "tier1",
         "contact_phone_available": true,
         "contact_email_available": true,
         "contact_attempts": 2,
-        "last_contact_attempt_at": "2026-08-03T02:56:11.694Z",
+        "last_contact_attempt_at": "2026-08-05T23:57:49.513Z",
         "customer_type": "new",
         "test_drive_requested": false,
         "notes": [
@@ -282,14 +278,13 @@
     {
       "lead_id": "LEAD-3016",
       "flags": [
-        "overdue: 29.0h since qualified, expected within 4h",
         "high_loss_segment: tier1 city + SUV interest"
       ],
       "record": {
         "lead_id": "LEAD-3016",
         "vehicle_category": "suv",
         "source": "walk-in",
-        "qualified_at": "2026-08-05T05:56:11.694Z",
+        "qualified_at": "2026-08-07T08:57:49.513Z",
         "city_tier": "tier1",
         "contact_phone_available": true,
         "contact_email_available": false,

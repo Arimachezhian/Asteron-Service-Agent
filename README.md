@@ -96,7 +96,7 @@ Two possible shapes back, both `200`:
    {
      "ok": true,
      "llm_called": true,
-     "provider": "gemini-2.5-flash",
+     "provider": "gemini-3.6-flash",
      "needs_human_input": false,
      "human_question": null,
      "record": { "...tagged record..." },

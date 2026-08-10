@@ -31,8 +31,10 @@ import outputSchema from "./output_schema.json";
 
 import { checkLeadCompleteness } from "./lead_completeness_check.js";
 import { buildLeadSystemInstruction } from "./lead_system_prompt.js";
-import { validateLeadAndEnforce, buildLeadReviewFallback } from "./lead_validate.js";
+import { validateLeadAndEnforce, buildLeadReviewFallback, computeAutoSend } from "./lead_validate.js";
 import leadOutputSchema from "./lead_output_schema.json";
+import { routeToDealer } from "./dealer_router.js";
+import dealerDirectory from "./dealer_directory.json";
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -184,12 +186,24 @@ async function handleTriage(request, env) {
       needs_human_input: check.needsHumanInput,
       human_question: check.humanQuestion,
       record: check.record,
+      recommended_dealer: null,
+      auto_send: false,
       output: null
     });
   }
 
+  // Routing is deterministic and independent of the LLM entirely — compute
+  // it once here so it's available on every branch below, including the
+  // "both LLM providers failed" path. A lead can be correctly routed to a
+  // dealer even when the AI triage step is completely unavailable.
+  const recommendedDealer = routeToDealer(check.record, dealerDirectory.dealers);
+
   const systemInstruction = buildLeadSystemInstruction(leadOutputSchema);
-  const userContent = JSON.stringify(check.record, null, 2);
+  // matched_dealer rides alongside the tagged record fields, un-tagged
+  // (it's not customer data, it's routing context) — the model reads it
+  // to name a real dealer in the acknowledgment rather than a generic
+  // "someone will call you."
+  const userContent = JSON.stringify({ ...check.record, matched_dealer: recommendedDealer }, null, 2);
 
   let parsed, provider;
   try {
@@ -205,6 +219,8 @@ async function handleTriage(request, env) {
       human_question: null,
       record: check.record,
       output: buildLeadReviewFallback(check.record, `Triage unavailable: ${e.message}`),
+      recommended_dealer: recommendedDealer,
+      auto_send: false,
       validation_notes: [`Both LLM providers failed: ${e.message}`]
     });
   }
@@ -220,6 +236,8 @@ async function handleTriage(request, env) {
       human_question: null,
       record: check.record,
       output: validated.fallback,
+      recommended_dealer: recommendedDealer,
+      auto_send: false,
       validation_notes: [validated.reason]
     });
   }
@@ -231,6 +249,8 @@ async function handleTriage(request, env) {
     needs_human_input: validated.output.needs_human_input,
     human_question: validated.output.human_question,
     record: check.record,
+    recommended_dealer: recommendedDealer,
+    auto_send: computeAutoSend(validated.output),
     output: validated.output,
     validation_notes: validated.notes
   });

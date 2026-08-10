@@ -120,6 +120,7 @@
   .ticket.status-diagnosed{border-left-color:var(--teal);}
   .ticket.status-review_flagged{border-left-color:var(--rust);}
   .ticket.status-approved{border-left-color:var(--teal); opacity:.72;}
+  .ticket.status-auto_sent{border-left-color:var(--teal);}
   .ticket.status-rejected{border-left-color:var(--rust); opacity:.55;}
   .ticket.status-loading{border-left-color:var(--amber);}
   .ticket-head{display:flex; justify-content:space-between; align-items:baseline; gap:8px;}
@@ -136,6 +137,7 @@
   .mini-badge.diagnosed{color:var(--teal-ink); background:var(--teal-bg); border-color:var(--teal);}
   .mini-badge.review_flagged{color:var(--rust-ink); background:var(--rust-bg); border-color:var(--rust);}
   .mini-badge.approved{color:var(--teal-ink); background:var(--teal-bg); border-color:var(--teal);}
+  .mini-badge.auto_sent{color:var(--teal-ink); background:var(--teal-bg); border-color:var(--teal);}
   .mini-badge.rejected{color:var(--rust-ink); background:var(--rust-bg); border-color:var(--rust);}
   .mini-badge.loading{color:var(--amber-ink); background:var(--amber-bg); border-color:var(--amber);}
 
@@ -154,6 +156,7 @@
   .stamp.diagnosed{color:var(--teal-ink);}
   .stamp.review_flagged{color:var(--rust-ink);}
   .stamp.approved{color:var(--teal-ink);}
+  .stamp.auto_sent{color:var(--teal-ink);}
   .stamp.rejected{color:var(--rust-ink);}
   .stamp.loading{color:var(--amber-ink);}
 
@@ -198,10 +201,44 @@
 
   .review-banner{
     background:var(--rust-bg); border:1px solid var(--rust); color:var(--rust-ink);
+    border-radius:2px; padding:12px 14px; margin-bottom:12px;
+  }
+  .review-banner-title{
+    font-family:var(--font-display); text-transform:uppercase; letter-spacing:.05em;
+    font-size:12px; font-weight:700; margin-bottom:5px; display:flex; align-items:center; gap:6px;
+  }
+  .review-banner-summary{margin:0; font-size:13.5px; line-height:1.5;}
+  .review-banner-header{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:6px;}
+  .review-tag{
+    font-family:var(--font-display); text-transform:uppercase; letter-spacing:.05em; font-size:11px; font-weight:700;
+    background:var(--rust); color:#FDEDE3; padding:3px 9px; border-radius:2px;
+  }
+  .review-banner-footer{font-family:var(--font-mono); font-size:10.5px; opacity:.75;}
+
+  /* ---------- Evaluating steps (live pipeline checklist) ---------- */
+  .eval-steps{display:flex; flex-direction:column; gap:11px; margin-top:4px;}
+  .eval-step{display:flex; align-items:center; gap:10px; font-size:13px; color:var(--steel); transition:color .2s;}
+  .eval-step.done{color:var(--ink);}
+  .eval-step.active{color:var(--ink); font-weight:600;}
+  .eval-dot{
+    width:18px; height:18px; border-radius:50%; border:2px solid var(--steel-soft); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff;
+  }
+  .eval-step.done .eval-dot{background:var(--teal); border-color:var(--teal);}
+  .eval-step.active .eval-dot{border-color:var(--amber); animation:eval-pulse 1.1s ease-in-out infinite;}
+  @keyframes eval-pulse{
+    0%, 100%{box-shadow:0 0 0 0 rgba(227,166,30,.45);}
+    50%{box-shadow:0 0 0 6px rgba(227,166,30,0);}
+  }
+
+  .auto-sent-banner{
+    background:var(--teal-bg); border:1px solid var(--teal); color:var(--teal-ink);
     border-radius:2px; padding:10px 12px; margin-bottom:12px; font-size:12.5px;
   }
-  .review-banner strong{display:block; font-family:var(--font-display); text-transform:uppercase; letter-spacing:.05em; font-size:11.5px; margin-bottom:4px;}
-  .review-banner ul{margin:4px 0 0; padding-left:18px;}
+  .auto-sent-banner strong{display:block; font-family:var(--font-display); text-transform:uppercase; letter-spacing:.05em; font-size:11.5px; margin-bottom:4px;}
+  .sent-text{
+    font-size:13px; padding:8px; background:var(--panel); border:1px solid var(--steel-soft); border-radius:2px;
+  }
 
   .conf-meter{background:var(--steel-softer); border-radius:3px; height:8px; overflow:hidden; margin:6px 0 2px;}
   .conf-meter > div{height:100%; background:var(--teal);}
@@ -237,6 +274,61 @@
   .raw-response{margin-top:12px;}
   .raw-response summary{cursor:pointer; font-family:var(--font-mono); font-size:11px; color:var(--steel); text-transform:uppercase; letter-spacing:.04em;}
   .raw-response pre{background:var(--ink); color:#B9BDB5; font-size:11px; padding:10px; border-radius:2px; overflow-x:auto; margin-top:6px; max-height:240px; overflow-y:auto; white-space:pre-wrap; word-break:break-word;}
+
+  /* ---------- SLA countdown badges ---------- */
+  .sla-badge{
+    display:inline-block; font-family:var(--font-mono); font-size:10.5px; font-weight:600;
+    padding:3px 8px; border-radius:10px; letter-spacing:.02em;
+  }
+  .sla-badge.ok{background:var(--teal-bg); color:var(--teal-ink);}
+  .sla-badge.warning{background:var(--amber-bg); color:var(--amber-ink);}
+  .sla-badge.overdue{background:var(--rust-bg); color:var(--rust-ink);}
+
+  /* ---------- Metrics strip (how it works + live queue distribution) ---------- */
+  .metrics-strip{
+    display:flex; gap:0; background:var(--panel); border-bottom:1px solid var(--steel-soft); flex-wrap:wrap;
+  }
+  .metric-group{
+    flex:1; min-width:220px; padding:10px 20px; border-right:1px solid var(--steel-soft);
+  }
+  .metric-group:last-child{border-right:none;}
+  .metric-group.live{background:var(--panel-alt); flex:0 0 260px;}
+  .metric-group.how-it-works{flex:2 1 460px; padding-top:12px; padding-bottom:14px;}
+  .metric-group.how-it-works p{margin:0 0 10px; font-size:13.5px; line-height:1.55; color:var(--steel);}
+  .metric-group.how-it-works p strong{color:var(--ink);}
+  .score-legend{display:flex; flex-direction:column; gap:6px;}
+  .score-legend-row{font-size:13px; line-height:1.4; color:var(--ink); display:flex; align-items:flex-start; gap:0;}
+  .score-legend-row .score-dot{margin-top:5px;}
+  .score-legend-row strong{font-family:var(--font-display); text-transform:uppercase; letter-spacing:.03em; margin-right:5px; flex-shrink:0;}
+  .metric-label{
+    font-family:var(--font-display); text-transform:uppercase; letter-spacing:.08em; font-size:10.5px;
+    color:var(--steel); margin-bottom:6px;
+  }
+  .metric-row{display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:12.5px; padding:2px 0;}
+  .metric-row strong{font-family:var(--font-mono);}
+  .score-dot{display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px;}
+  .score-dot.score-high{background:var(--teal);}
+  .score-dot.score-medium{background:var(--amber);}
+  .score-dot.score-low{background:var(--steel-soft); border:1px solid var(--steel);}
+
+  .sort-select{
+    font-family:var(--font-mono); font-size:11.5px; padding:5px 8px; border:1px solid var(--steel-soft);
+    border-radius:2px; background:var(--panel); color:var(--ink);
+  }
+
+  .no-ai-tag{
+    font-weight:400; text-transform:none; letter-spacing:0; font-family:var(--font-mono);
+    font-size:10.5px; color:var(--steel);
+  }
+
+  /* ---------- Lead score badges (queue + detail) ---------- */
+  .score-badge{
+    font-family:var(--font-display); font-weight:700; font-size:11px; text-transform:uppercase;
+    letter-spacing:.04em; padding:3px 9px; border-radius:2px; border:1.5px solid currentColor;
+  }
+  .score-badge.score-high{color:var(--teal-ink); background:var(--teal-bg); border-color:var(--teal);}
+  .score-badge.score-medium{color:var(--amber-ink); background:var(--amber-bg); border-color:var(--amber);}
+  .score-badge.score-low{color:var(--steel); background:var(--panel-alt); border-color:var(--steel-soft);}
 
   .log{max-height:220px; overflow-y:auto; font-family:var(--font-mono); font-size:11.5px;}
   .log-row{display:grid; grid-template-columns:64px 1fr; gap:10px; padding:5px 0; border-bottom:1px dotted var(--steel-softer);}
@@ -293,11 +385,23 @@
 
 <div id="view-lead" class="agent-view" style="display:none;">
   <div class="status-board" id="leadStatusBoard"></div>
+  <div class="metrics-strip" id="leadMetrics"></div>
 
   <div class="layout">
     <div class="queue">
       <div class="eyebrow" style="margin-bottom:6px;">Flagged today</div>
-      <h2 style="font-family:var(--font-display); text-transform:uppercase; letter-spacing:.04em; font-size:16px; margin:0 0 12px;">Lead queue</h2>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; gap:8px; flex-wrap:wrap;">
+        <h2 style="font-family:var(--font-display); text-transform:uppercase; letter-spacing:.04em; font-size:16px; margin:0;">Lead queue</h2>
+        <button type="button" class="btn btn-amber" id="simulateLeadBtn">+ Simulate new lead</button>
+      </div>
+      <div style="margin-bottom:12px;">
+        <label for="leadSortSelect" style="font-family:var(--font-mono); font-size:10.5px; color:var(--steel); text-transform:uppercase; letter-spacing:.04em; margin-right:6px;">Sort</label>
+        <select id="leadSortSelect" class="sort-select">
+          <option value="newest">Newest first</option>
+          <option value="score">Score: High → Low</option>
+          <option value="overdue">Most overdue first</option>
+        </select>
+      </div>
       <div class="queue-list" id="leadQueueList"></div>
     </div>
 
@@ -324,8 +428,9 @@
 // ======================================================================
 const FLAGGED_CUSTOMERS = [{"customer_id":"AST-20001","flags":["delivery_booking_status_unknown"],"record":{"customer_id":"AST-20001","vehicle_category":"suv","purchase_date":"2026-06-05","last_service_date":null,"service_visit_count":0,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2026-07-05","first_service_booked_at_delivery":null,"unified_id_present":false,"authorized_discount_range":[0,1500]}},{"customer_id":"AST-20002","flags":["delivery_booking_status_unknown"],"record":{"customer_id":"AST-20002","vehicle_category":"ev","purchase_date":"2026-07-05","last_service_date":null,"service_visit_count":0,"complaint_text":[],"survey_scores":[],"app_last_login_date":null,"first_service_booked_at_delivery":null,"unified_id_present":false,"authorized_discount_range":[0,1500]}},{"customer_id":"AST-20003","flags":["service_overdue: 10mo since last service (expected every 6mo)"],"record":{"customer_id":"AST-20003","vehicle_category":"sedan","purchase_date":"2025-06-05","last_service_date":"2025-10-05","service_visit_count":1,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2025-11-05","first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":[0,2000]}},{"customer_id":"AST-20004","flags":["service_overdue: 15mo since last service (expected every 6mo)","app_inactive_18mo"],"record":{"customer_id":"AST-20004","vehicle_category":"hatchback","purchase_date":"2024-12-05","last_service_date":"2025-05-05","service_visit_count":2,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2025-02-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,1200]}},{"customer_id":"AST-20005","flags":["has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20005","vehicle_category":"hatchback","purchase_date":"2024-08-05","last_service_date":"2026-05-05","service_visit_count":2,"complaint_text":["Visit on record: customer said the final bill was much higher than the quote and felt not informed beforehand."],"survey_scores":[{"visit_date":"2026-05-05","score":3,"comment":"unexpected charges"}],"app_last_login_date":"2026-04-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,2000]}},{"customer_id":"AST-20006","flags":["has_complaint_on_record"],"record":{"customer_id":"AST-20006","vehicle_category":"suv","purchase_date":"2025-02-05","last_service_date":"2026-03-05","service_visit_count":1,"complaint_text":["Customer felt uninformed about a charge added to the service bill without prior notice."],"survey_scores":[{"visit_date":"2026-03-05","score":4,"comment":"surprised by add-on charge"}],"app_last_login_date":"2026-02-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,1500]}},{"customer_id":"AST-20018","flags":["app_never_used_past_year_1","has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20018","vehicle_category":"suv","purchase_date":"2024-10-05","last_service_date":"2026-01-05","service_visit_count":2,"complaint_text":["Customer said the estimate quoted on the phone did not match the amount charged at pickup."],"survey_scores":[{"visit_date":"2026-01-05","score":3,"comment":"cost mismatch"}],"app_last_login_date":null,"first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,1600]}},{"customer_id":"AST-20022","flags":["has_complaint_on_record"],"record":{"customer_id":"AST-20022","vehicle_category":"suv","purchase_date":"2025-01-05","last_service_date":"2026-06-05","service_visit_count":3,"complaint_text":["Customer raised concern that pricing wasn't explained clearly before work started."],"survey_scores":[{"visit_date":"2026-06-05","score":4,"comment":"unclear pricing"}],"app_last_login_date":"2026-06-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,1700]}},{"customer_id":"AST-20007","flags":["app_never_used_past_year_1","has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20007","vehicle_category":"sedan","purchase_date":"2025-05-05","last_service_date":"2026-04-05","service_visit_count":2,"complaint_text":["Customer complained about a long wait and being unable to get a convenient appointment slot."],"survey_scores":[{"visit_date":"2026-04-05","score":3,"comment":"slow, no slots available"}],"app_last_login_date":null,"first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":[0,1800]}},{"customer_id":"AST-20008","flags":["has_complaint_on_record"],"record":{"customer_id":"AST-20008","vehicle_category":"suv","purchase_date":"2025-09-05","last_service_date":"2026-06-05","service_visit_count":1,"complaint_text":["Customer said the appointment was delayed significantly beyond the scheduled time."],"survey_scores":[],"app_last_login_date":"2026-05-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,1400]}},{"customer_id":"AST-20020","flags":["app_never_used_past_year_1","has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20020","vehicle_category":"ev","purchase_date":"2025-07-05","last_service_date":"2026-02-05","service_visit_count":2,"complaint_text":["Customer noted they could not get a slot for two weeks and found the wait inconvenient."],"survey_scores":[{"visit_date":"2026-02-05","score":3,"comment":"wait too long"}],"app_last_login_date":null,"first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":[0,1900]}},{"customer_id":"AST-20009","flags":["has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20009","vehicle_category":"ev","purchase_date":"2025-10-05","last_service_date":"2026-07-05","service_visit_count":3,"complaint_text":["First visit: customer reported the charging port connection felt loose and intermittent.","Second visit, same issue: customer said the charging port fault was not fully resolved and recurred."],"survey_scores":[{"visit_date":"2026-07-05","score":2,"comment":"same charging fault again"}],"app_last_login_date":"2026-07-05","first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":[0,2500]}},{"customer_id":"AST-20010","flags":["has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20010","vehicle_category":"hatchback","purchase_date":"2025-11-05","last_service_date":"2026-06-05","service_visit_count":2,"complaint_text":["Customer reported a rattling noise from the dashboard was not fixed after the visit."],"survey_scores":[{"visit_date":"2026-06-05","score":1,"comment":"issue not fixed, very unhappy"}],"app_last_login_date":"2026-05-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,1300]}},{"customer_id":"AST-20019","flags":["has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20019","vehicle_category":"sedan","purchase_date":"2025-08-05","last_service_date":"2026-07-05","service_visit_count":2,"complaint_text":["Customer reported a persistent AC noise.","Return visit: customer said the same AC noise is still present after the repair."],"survey_scores":[{"visit_date":"2026-07-05","score":2,"comment":"same noise as before"}],"app_last_login_date":"2026-06-05","first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":null}},{"customer_id":"AST-20011","flags":["no_first_service_booked_at_delivery"],"record":{"customer_id":"AST-20011","vehicle_category":"sedan","purchase_date":"2026-03-05","last_service_date":null,"service_visit_count":0,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2026-04-05","first_service_booked_at_delivery":false,"unified_id_present":false,"authorized_discount_range":[0,1000]}},{"customer_id":"AST-20012","flags":["never_serviced: 8mo since purchase, first service expected within 6mo","no_first_service_booked_at_delivery"],"record":{"customer_id":"AST-20012","vehicle_category":"suv","purchase_date":"2025-12-05","last_service_date":null,"service_visit_count":0,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2026-01-05","first_service_booked_at_delivery":false,"unified_id_present":true,"authorized_discount_range":[0,1500]}},{"customer_id":"AST-20023","flags":["never_serviced: 6mo since purchase, first service expected within 6mo","no_first_service_booked_at_delivery"],"record":{"customer_id":"AST-20023","vehicle_category":"sedan","purchase_date":"2026-02-05","last_service_date":null,"service_visit_count":0,"complaint_text":[],"survey_scores":[],"app_last_login_date":null,"first_service_booked_at_delivery":false,"unified_id_present":false,"authorized_discount_range":[0,1100]}},{"customer_id":"AST-20015","flags":["service_overdue: 16mo since last service (expected every 6mo)","app_inactive_20mo","has_complaint_on_record"],"record":{"customer_id":"AST-20015","vehicle_category":"suv","purchase_date":"2024-04-05","last_service_date":"2025-04-05","service_visit_count":2,"complaint_text":["Dealer follow-up: no concerns were raised by the customer during their visit(s)."],"survey_scores":[],"app_last_login_date":"2024-12-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,1600]}},{"customer_id":"AST-20016","flags":["app_never_used_past_year_1","has_complaint_on_record"],"record":{"customer_id":"AST-20016","vehicle_category":"ev","purchase_date":"2024-10-05","last_service_date":"2025-06-05","service_visit_count":1,"complaint_text":["Dealer follow-up: no concerns were raised by the customer during their visit(s)."],"survey_scores":[],"app_last_login_date":null,"first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":[0,2200]}},{"customer_id":"AST-20013","flags":["service_overdue: 19mo since last service (expected every 6mo)","app_inactive_21mo","warranty_expiring_in_2mo"],"record":{"customer_id":"AST-20013","vehicle_category":"hatchback","purchase_date":"2023-10-05","last_service_date":"2025-01-05","service_visit_count":1,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2024-11-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,900]}},{"customer_id":"AST-20014","flags":["service_overdue: 24mo since last service (expected every 6mo)","app_inactive_26mo","warranty_expired_4mo_ago"],"record":{"customer_id":"AST-20014","vehicle_category":"sedan","purchase_date":"2023-04-05","last_service_date":"2024-08-05","service_visit_count":1,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2024-06-05","first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":[0,1000]}},{"customer_id":"AST-20021","flags":["service_overdue: 18mo since last service (expected every 6mo)","app_inactive_19mo","warranty_expiring_in_3mo"],"record":{"customer_id":"AST-20021","vehicle_category":"hatchback","purchase_date":"2023-11-05","last_service_date":"2025-02-05","service_visit_count":1,"complaint_text":[],"survey_scores":[],"app_last_login_date":"2025-01-05","first_service_booked_at_delivery":true,"unified_id_present":true,"authorized_discount_range":[0,1100]}},{"customer_id":"AST-20017","flags":["has_complaint_on_record","low_survey_score_on_record"],"record":{"customer_id":"AST-20017","vehicle_category":"hatchback","purchase_date":"2025-03-05","last_service_date":"2026-03-05","service_visit_count":3,"complaint_text":["Customer complained the estimate was higher than quoted.","Customer also mentioned the wait for a service slot was longer than expected."],"survey_scores":[{"visit_date":"2026-03-05","score":3,"comment":"cost and wait, both frustrating"}],"app_last_login_date":"2026-02-05","first_service_booked_at_delivery":true,"unified_id_present":false,"authorized_discount_range":[0,2000]}}];
 const CATEGORY_META = {"A":{"name":"Delivery handoff failure","playbook_code":"schedule_warm_call"},"B":{"name":"Cost or transparency distrust","playbook_code":"transparent_quote"},"C":{"name":"Convenience or wait-time friction","playbook_code":"priority_slot"},"D":{"name":"Genuine quality dissatisfaction","playbook_code":"escalate_human_only"},"E":{"name":"Silent drift","playbook_code":"soft_reminder"},"F":{"name":"Competitive defection risk","playbook_code":"value_package"}};
-const FLAGGED_LEADS = [{"lead_id":"LEAD-3001","flags":["no_contact_method","overdue: 30.0h since qualified, expected within 4h","high_loss_segment: tier1 city + SUV interest"],"record":{"lead_id":"LEAD-3001","vehicle_category":"suv","source":"digital","qualified_at":"2026-08-05T04:56:11.674Z","city_tier":"tier1","contact_phone_available":false,"contact_email_available":false,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3002","flags":["no_contact_method"],"record":{"lead_id":"LEAD-3002","vehicle_category":"hatchback","source":"walk-in","qualified_at":"2026-08-06T05:56:11.694Z","city_tier":"tier2","contact_phone_available":false,"contact_email_available":false,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3003","flags":["overdue: 28.0h since qualified, expected within 4h","high_loss_segment: tier1 city + SUV interest"],"record":{"lead_id":"LEAD-3003","vehicle_category":"suv","source":"digital","qualified_at":"2026-08-05T06:56:11.694Z","city_tier":"tier1","contact_phone_available":true,"contact_email_available":true,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3004","flags":["overdue: 30.0h since qualified, expected within 24h","repeat_customer"],"record":{"lead_id":"LEAD-3004","vehicle_category":"sedan","source":"referral","qualified_at":"2026-08-05T04:56:11.694Z","city_tier":"tier2","contact_phone_available":true,"contact_email_available":false,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"repeat","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3005","flags":["overdue: 26.0h since qualified, expected within 8h","referral_customer"],"record":{"lead_id":"LEAD-3005","vehicle_category":"ev","source":"referral","qualified_at":"2026-08-05T08:56:11.694Z","city_tier":"tier1","contact_phone_available":true,"contact_email_available":true,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"referral","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3006","flags":["overdue: 30.0h since qualified, expected within 24h"],"record":{"lead_id":"LEAD-3006","vehicle_category":"hatchback","source":"digital","qualified_at":"2026-08-05T04:56:11.694Z","city_tier":"tier2","contact_phone_available":true,"contact_email_available":true,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3007","flags":["overdue: 10.0h since qualified, expected within 8h"],"record":{"lead_id":"LEAD-3007","vehicle_category":"sedan","source":"digital","qualified_at":"2026-08-06T00:56:11.694Z","city_tier":"tier1","contact_phone_available":true,"contact_email_available":false,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3008","flags":["overdue: 27.0h since qualified, expected within 24h"],"record":{"lead_id":"LEAD-3008","vehicle_category":"suv","source":"walk-in","qualified_at":"2026-08-05T07:56:11.694Z","city_tier":"tier3","contact_phone_available":true,"contact_email_available":true,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3010","flags":["high_loss_segment: tier1 city + SUV interest"],"record":{"lead_id":"LEAD-3010","vehicle_category":"suv","source":"digital","qualified_at":"2026-08-06T08:56:11.694Z","city_tier":"tier1","contact_phone_available":true,"contact_email_available":true,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":true,"notes":[]}},{"lead_id":"LEAD-3012","flags":["referral_customer"],"record":{"lead_id":"LEAD-3012","vehicle_category":"ev","source":"referral","qualified_at":"2026-08-06T07:56:11.694Z","city_tier":"tier2","contact_phone_available":true,"contact_email_available":true,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"referral","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3013","flags":["stalled: 2 attempts, no test drive requested"],"record":{"lead_id":"LEAD-3013","vehicle_category":"hatchback","source":"digital","qualified_at":"2026-07-29T02:56:11.694Z","city_tier":"tier2","contact_phone_available":true,"contact_email_available":true,"contact_attempts":2,"last_contact_attempt_at":"2026-08-02T10:56:11.694Z","customer_type":"new","test_drive_requested":false,"notes":["Attempt 1: no answer.","Attempt 2: asked to be contacted later, no follow-up since."]}},{"lead_id":"LEAD-3014","flags":["stalled: 3 attempts, no test drive requested"],"record":{"lead_id":"LEAD-3014","vehicle_category":"sedan","source":"digital","qualified_at":"2026-07-24T22:56:11.694Z","city_tier":"tier3","contact_phone_available":true,"contact_email_available":true,"contact_attempts":3,"last_contact_attempt_at":"2026-08-01T10:56:11.694Z","customer_type":"new","test_drive_requested":false,"notes":["Attempt 1: no answer.","Attempt 2: no answer.","Attempt 3: said not ready to decide yet."]}},{"lead_id":"LEAD-3015","flags":["stalled: 2 attempts, no test drive requested","high_loss_segment: tier1 city + SUV interest"],"record":{"lead_id":"LEAD-3015","vehicle_category":"suv","source":"digital","qualified_at":"2026-07-27T00:56:11.694Z","city_tier":"tier1","contact_phone_available":true,"contact_email_available":true,"contact_attempts":2,"last_contact_attempt_at":"2026-08-03T02:56:11.694Z","customer_type":"new","test_drive_requested":false,"notes":["Attempt 1: no answer.","Attempt 2: said they'd already bought elsewhere, but didn't explicitly close the lead."]}},{"lead_id":"LEAD-3016","flags":["overdue: 29.0h since qualified, expected within 4h","high_loss_segment: tier1 city + SUV interest"],"record":{"lead_id":"LEAD-3016","vehicle_category":"suv","source":"walk-in","qualified_at":"2026-08-05T05:56:11.694Z","city_tier":"tier1","contact_phone_available":true,"contact_email_available":false,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":false,"notes":[]}}];
-const TIER_META = {"critical":{"name":"Critical — overdue, high-loss segment","playbook_code":"immediate_call"},"high":{"name":"High — overdue, standard segment","playbook_code":"priority_outreach"},"standard":{"name":"Standard — within SLA window","playbook_code":"standard_outreach"},"nurture":{"name":"Nurture — repeated attempts, no engagement","playbook_code":"nurture_sequence"}};
+const FLAGGED_LEADS = [{"lead_id":"LEAD-3001","flags":["no_contact_method","high_loss_segment: tier1 city + SUV interest"],"record":{"lead_id":"LEAD-3001","vehicle_category":"suv","source":"digital","qualified_at":"2026-08-07T08:57:49.512Z","city_tier":"tier1","contact_phone_available":false,"contact_email_available":false,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3002","flags":["no_contact_method"],"record":{"lead_id":"LEAD-3002","vehicle_category":"hatchback","source":"walk-in","qualified_at":"2026-08-07T05:57:49.513Z","city_tier":"tier2","contact_phone_available":false,"contact_email_available":false,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3003","flags":["high_loss_segment: tier1 city + SUV interest"],"record":{"lead_id":"LEAD-3003","vehicle_category":"suv","source":"digital","qualified_at":"2026-08-07T07:57:49.513Z","city_tier":"tier1","contact_phone_available":true,"contact_email_available":true,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3004","flags":["repeat_customer"],"record":{"lead_id":"LEAD-3004","vehicle_category":"sedan","source":"referral","qualified_at":"2026-08-07T02:57:49.513Z","city_tier":"tier2","contact_phone_available":true,"contact_email_available":false,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"repeat","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3005","flags":["referral_customer"],"record":{"lead_id":"LEAD-3005","vehicle_category":"ev","source":"referral","qualified_at":"2026-08-07T05:57:49.513Z","city_tier":"tier1","contact_phone_available":true,"contact_email_available":true,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"referral","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3006","flags":["overdue: 26.0h since qualified, expected within 24h"],"record":{"lead_id":"LEAD-3006","vehicle_category":"hatchback","source":"digital","qualified_at":"2026-08-06T08:57:49.513Z","city_tier":"tier2","contact_phone_available":true,"contact_email_available":true,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3007","flags":["overdue: 9.0h since qualified, expected within 8h"],"record":{"lead_id":"LEAD-3007","vehicle_category":"sedan","source":"digital","qualified_at":"2026-08-07T01:57:49.513Z","city_tier":"tier1","contact_phone_available":true,"contact_email_available":false,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3008","flags":["overdue: 25.0h since qualified, expected within 24h"],"record":{"lead_id":"LEAD-3008","vehicle_category":"suv","source":"walk-in","qualified_at":"2026-08-06T09:57:49.513Z","city_tier":"tier3","contact_phone_available":true,"contact_email_available":true,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3010","flags":["high_loss_segment: tier1 city + SUV interest"],"record":{"lead_id":"LEAD-3010","vehicle_category":"suv","source":"digital","qualified_at":"2026-08-07T08:57:49.513Z","city_tier":"tier1","contact_phone_available":true,"contact_email_available":true,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":true,"notes":[]}},{"lead_id":"LEAD-3012","flags":["referral_customer"],"record":{"lead_id":"LEAD-3012","vehicle_category":"ev","source":"referral","qualified_at":"2026-08-07T07:57:49.513Z","city_tier":"tier2","contact_phone_available":true,"contact_email_available":true,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"referral","test_drive_requested":false,"notes":[]}},{"lead_id":"LEAD-3013","flags":["stalled: 2 attempts, no test drive requested"],"record":{"lead_id":"LEAD-3013","vehicle_category":"hatchback","source":"digital","qualified_at":"2026-08-03T10:57:49.513Z","city_tier":"tier2","contact_phone_available":true,"contact_email_available":true,"contact_attempts":2,"last_contact_attempt_at":"2026-08-05T18:57:49.513Z","customer_type":"new","test_drive_requested":false,"notes":["Attempt 1: no answer.","Attempt 2: asked to be contacted later, no follow-up since."]}},{"lead_id":"LEAD-3014","flags":["stalled: 3 attempts, no test drive requested"],"record":{"lead_id":"LEAD-3014","vehicle_category":"sedan","source":"digital","qualified_at":"2026-08-02T00:57:49.513Z","city_tier":"tier3","contact_phone_available":true,"contact_email_available":true,"contact_attempts":3,"last_contact_attempt_at":"2026-08-05T08:57:49.513Z","customer_type":"new","test_drive_requested":false,"notes":["Attempt 1: no answer.","Attempt 2: no answer.","Attempt 3: said not ready to decide yet."]}},{"lead_id":"LEAD-3015","flags":["stalled: 2 attempts, no test drive requested","high_loss_segment: tier1 city + SUV interest"],"record":{"lead_id":"LEAD-3015","vehicle_category":"suv","source":"digital","qualified_at":"2026-08-02T20:57:49.513Z","city_tier":"tier1","contact_phone_available":true,"contact_email_available":true,"contact_attempts":2,"last_contact_attempt_at":"2026-08-05T23:57:49.513Z","customer_type":"new","test_drive_requested":false,"notes":["Attempt 1: no answer.","Attempt 2: said they'd already bought elsewhere, but didn't explicitly close the lead."]}},{"lead_id":"LEAD-3016","flags":["high_loss_segment: tier1 city + SUV interest"],"record":{"lead_id":"LEAD-3016","vehicle_category":"suv","source":"walk-in","qualified_at":"2026-08-07T08:57:49.513Z","city_tier":"tier1","contact_phone_available":true,"contact_email_available":false,"contact_attempts":0,"last_contact_attempt_at":null,"customer_type":"new","test_drive_requested":false,"notes":[]}}];
+const TIER_META = {"high":{"name":"High — strong intent, worth immediate effort","playbook_code":"immediate_call"},"medium":{"name":"Medium — standard intent, normal handling","playbook_code":"standard_outreach"},"low":{"name":"Low — weak intent or going cold","playbook_code":"nurture_sequence"}};
+const PRESCORED_RESULTS = {"LEAD-3001":{"ok":true,"llm_called":false,"provider":null,"needs_human_input":true,"human_question":"No phone or email on file for LEAD-3001. Do you have a way to reach this lead? (Phone / Email / Lead is unreachable)","record":{"lead_id":{"value":"LEAD-3001","status":"observed"},"vehicle_category":{"value":"suv","status":"observed"},"source":{"value":"digital","status":"observed"},"qualified_at":{"value":"2026-08-07T08:57:49.512Z","status":"observed"},"city_tier":{"value":"tier1","status":"observed"},"contact_phone_available":{"value":false,"status":"observed"},"contact_email_available":{"value":false,"status":"observed"},"contact_attempts":{"value":0,"status":"observed"},"last_contact_attempt_at":{"value":null,"status":"missing"},"customer_type":{"value":"new","status":"observed"},"test_drive_requested":{"value":false,"status":"observed"},"notes":{"value":[],"status":"observed"},"hours_since_qualified":{"value":69.6,"status":"observed"},"expected_sla_hours":{"value":4,"status":"inferred","basis":"Inferred from city_tier (\"tier1\") and vehicle_category (\"suv\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."}},"recommended_dealer":null,"auto_send":false,"output":null,"_elapsedMs":1137},"LEAD-3002":{"ok":true,"llm_called":false,"provider":null,"needs_human_input":true,"human_question":"No phone or email on file for LEAD-3002. Do you have a way to reach this lead? (Phone / Email / Lead is unreachable)","record":{"lead_id":{"value":"LEAD-3002","status":"observed"},"vehicle_category":{"value":"hatchback","status":"observed"},"source":{"value":"walk-in","status":"observed"},"qualified_at":{"value":"2026-08-07T05:57:49.513Z","status":"observed"},"city_tier":{"value":"tier2","status":"observed"},"contact_phone_available":{"value":false,"status":"observed"},"contact_email_available":{"value":false,"status":"observed"},"contact_attempts":{"value":0,"status":"observed"},"last_contact_attempt_at":{"value":null,"status":"missing"},"customer_type":{"value":"new","status":"observed"},"test_drive_requested":{"value":false,"status":"observed"},"notes":{"value":[],"status":"observed"},"hours_since_qualified":{"value":72.6,"status":"observed"},"expected_sla_hours":{"value":24,"status":"inferred","basis":"Inferred from city_tier (\"tier2\") and vehicle_category (\"hatchback\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."}},"recommended_dealer":null,"auto_send":false,"output":null,"_elapsedMs":142},"LEAD-3003":{"ok":true,"llm_called":true,"provider":"groq-llama-3.3-70b","needs_human_input":false,"human_question":null,"record":{"lead_id":{"value":"LEAD-3003","status":"observed"},"vehicle_category":{"value":"suv","status":"observed"},"source":{"value":"digital","status":"observed"},"qualified_at":{"value":"2026-08-07T07:57:49.513Z","status":"observed"},"city_tier":{"value":"tier1","status":"observed"},"contact_phone_available":{"value":true,"status":"observed"},"contact_email_available":{"value":true,"status":"observed"},"contact_attempts":{"value":0,"status":"observed"},"last_contact_attempt_at":{"value":null,"status":"missing"},"customer_type":{"value":"new","status":"observed"},"test_drive_requested":{"value":false,"status":"observed"},"notes":{"value":[],"status":"observed"},"hours_since_qualified":{"value":70.6,"status":"observed"},"expected_sla_hours":{"value":4,"status":"inferred","basis":"Inferred from city_tier (\"tier1\") and vehicle_category (\"suv\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."}},"recommended_dealer":{"dealer_id":"AST-D-BLR-01","dealer_name":"Asteron Hub Whitefield","city":"Bengaluru","city_tier":"tier1","current_load":2,"sla_compliance_pct":92,"match_score":95,"rationale":"Matched to Asteron Hub Whitefield (Bengaluru) — same city tier (tier1), specializes in suv, 2 active leads right now, 92% historical SLA compliance."},"auto_send":true,"output":{"lead_id":"LEAD-3003","scoring":{"lead_score":"medium","evidence":["Tier-1 city","SUV segment","No prior contact attempts","Within expected response window"],"confidence":100},"needs_human_input":false,"human_question":null,"recommended_action":{"playbook_code":"standard_outreach","description":"Contact via the lead's preferred available channel within the expected response window."},"draft_message":{"channel":"sms","text":"Thank you for your inquiry. Asteron Hub Whitefield will respond within 4 hours."},"review_flag":false},"validation_notes":["Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"SUV segment\"]"],"_elapsedMs":925},"LEAD-3004":{"ok":true,"llm_called":true,"provider":"groq-llama-3.3-70b","needs_human_input":false,"human_question":null,"record":{"lead_id":{"value":"LEAD-3004","status":"observed"},"vehicle_category":{"value":"sedan","status":"observed"},"source":{"value":"referral","status":"observed"},"qualified_at":{"value":"2026-08-07T02:57:49.513Z","status":"observed"},"city_tier":{"value":"tier2","status":"observed"},"contact_phone_available":{"value":true,"status":"observed"},"contact_email_available":{"value":false,"status":"observed"},"contact_attempts":{"value":0,"status":"observed"},"last_contact_attempt_at":{"value":null,"status":"missing"},"customer_type":{"value":"repeat","status":"observed"},"test_drive_requested":{"value":false,"status":"observed"},"notes":{"value":[],"status":"observed"},"hours_since_qualified":{"value":75.6,"status":"observed"},"expected_sla_hours":{"value":24,"status":"inferred","basis":"Inferred from city_tier (\"tier2\") and vehicle_category (\"sedan\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."}},"recommended_dealer":{"dealer_id":"AST-D-KOC-01","dealer_name":"Asteron Coastal Kochi","city":"Kochi","city_tier":"tier2","current_load":3,"sla_compliance_pct":85,"match_score":93,"rationale":"Matched to Asteron Coastal Kochi (Kochi) — same city tier (tier2), specializes in sedan, 3 active leads right now, 85% historical SLA compliance."},"auto_send":true,"output":{"lead_id":"LEAD-3004","scoring":{"lead_score":"medium","evidence":["Repeat customer","Referral source","Tier2 city","Within expected response window"],"confidence":100},"needs_human_input":false,"human_question":null,"recommended_action":{"playbook_code":"standard_outreach","description":"Contact via the lead's preferred available channel within the expected response window."},"draft_message":{"channel":"sms","text":"Thank you for your inquiry. Asteron Coastal Kochi will respond within 24 hours."},"review_flag":false},"validation_notes":[],"_elapsedMs":805},"LEAD-3005":{"ok":true,"llm_called":true,"provider":"groq-llama-3.3-70b","needs_human_input":false,"human_question":null,"record":{"lead_id":{"value":"LEAD-3005","status":"observed"},"vehicle_category":{"value":"ev","status":"observed"},"source":{"value":"referral","status":"observed"},"qualified_at":{"value":"2026-08-07T05:57:49.513Z","status":"observed"},"city_tier":{"value":"tier1","status":"observed"},"contact_phone_available":{"value":true,"status":"observed"},"contact_email_available":{"value":true,"status":"observed"},"contact_attempts":{"value":0,"status":"observed"},"last_contact_attempt_at":{"value":null,"status":"missing"},"customer_type":{"value":"referral","status":"observed"},"test_drive_requested":{"value":false,"status":"observed"},"notes":{"value":[],"status":"observed"},"hours_since_qualified":{"value":72.6,"status":"observed"},"expected_sla_hours":{"value":8,"status":"inferred","basis":"Inferred from city_tier (\"tier1\") and vehicle_category (\"ev\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."}},"recommended_dealer":{"dealer_id":"AST-D-MUM-01","dealer_name":"Asteron Select Bandra","city":"Mumbai","city_tier":"tier1","current_load":3,"sla_compliance_pct":88,"match_score":93,"rationale":"Matched to Asteron Select Bandra (Mumbai) — same city tier (tier1), specializes in ev, 3 active leads right now, 88% historical SLA compliance."},"auto_send":true,"output":{"lead_id":"LEAD-3005","scoring":{"lead_score":"high","evidence":["Tier-1 city","Referral customer","EV segment","No prior contact attempts"],"confidence":100},"needs_human_input":false,"human_question":null,"recommended_action":{"playbook_code":"immediate_call","description":"Call the lead within the hour and offer a same-day test drive slot."},"draft_message":{"channel":"call_brief","text":"Hello, this is Asteron Select Bandra. We've received your inquiry and will be in touch within the hour to discuss your EV interests."},"review_flag":false},"validation_notes":["Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"EV segment\"]"],"_elapsedMs":934},"LEAD-3006":{"ok":true,"llm_called":true,"provider":"groq-llama-3.3-70b","needs_human_input":false,"human_question":null,"record":{"lead_id":{"value":"LEAD-3006","status":"observed"},"vehicle_category":{"value":"hatchback","status":"observed"},"source":{"value":"digital","status":"observed"},"qualified_at":{"value":"2026-08-06T08:57:49.513Z","status":"observed"},"city_tier":{"value":"tier2","status":"observed"},"contact_phone_available":{"value":true,"status":"observed"},"contact_email_available":{"value":true,"status":"observed"},"contact_attempts":{"value":0,"status":"observed"},"last_contact_attempt_at":{"value":null,"status":"missing"},"customer_type":{"value":"new","status":"observed"},"test_drive_requested":{"value":false,"status":"observed"},"notes":{"value":[],"status":"observed"},"hours_since_qualified":{"value":93.6,"status":"observed"},"expected_sla_hours":{"value":24,"status":"inferred","basis":"Inferred from city_tier (\"tier2\") and vehicle_category (\"hatchback\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."}},"recommended_dealer":{"dealer_id":"AST-D-KOC-01","dealer_name":"Asteron Coastal Kochi","city":"Kochi","city_tier":"tier2","current_load":3,"sla_compliance_pct":85,"match_score":93,"rationale":"Matched to Asteron Coastal Kochi (Kochi) — same city tier (tier2), specializes in hatchback, 3 active leads right now, 85% historical SLA compliance."},"auto_send":true,"output":{"lead_id":"LEAD-3006","scoring":{"lead_score":"medium","evidence":["New customer","Hatchback segment","Tier2 city","Within expected response window"],"confidence":100},"needs_human_input":false,"human_question":null,"recommended_action":{"playbook_code":"standard_outreach","description":"Contact via the lead's preferred available channel within the expected response window."},"draft_message":{"channel":"sms","text":"Thank you for your inquiry. Asteron Coastal Kochi will respond within 24 hours."},"review_flag":false},"validation_notes":["Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"New customer\"]"],"_elapsedMs":861},"LEAD-3007":{"ok":true,"llm_called":true,"provider":"groq-llama-3.3-70b","needs_human_input":false,"human_question":null,"record":{"lead_id":{"value":"LEAD-3007","status":"observed"},"vehicle_category":{"value":"sedan","status":"observed"},"source":{"value":"digital","status":"observed"},"qualified_at":{"value":"2026-08-07T01:57:49.513Z","status":"observed"},"city_tier":{"value":"tier1","status":"observed"},"contact_phone_available":{"value":true,"status":"observed"},"contact_email_available":{"value":false,"status":"observed"},"contact_attempts":{"value":0,"status":"observed"},"last_contact_attempt_at":{"value":null,"status":"missing"},"customer_type":{"value":"new","status":"observed"},"test_drive_requested":{"value":false,"status":"observed"},"notes":{"value":[],"status":"observed"},"hours_since_qualified":{"value":76.6,"status":"observed"},"expected_sla_hours":{"value":8,"status":"inferred","basis":"Inferred from city_tier (\"tier1\") and vehicle_category (\"sedan\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."}},"recommended_dealer":{"dealer_id":"AST-D-BLR-02","dealer_name":"Asteron Motors Koramangala","city":"Bengaluru","city_tier":"tier1","current_load":5,"sla_compliance_pct":74,"match_score":87,"rationale":"Matched to Asteron Motors Koramangala (Bengaluru) — same city tier (tier1), specializes in sedan, 5 active leads right now, 74% historical SLA compliance."},"auto_send":true,"output":{"lead_id":"LEAD-3007","scoring":{"lead_score":"medium","evidence":["Tier-1 city","New customer","No test drive requested","Within expected response window"],"confidence":100},"needs_human_input":false,"human_question":null,"recommended_action":{"playbook_code":"standard_outreach","description":"Contact via the lead's preferred available channel within the expected response window."},"draft_message":{"channel":"sms","text":"Thank you for your inquiry. Asteron Motors Koramangala will respond within 8 hours."},"review_flag":false},"validation_notes":["Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"New customer\"]"],"_elapsedMs":965},"LEAD-3008":{"ok":true,"llm_called":true,"provider":"gemini-3.6-flash","needs_human_input":false,"human_question":null,"record":{"lead_id":{"value":"LEAD-3008","status":"observed"},"vehicle_category":{"value":"suv","status":"observed"},"source":{"value":"walk-in","status":"observed"},"qualified_at":{"value":"2026-08-06T09:57:49.513Z","status":"observed"},"city_tier":{"value":"tier3","status":"observed"},"contact_phone_available":{"value":true,"status":"observed"},"contact_email_available":{"value":true,"status":"observed"},"contact_attempts":{"value":0,"status":"observed"},"last_contact_attempt_at":{"value":null,"status":"missing"},"customer_type":{"value":"new","status":"observed"},"test_drive_requested":{"value":false,"status":"observed"},"notes":{"value":[],"status":"observed"},"hours_since_qualified":{"value":92.6,"status":"observed"},"expected_sla_hours":{"value":24,"status":"inferred","basis":"Inferred from city_tier (\"tier3\") and vehicle_category (\"suv\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."}},"recommended_dealer":{"dealer_id":"AST-D-DDN-01","dealer_name":"Asteron Foothills Dehradun","city":"Dehradun","city_tier":"tier3","current_load":1,"sla_compliance_pct":95,"match_score":68,"rationale":"Matched to Asteron Foothills Dehradun (Dehradun) — same city tier (tier3), 1 active lead right now, 95% historical SLA compliance."},"auto_send":true,"output":{"lead_id":"LEAD-3008","scoring":{"lead_score":"high","evidence":["Overdue lead: 92.6 hours elapsed against 24-hour expected SLA.","Walk-in SUV inquiry with zero prior contact attempts."],"confidence":85},"needs_human_input":false,"human_question":null,"recommended_action":{"playbook_code":"immediate_call","description":"Call the lead within the hour and offer a same-day test drive slot."},"draft_message":{"channel":"email","text":"Thank you for visiting Asteron Motors. We have received your SUV inquiry and assigned your request to Asteron Foothills Dehradun, who will be in touch shortly."},"review_flag":false},"validation_notes":[],"_elapsedMs":9291},"LEAD-3010":{"ok":true,"llm_called":true,"provider":"groq-llama-3.3-70b","needs_human_input":false,"human_question":null,"record":{"lead_id":{"value":"LEAD-3010","status":"observed"},"vehicle_category":{"value":"suv","status":"observed"},"source":{"value":"digital","status":"observed"},"qualified_at":{"value":"2026-08-07T08:57:49.513Z","status":"observed"},"city_tier":{"value":"tier1","status":"observed"},"contact_phone_available":{"value":true,"status":"observed"},"contact_email_available":{"value":true,"status":"observed"},"contact_attempts":{"value":0,"status":"observed"},"last_contact_attempt_at":{"value":null,"status":"missing"},"customer_type":{"value":"new","status":"observed"},"test_drive_requested":{"value":true,"status":"observed"},"notes":{"value":[],"status":"observed"},"hours_since_qualified":{"value":69.6,"status":"observed"},"expected_sla_hours":{"value":4,"status":"inferred","basis":"Inferred from city_tier (\"tier1\") and vehicle_category (\"suv\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."}},"recommended_dealer":{"dealer_id":"AST-D-BLR-01","dealer_name":"Asteron Hub Whitefield","city":"Bengaluru","city_tier":"tier1","current_load":2,"sla_compliance_pct":92,"match_score":95,"rationale":"Matched to Asteron Hub Whitefield (Bengaluru) — same city tier (tier1), specializes in suv, 2 active leads right now, 92% historical SLA compliance."},"auto_send":true,"output":{"lead_id":"LEAD-3010","scoring":{"lead_score":"high","evidence":["Tier-1 city","SUV lead","Test drive requested","Zero contact attempts"],"confidence":100},"needs_human_input":false,"human_question":null,"recommended_action":{"playbook_code":"immediate_call","description":"Call the lead within the hour and offer a same-day test drive slot."},"draft_message":{"channel":"sms","text":"Thank you for your inquiry. Asteron Hub Whitefield will respond within 4 hours."},"review_flag":false},"validation_notes":["Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"SUV lead\"]"],"_elapsedMs":802},"LEAD-3012":{"ok":true,"llm_called":true,"provider":"gemini-3.6-flash","needs_human_input":false,"human_question":null,"record":{"lead_id":{"value":"LEAD-3012","status":"observed"},"vehicle_category":{"value":"ev","status":"observed"},"source":{"value":"referral","status":"observed"},"qualified_at":{"value":"2026-08-07T07:57:49.513Z","status":"observed"},"city_tier":{"value":"tier2","status":"observed"},"contact_phone_available":{"value":true,"status":"observed"},"contact_email_available":{"value":true,"status":"observed"},"contact_attempts":{"value":0,"status":"observed"},"last_contact_attempt_at":{"value":null,"status":"missing"},"customer_type":{"value":"referral","status":"observed"},"test_drive_requested":{"value":false,"status":"observed"},"notes":{"value":[],"status":"observed"},"hours_since_qualified":{"value":70.6,"status":"observed"},"expected_sla_hours":{"value":24,"status":"inferred","basis":"Inferred from city_tier (\"tier2\") and vehicle_category (\"ev\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."}},"recommended_dealer":{"dealer_id":"AST-D-MUM-01","dealer_name":"Asteron Select Bandra","city":"Mumbai","city_tier":"tier1","current_load":3,"sla_compliance_pct":88,"match_score":68,"rationale":"Matched to Asteron Select Bandra (Mumbai) — nearby tier (tier1 vs. lead's tier2), specializes in ev, 3 active leads right now, 88% historical SLA compliance."},"auto_send":true,"output":{"lead_id":"LEAD-3012","scoring":{"lead_score":"high","evidence":["Referral customer.","Inquiry response time overdue against expected SLA window."],"confidence":85},"needs_human_input":false,"human_question":null,"recommended_action":{"playbook_code":"immediate_call","description":"Call the lead within the hour and offer a same-day test drive slot."},"draft_message":{"channel":"sms","text":"Hello! Thank you for reaching out to Asteron Motors. Your inquiry has been received by Asteron Select Bandra, and our team will contact you shortly."},"review_flag":false},"validation_notes":["Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"Inquiry response time overdue against expected SLA window.\"]"],"_elapsedMs":7403},"LEAD-3013":{"ok":true,"llm_called":true,"provider":"gemini-3.6-flash","needs_human_input":false,"human_question":null,"record":{"lead_id":{"value":"LEAD-3013","status":"observed"},"vehicle_category":{"value":"hatchback","status":"observed"},"source":{"value":"digital","status":"observed"},"qualified_at":{"value":"2026-08-03T10:57:49.513Z","status":"observed"},"city_tier":{"value":"tier2","status":"observed"},"contact_phone_available":{"value":true,"status":"observed"},"contact_email_available":{"value":true,"status":"observed"},"contact_attempts":{"value":2,"status":"observed"},"last_contact_attempt_at":{"value":"2026-08-05T18:57:49.513Z","status":"observed"},"customer_type":{"value":"new","status":"observed"},"test_drive_requested":{"value":false,"status":"observed"},"notes":{"value":["Attempt 1: no answer.","Attempt 2: asked to be contacted later, no follow-up since."],"status":"observed"},"hours_since_qualified":{"value":163.6,"status":"observed"},"expected_sla_hours":{"value":24,"status":"inferred","basis":"Inferred from city_tier (\"tier2\") and vehicle_category (\"hatchback\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."}},"recommended_dealer":{"dealer_id":"AST-D-KOC-01","dealer_name":"Asteron Coastal Kochi","city":"Kochi","city_tier":"tier2","current_load":3,"sla_compliance_pct":85,"match_score":93,"rationale":"Matched to Asteron Coastal Kochi (Kochi) — same city tier (tier2), specializes in hatchback, 3 active leads right now, 85% historical SLA compliance."},"auto_send":true,"output":{"lead_id":"LEAD-3013","scoring":{"lead_score":"low","evidence":["Two contact attempts on record.","No test drive requested.","Customer requested follow-up later without recent engagement."],"confidence":100},"needs_human_input":false,"human_question":null,"recommended_action":{"playbook_code":"nurture_sequence","description":"Move to a low-touch digital nurture sequence (email/SMS); re-engage promptly if interest signals increase."},"draft_message":{"channel":"email","text":"Thank you for reaching out to Asteron Motors regarding your hatchback inquiry. Your message has been received by Asteron Coastal Kochi, and our team will be in touch with you shortly."},"review_flag":false},"validation_notes":[],"_elapsedMs":9650},"LEAD-3014":{"ok":true,"llm_called":true,"provider":"groq-llama-3.3-70b","needs_human_input":false,"human_question":null,"record":{"lead_id":{"value":"LEAD-3014","status":"observed"},"vehicle_category":{"value":"sedan","status":"observed"},"source":{"value":"digital","status":"observed"},"qualified_at":{"value":"2026-08-02T00:57:49.513Z","status":"observed"},"city_tier":{"value":"tier3","status":"observed"},"contact_phone_available":{"value":true,"status":"observed"},"contact_email_available":{"value":true,"status":"observed"},"contact_attempts":{"value":3,"status":"observed"},"last_contact_attempt_at":{"value":"2026-08-05T08:57:49.513Z","status":"observed"},"customer_type":{"value":"new","status":"observed"},"test_drive_requested":{"value":false,"status":"observed"},"notes":{"value":["Attempt 1: no answer.","Attempt 2: no answer.","Attempt 3: said not ready to decide yet."],"status":"observed"},"hours_since_qualified":{"value":197.6,"status":"observed"},"expected_sla_hours":{"value":24,"status":"inferred","basis":"Inferred from city_tier (\"tier3\") and vehicle_category (\"sedan\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."}},"recommended_dealer":{"dealer_id":"AST-D-DDN-01","dealer_name":"Asteron Foothills Dehradun","city":"Dehradun","city_tier":"tier3","current_load":1,"sla_compliance_pct":95,"match_score":98,"rationale":"Matched to Asteron Foothills Dehradun (Dehradun) — same city tier (tier3), specializes in sedan, 1 active lead right now, 95% historical SLA compliance."},"auto_send":true,"output":{"lead_id":"LEAD-3014","scoring":{"lead_score":"low","evidence":["3 contact attempts with no test drive requested","Customer said not ready to decide yet","Hours since qualified (197.6) exceeds expected SLA hours (24)"],"confidence":85},"needs_human_input":false,"human_question":null,"recommended_action":{"playbook_code":"nurture_sequence","description":"Move to a low-touch digital nurture sequence"},"draft_message":{"channel":"sms","text":"Thank you for your inquiry. Asteron Foothills Dehradun will respond within 24 hours."},"review_flag":false},"validation_notes":[],"_elapsedMs":824},"LEAD-3015":{"ok":true,"llm_called":true,"provider":"gemini-3.6-flash","needs_human_input":false,"human_question":null,"record":{"lead_id":{"value":"LEAD-3015","status":"observed"},"vehicle_category":{"value":"suv","status":"observed"},"source":{"value":"digital","status":"observed"},"qualified_at":{"value":"2026-08-02T20:57:49.513Z","status":"observed"},"city_tier":{"value":"tier1","status":"observed"},"contact_phone_available":{"value":true,"status":"observed"},"contact_email_available":{"value":true,"status":"observed"},"contact_attempts":{"value":2,"status":"observed"},"last_contact_attempt_at":{"value":"2026-08-05T23:57:49.513Z","status":"observed"},"customer_type":{"value":"new","status":"observed"},"test_drive_requested":{"value":false,"status":"observed"},"notes":{"value":["Attempt 1: no answer.","Attempt 2: said they'd already bought elsewhere, but didn't explicitly close the lead."],"status":"observed"},"hours_since_qualified":{"value":177.6,"status":"observed"},"expected_sla_hours":{"value":4,"status":"inferred","basis":"Inferred from city_tier (\"tier1\") and vehicle_category (\"suv\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."}},"recommended_dealer":{"dealer_id":"AST-D-BLR-01","dealer_name":"Asteron Hub Whitefield","city":"Bengaluru","city_tier":"tier1","current_load":2,"sla_compliance_pct":92,"match_score":95,"rationale":"Matched to Asteron Hub Whitefield (Bengaluru) — same city tier (tier1), specializes in suv, 2 active leads right now, 92% historical SLA compliance."},"auto_send":true,"output":{"lead_id":"LEAD-3015","scoring":{"lead_score":"low","evidence":["Two contact attempts made with no test drive requested.","Customer stated they already bought elsewhere during contact attempt.","Direct disengagement signal takes priority over tier-1 SUV segment."],"confidence":100},"needs_human_input":false,"human_question":null,"recommended_action":{"playbook_code":"nurture_sequence","description":"Move to a low-touch digital nurture sequence (email/SMS); re-engage promptly if interest signals increase."},"draft_message":{"channel":"email","text":"Thank you for contacting Asteron Motors. Your SUV inquiry has been received and routed to Asteron Hub Whitefield. Please let us know if we can assist you with any future vehicle needs."},"review_flag":false},"validation_notes":["Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"Direct disengagement signal takes priority over tier-1 SUV segment.\"]"],"_elapsedMs":11516},"LEAD-3016":{"ok":true,"llm_called":true,"provider":"groq-llama-3.3-70b","needs_human_input":false,"human_question":null,"record":{"lead_id":{"value":"LEAD-3016","status":"observed"},"vehicle_category":{"value":"suv","status":"observed"},"source":{"value":"walk-in","status":"observed"},"qualified_at":{"value":"2026-08-07T08:57:49.513Z","status":"observed"},"city_tier":{"value":"tier1","status":"observed"},"contact_phone_available":{"value":true,"status":"observed"},"contact_email_available":{"value":false,"status":"observed"},"contact_attempts":{"value":0,"status":"observed"},"last_contact_attempt_at":{"value":null,"status":"missing"},"customer_type":{"value":"new","status":"observed"},"test_drive_requested":{"value":false,"status":"observed"},"notes":{"value":[],"status":"observed"},"hours_since_qualified":{"value":69.7,"status":"observed"},"expected_sla_hours":{"value":4,"status":"inferred","basis":"Inferred from city_tier (\"tier1\") and vehicle_category (\"suv\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."}},"recommended_dealer":{"dealer_id":"AST-D-BLR-01","dealer_name":"Asteron Hub Whitefield","city":"Bengaluru","city_tier":"tier1","current_load":2,"sla_compliance_pct":92,"match_score":95,"rationale":"Matched to Asteron Hub Whitefield (Bengaluru) — same city tier (tier1), specializes in suv, 2 active leads right now, 92% historical SLA compliance."},"auto_send":true,"output":{"lead_id":"LEAD-3016","scoring":{"lead_score":"high","evidence":["Tier-1 city","SUV lead","Zero contact attempts","Recent qualification"],"confidence":100},"needs_human_input":false,"human_question":null,"recommended_action":{"playbook_code":"immediate_call","description":"Call the lead within the hour and offer a same-day test drive slot."},"draft_message":{"channel":"sms","text":"Thank you for your interest in Asteron Motors. Your inquiry has been received by Asteron Hub Whitefield. We will get back to you within 4 hours."},"review_flag":false},"validation_notes":["Note (non-blocking): 2 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"SUV lead\",\"Recent qualification\"]"],"_elapsedMs":951}}; // lead_id -> /triage response, computed BEFORE page load
 const DEFAULT_WORKER_URL = "https://asteron-retention-agent.aces4iimb.workers.dev";
 
 // ---------------------------------------------------------------------
@@ -347,10 +452,135 @@ const leadState = {
   status: new Map(),           // lead_id -> status string
   results: new Map(),          // lead_id -> last /triage response body
   errors: new Map(),
+  evalStep: new Map(),         // lead_id -> which real pipeline stage is currently showing (1-4) while loading
   log: [],
   selectedId: null,
   editingDraft: false
 };
+
+// Leads created live via "Simulate New Lead" — kept separate from the
+// build-time FLAGGED_LEADS data so a rebuild never accidentally bakes
+// a demo-session lead into the shipped dataset. allLeadEntries() below
+// is the single place both lists get merged for rendering/lookup.
+const simulatedLeads = [];
+let simulatedLeadCounter = 0;
+
+function allLeadEntries() {
+  return [...FLAGGED_LEADS, ...simulatedLeads];
+}
+
+// ---------------------------------------------------------------------
+// Queue sorting — "newest" is the default because it's the one that
+// makes intuitive sense for a live queue: a lead that just came in
+// (via Simulate New Lead, or in production, real intake) should appear
+// at the top, not buried under a pile of older ones. "score" and
+// "overdue" are there for when a dealer specifically wants to work
+// top-value or most-time-pressured leads first instead.
+// ---------------------------------------------------------------------
+let leadSortMode = "newest"; // "newest" | "score" | "overdue"
+const SCORE_RANK = { high: 0, medium: 1, low: 2 };
+
+function slaRemainingHoursFor(rec) {
+  if (!rec || !rec.qualified_at) return Infinity;
+  const slaHours = inferSlaHoursClient(rec.city_tier || "tier2", rec.vehicle_category);
+  return slaHours - hoursSinceClient(rec.qualified_at);
+}
+
+function sortLeadEntries(entries) {
+  const withMeta = entries.map((l) => {
+    const rec = leadState.workingRecords.get(l.lead_id);
+    const res = leadState.results.get(l.lead_id);
+    const score = res?.output?.scoring?.lead_score;
+    return {
+      entry: l,
+      remaining: slaRemainingHoursFor(rec),
+      scoreRank: score !== undefined && SCORE_RANK[score] !== undefined ? SCORE_RANK[score] : 3,
+      qualifiedAt: rec?.qualified_at || ""
+    };
+  });
+
+  if (leadSortMode === "score") {
+    withMeta.sort((a, b) => a.scoreRank - b.scoreRank || a.remaining - b.remaining);
+  } else if (leadSortMode === "overdue") {
+    withMeta.sort((a, b) => a.remaining - b.remaining);
+  } else {
+    withMeta.sort((a, b) => new Date(b.qualifiedAt) - new Date(a.qualifiedAt));
+  }
+  return withMeta.map((m) => m.entry);
+}
+
+// ---------------------------------------------------------------------
+// Client-side SLA math — a deliberate, minimal duplicate of the same
+// inference lead_completeness_check.js does server-side (tier1+SUV=4h,
+// tier1=8h, else 24h). Duplicated on purpose rather than shared: this
+// copy only drives a live countdown display, never a real decision —
+// the Worker's own copy remains the sole source of truth for anything
+// that actually affects triage output.
+// ---------------------------------------------------------------------
+function inferSlaHoursClient(cityTier, vehicleCategory) {
+  if (cityTier === "tier1" && vehicleCategory === "suv") return 4;
+  if (cityTier === "tier1") return 8;
+  return 24;
+}
+function hoursSinceClient(isoString) {
+  return (Date.now() - new Date(isoString).getTime()) / (1000 * 60 * 60);
+}
+function formatHoursMinutes(hours) {
+  const totalMinutes = Math.round(Math.abs(hours) * 60);
+  const h = Math.floor(totalMinutes / 60);
+  const m = totalMinutes % 60;
+  return `${h}h ${m}m`;
+}
+function slaBadgeHtml(rec) {
+  const slaHours = inferSlaHoursClient(rec.city_tier || "tier2", rec.vehicle_category);
+  const remaining = slaHours - hoursSinceClient(rec.qualified_at);
+  const cls = remaining < 0 ? "overdue" : remaining < slaHours * 0.25 ? "warning" : "ok";
+  const label = remaining < 0 ? `OVERDUE by ${formatHoursMinutes(remaining)}` : `${formatHoursMinutes(remaining)} left`;
+  return `<span class="sla-badge ${cls}" data-qualified-at="${esc(rec.qualified_at)}" data-sla-hours="${slaHours}">${esc(label)}</span>`;
+}
+function tickSlaBadges() {
+  document.querySelectorAll(".sla-badge").forEach((el) => {
+    const qualifiedAt = el.dataset.qualifiedAt;
+    const slaHours = Number(el.dataset.slaHours);
+    if (!qualifiedAt || Number.isNaN(slaHours)) return;
+    const remaining = slaHours - hoursSinceClient(qualifiedAt);
+    el.className = "sla-badge " + (remaining < 0 ? "overdue" : remaining < slaHours * 0.25 ? "warning" : "ok");
+    el.textContent = remaining < 0 ? `OVERDUE by ${formatHoursMinutes(remaining)}` : `${formatHoursMinutes(remaining)} left`;
+  });
+}
+setInterval(tickSlaBadges, 1000);
+
+let leadFetchDurations = []; // client-elapsed ms per completed triage, for the metrics strip
+
+function renderLeadMetrics() {
+  const el = document.getElementById("leadMetrics");
+  if (!el) return;
+  const results = [...leadState.results.values()];
+  const high = results.filter((r) => r.output?.scoring?.lead_score === "high").length;
+  const medium = results.filter((r) => r.output?.scoring?.lead_score === "medium").length;
+  const low = results.filter((r) => r.output?.scoring?.lead_score === "low").length;
+  const autoSentCount = results.filter((r) => r.auto_send === true).length;
+  const needsReviewCount = results.filter((r) => r.output?.review_flag === true).length;
+
+  el.innerHTML = `
+    <div class="metric-group how-it-works">
+      <div class="metric-label">How this queue works</div>
+      <p>Every lead is scored the instant it's captured — a live AI read on <strong>purchase intent</strong>, separate from the SLA badge on each ticket (which only tracks time, not interest). Where the score comes back clean, the first-contact message has already gone out automatically — no dealer click needed. Only genuine exceptions wait for a human.</p>
+      <div class="score-legend">
+        <div class="score-legend-row"><span class="score-dot score-high"></span><strong>High</strong> — strong intent (best segment, repeat/referral, or a requested test drive). Call within the hour.</div>
+        <div class="score-legend-row"><span class="score-dot score-medium"></span><strong>Medium</strong> — no strong signal either way. Standard follow-up, normal timing.</div>
+        <div class="score-legend-row"><span class="score-dot score-low"></span><strong>Low</strong> — repeated attempts, no engagement. Moved to a low-touch nurture sequence.</div>
+      </div>
+    </div>
+    <div class="metric-group live">
+      <div class="metric-label">This queue — AI-rated right now</div>
+      <div class="metric-row"><span><span class="score-dot score-high"></span>High</span><strong>${high}</strong></div>
+      <div class="metric-row"><span><span class="score-dot score-medium"></span>Medium</span><strong>${medium}</strong></div>
+      <div class="metric-row"><span><span class="score-dot score-low"></span>Low</span><strong>${low}</strong></div>
+      <div class="metric-row"><span>Auto-acknowledged</span><strong>${autoSentCount}</strong></div>
+      <div class="metric-row"><span>Needs a human look</span><strong>${needsReviewCount}</strong></div>
+    </div>`;
+}
 
 let activeTab = "retention";
 
@@ -361,7 +591,15 @@ for (const c of FLAGGED_CUSTOMERS) {
 
 for (const l of FLAGGED_LEADS) {
   leadState.workingRecords.set(l.lead_id, deepClone(l.record));
-  leadState.status.set(l.lead_id, "pending");
+  const prescored = PRESCORED_RESULTS[l.lead_id];
+  if (prescored) {
+    applyLeadResult(l.lead_id, prescored, { isInitialLoad: true });
+  } else {
+    // No pre-scored result available (score_leads.mjs wasn't re-run
+    // after this lead was added, or scoring genuinely failed for it) —
+    // falls back to needing a manual trigger, same as the old behavior.
+    leadState.status.set(l.lead_id, "pending");
+  }
 }
 
 function deepClone(obj) {
@@ -383,7 +621,8 @@ function addLog(id, action, detail) {
 }
 function statusLabel(s) {
   return { pending: "Pending", awaiting_info: "Awaiting info", diagnosed: "Diagnosed",
-    review_flagged: "Needs review", approved: "Approved", rejected: "Rejected", loading: "Diagnosing…" }[s] || s;
+    review_flagged: "Needs review", approved: "Approved", rejected: "Rejected", loading: "Diagnosing…",
+    auto_sent: "Auto-sent" }[s] || s;
 }
 function workerUrl() {
   return document.getElementById("workerUrl").value.trim().replace(/\/+$/, "");
@@ -778,10 +1017,10 @@ function resetSession() {
 // =======================================================================
 
 function renderLeadStatusBoard() {
-  const counts = { pending: 0, awaiting_info: 0, diagnosed: 0, review_flagged: 0, approved: 0, rejected: 0, loading: 0 };
+  const counts = { pending: 0, awaiting_info: 0, diagnosed: 0, review_flagged: 0, approved: 0, rejected: 0, loading: 0, auto_sent: 0 };
   for (const s of leadState.status.values()) counts[s] = (counts[s] || 0) + 1;
   const cells = [
-    ["pending", "Pending"], ["awaiting_info", "Awaiting info"], ["diagnosed", "Triaged"],
+    ["pending", "Pending"], ["awaiting_info", "Awaiting info"], ["auto_sent", "Auto-sent"],
     ["review_flagged", "Needs review"], ["approved", "Approved"], ["rejected", "Rejected"]
   ];
   document.getElementById("leadStatusBoard").innerHTML = cells.map(([key, label]) =>
@@ -791,18 +1030,26 @@ function renderLeadStatusBoard() {
 
 function renderLeadQueue() {
   const list = document.getElementById("leadQueueList");
-  list.innerHTML = FLAGGED_LEADS.map((l) => {
+  list.innerHTML = sortLeadEntries(allLeadEntries()).map((l) => {
     const status = leadState.status.get(l.lead_id);
     const rec = leadState.workingRecords.get(l.lead_id);
+    if (!rec) return "";
     const selected = leadState.selectedId === l.lead_id ? "selected" : "";
+    const res = leadState.results.get(l.lead_id);
+    const score = res?.output?.scoring?.lead_score;
+    const scoreBadge = score ? `<span class="score-badge score-${score}">${esc(score.toUpperCase())}</span>` : "";
     return `
       <button type="button" class="ticket status-${status} ${selected}" data-id="${esc(l.lead_id)}">
         <div class="ticket-head">
           <span class="ticket-no">LEAD #${esc(l.lead_id)}</span>
+          ${scoreBadge}
+        </div>
+        <div class="ticket-head" style="margin-top:2px;">
           <span class="mini-badge ${status}">${esc(statusLabel(status))}</span>
         </div>
-        <div class="ticket-meta">${esc((rec.vehicle_category || "").toUpperCase())} · ${l.flags.length} flag${l.flags.length === 1 ? "" : "s"}</div>
+        <div class="ticket-meta">${esc((rec.vehicle_category || "").toUpperCase())}${rec.customer_name ? " · " + esc(rec.customer_name) : ""} · ${l.flags.length} flag${l.flags.length === 1 ? "" : "s"}</div>
         <div class="ticket-flags">${esc(l.flags[0] || "")}${l.flags.length > 1 ? ` +${l.flags.length - 1} more` : ""}</div>
+        ${rec.qualified_at ? `<div style="margin-top:6px;">${slaBadgeHtml(rec)}</div>` : ""}
       </button>`;
   }).join("");
   list.querySelectorAll(".ticket").forEach((el) => {
@@ -810,7 +1057,7 @@ function renderLeadQueue() {
   });
 }
 
-function renderLeadRecordPanel(rec) {
+function renderLeadRecordPanel(id, rec) {
   const rows = [
     fieldRow("Vehicle interest", rec.vehicle_category, false),
     fieldRow("Source", rec.source, false),
@@ -824,9 +1071,12 @@ function renderLeadRecordPanel(rec) {
     fieldRow("Test drive requested", rec.test_drive_requested ? "Yes" : "No", false)
   ].join("");
   const notes = (rec.notes || []).map((t) => `<div class="slip">"${esc(t)}"</div>`).join("");
+  const nameLine = rec.customer_name ? `<div class="eyebrow" style="margin-bottom:8px;">${esc(rec.customer_name)}</div>` : "";
   return `
     <section class="panel">
       <h3>Lead record</h3>
+      ${nameLine}
+      <div style="margin-bottom:10px;">${slaBadgeHtml(rec)} <span style="font-family:var(--font-mono); font-size:10.5px; color:var(--steel);">SLA — response window before this lead is considered overdue</span></div>
       <div class="record-grid">${rows}</div>
       ${notes ? `<div style="margin-top:12px;">${notes}</div>` : ""}
     </section>`;
@@ -856,11 +1106,91 @@ function renderLeadQuestionBox(id, question) {
     </section>`;
 }
 
+// The four real stages handleTriage() in the Worker actually performs,
+// in the actual order it performs them — this isn't a decorative
+// animation, it's an honest reflection of the pipeline. Steps 1-2 are
+// genuinely near-instant server-side (a completeness check and a pure
+// scoring/ranking function, no AI, no network call), so they advance on
+// a short timer that approximates real timing. Step 3 is the one
+// stage with real, variable latency — it does NOT advance on a timer,
+// only when the actual API response arrives. Step 4 gets a brief,
+// deliberate pause so it's visible rather than instant-skipped, since
+// validation genuinely did just run as part of producing that response.
+const EVAL_STEPS = [
+  { n: 1, label: "Checking lead details & contact info" },
+  { n: 2, label: "Matching to the best-fit dealer" },
+  { n: 3, label: "Scoring purchase intent — live AI call" },
+  { n: 4, label: "Validating the result" }
+];
+
+function renderEvalSteps(currentStep) {
+  return `
+    <section class="panel">
+      <h3>Evaluating this lead</h3>
+      <div class="eval-steps">
+        ${EVAL_STEPS.map((s) => {
+          const state = s.n < currentStep ? "done" : s.n === currentStep ? "active" : "";
+          const mark = s.n < currentStep ? "✓" : "";
+          return `<div class="eval-step ${state}"><span class="eval-dot">${mark}</span>${esc(s.label)}</div>`;
+        }).join("")}
+      </div>
+    </section>`;
+}
+
+/**
+ * Translates validate.js's technical validation_notes (written for
+ * debugging, full of field/code names) into a plain sentence that
+ * names the ACTUAL score, action, and channel involved — not a vague
+ * "something didn't match." A dealer reading this should get a short
+ * label plus one relevant reason — not a breakdown of the AI's
+ * internal reasoning. The exact raw strings are still available behind
+ * "Show technical details" for anyone who wants them.
+ */
+function humanizeOneNote(note) {
+  if (/playbook_code \(([^)]+)\) does not match lead_score/.test(note)) {
+    return { label: "Mismatch flagged", reason: "The AI's suggested next step didn't match its own rating." };
+  }
+  if (/every scored lead requires an acknowledgment/i.test(note)) {
+    return { label: "Message missing", reason: "AI rated the lead but didn't write a message." };
+  }
+  if (/is not available for this lead/.test(note)) {
+    return { label: "Contact issue", reason: "AI tried to reach this lead a way they're not reachable." };
+  }
+  if (/could not be matched to the record|check couldn't fully verify/i.test(note)) {
+    // Note: this specific reason is intentionally non-blocking now (see
+    // lead_validate.js) — it will rarely surface as the PRIMARY shown
+    // reason, since it alone no longer forces review_flag. It's handled
+    // here only for the rare case it appears alongside a real blocking
+    // reason in the notes array.
+    return { label: "Unverified reasoning", reason: "AI's explanation didn't match anything on file." };
+  }
+  if (/failed structural validation/i.test(note)) {
+    return { label: "Technical error", reason: "AI's response couldn't be read properly." };
+  }
+  if (/Both LLM providers failed/i.test(note)) {
+    return { label: "AI unavailable", reason: "Both AI services were briefly down." };
+  }
+  if (/needs_human_input was true/i.test(note)) {
+    return { label: "Needs more info", reason: "AI said it needed more details first." };
+  }
+  return { label: "Needs a look", reason: "Didn't pass one of the automatic checks." };
+}
+
+function humanizeReviewReason(notes) {
+  if (!notes || notes.length === 0) return { label: "Needs a look", reason: "Needs a second look before it's used." };
+  // Deliberately shows only the single most relevant reason, even if
+  // more than one check fired — a dealer needs one clear "why," not a
+  // stacked list. The complete raw picture is still one click away in
+  // "Show technical details."
+  return humanizeOneNote(notes[0]);
+}
+
 function renderLeadTriagePanel(id, res) {
   const out = res.output;
-  const tier = TIER_META[out.triage.priority_tier] || { name: out.triage.priority_tier };
-  const conf = Math.max(0, Math.min(100, out.triage.confidence));
-  const latencyLabel = res._clientElapsedMs ? `${(res._clientElapsedMs / 1000).toFixed(1)}s` : "?";
+  const score = TIER_META[out.scoring.lead_score] || { name: out.scoring.lead_score };
+  const conf = Math.max(0, Math.min(100, out.scoring.confidence));
+  const latencyLabel = res._elapsedMs ? `${(res._elapsedMs / 1000).toFixed(1)}s` : "?";
+  const autoSent = res.auto_send === true;
 
   const aiBadge = `
     <div class="ai-badge">
@@ -868,48 +1198,92 @@ function renderLeadTriagePanel(id, res) {
       Live AI call — ${esc(res.provider || "unknown provider")} · responded in ${latencyLabel}
     </div>`;
 
+  const reviewInfo = out.review_flag ? humanizeReviewReason(res.validation_notes) : null;
   const reviewBanner = out.review_flag ? `
     <div class="review-banner">
-      <strong>Flagged for review</strong>
-      This triage needs a human look before anything happens — the Worker's own validation caught something the model missed.
-      ${res.validation_notes && res.validation_notes.length ? `<ul>${res.validation_notes.map((n) => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}
+      <div class="review-banner-header">
+        <span class="review-tag">${esc(reviewInfo.label)}</span>
+        <span class="review-banner-footer">Not auto-sent</span>
+      </div>
+      <p class="review-banner-summary">${esc(reviewInfo.reason)}</p>
     </div>` : "";
 
-  const evidence = out.triage.evidence.map((e) => `<li>${esc(e)}</li>`).join("");
+  const autoSentBanner = autoSent ? `
+    <div class="auto-sent-banner">
+      <strong>✓ First-contact message sent automatically</strong>
+      Passed every validation check with no flags — sent the moment scoring completed, no dealer click required. See the exact text below.
+    </div>` : "";
+
+  const evidence = out.scoring.evidence.map((e) => `<li>${esc(e)}</li>`).join("");
 
   let draftBlock = "";
   if (out.draft_message) {
-    draftBlock = `
+    draftBlock = autoSent
+      ? `
+      <div class="draft-msg">
+        <div class="draft-meta">Sent — ${esc(out.draft_message.channel)} (read-only, already delivered)</div>
+        <div class="sent-text">${esc(out.draft_message.text)}</div>
+      </div>`
+      : `
       <div class="draft-msg">
         <div class="draft-meta">Draft — ${esc(out.draft_message.channel)}</div>
         <textarea id="leadDraftText">${esc(out.draft_message.text)}</textarea>
       </div>`;
   }
 
-  const actions = `
+  // Once auto-sent, "Approve & send" no longer makes sense (already
+  // sent) — only manually-reviewed (flagged) results still show the
+  // human approval controls, same as before.
+  const actions = autoSent
+    ? ""
+    : `
     <button class="btn btn-teal" data-action="approve">Approve &amp; send</button>
     ${out.draft_message ? `<button class="btn btn-outline" data-action="edit">Edit before sending</button>` : ""}
     <button class="btn btn-rust" data-action="reject">Reject</button>`;
 
+  // Technical detail consolidated into ONE place, not two — the same
+  // "View raw agent response" panel every result already has, rather
+  // than a second, separate toggle just for flagged ones. A dealer
+  // never needs to open this at all; it's here for anyone (a judge,
+  // your own technical team) who genuinely wants the full picture.
+  const rawPayload = { ...out };
+  if (res.validation_notes && res.validation_notes.length) rawPayload._validation_notes = res.validation_notes;
   const rawResponseBlock = `
     <details class="raw-response">
       <summary>View raw agent response (proof of a live model call)</summary>
-      <pre>${esc(JSON.stringify(out, null, 2))}</pre>
+      <pre>${esc(JSON.stringify(rawPayload, null, 2))}</pre>
     </details>`;
 
   return `
     <section class="panel">
-      <h3>Triage</h3>
+      <h3>Lead score</h3>
       ${aiBadge}
       ${reviewBanner}
-      <div><strong>${esc(out.triage.priority_tier.toUpperCase())} — ${esc(tier.name || "")}</strong></div>
+      ${autoSentBanner}
+      <div><strong>${esc(out.scoring.lead_score.toUpperCase())} — ${esc(score.name || "")}</strong></div>
       <div class="conf-meter"><div style="width:${conf}%; background:${out.review_flag ? "var(--rust)" : "var(--teal)"};"></div></div>
       <div class="conf-label">Confidence: ${conf}/100</div>
       <ul class="evidence-list">${evidence}</ul>
       <div style="margin-top:10px;"><strong>${esc(out.recommended_action.playbook_code)}</strong> — ${esc(out.recommended_action.description)}</div>
       ${draftBlock}
-      <div class="action-row" style="margin-top:14px;">${actions}</div>
+      ${actions ? `<div class="action-row" style="margin-top:14px;">${actions}</div>` : ""}
       ${rawResponseBlock}
+    </section>`;
+}
+
+function renderLeadDealerPanel(dealer) {
+  const rows = [
+    fieldRow("City / tier", `${dealer.city} · ${dealer.city_tier}`, false),
+    fieldRow("Current load", `${dealer.current_load} active lead${dealer.current_load === 1 ? "" : "s"}`, false),
+    fieldRow("Historical SLA compliance", `${dealer.sla_compliance_pct}%`, false),
+    fieldRow("Match score", dealer.match_score, false)
+  ].join("");
+  return `
+    <section class="panel">
+      <h3>Recommended dealer <span class="no-ai-tag">— deterministic match, no AI call</span></h3>
+      <div style="font-family:var(--font-display); font-weight:700; font-size:15px; margin-bottom:8px;">${esc(dealer.dealer_name)}</div>
+      <div class="record-grid">${rows}</div>
+      <p style="margin:10px 0 0; font-size:12.5px; color:var(--steel);">${esc(dealer.rationale)}</p>
     </section>`;
 }
 
@@ -920,7 +1294,7 @@ function renderLeadDetail() {
     el.innerHTML = `<div class="detail-empty">Select a lead from the queue to view the record and run triage.</div>`;
     return;
   }
-  const l = FLAGGED_LEADS.find((x) => x.lead_id === id);
+  const l = allLeadEntries().find((x) => x.lead_id === id);
   const rec = leadState.workingRecords.get(id);
   const status = leadState.status.get(id);
   const err = leadState.errors.get(id);
@@ -933,16 +1307,17 @@ function renderLeadDetail() {
     body += `<div class="error-banner"><strong style="display:block; font-family:var(--font-display); text-transform:uppercase; font-size:11.5px; letter-spacing:.05em; margin-bottom:4px;">Couldn't reach the Worker</strong>${esc(err)}</div>`;
   }
 
-  body += renderLeadRecordPanel(rec);
+  body += renderLeadRecordPanel(id, rec);
 
   if (status === "loading") {
-    body += `<section class="panel"><h3>Triage</h3><p style="color:var(--steel);">📡 Calling Gemini live (Groq fallback if needed) — this is a real API request, not a canned response…</p></section>`;
+    body += renderEvalSteps(leadState.evalStep.get(id) || 1);
   } else if (res && res.needs_human_input && !res.output) {
     body += renderLeadQuestionBox(id, res.human_question);
   } else if (res && res.output) {
     body += renderLeadTriagePanel(id, res);
+    if (res.recommended_dealer) body += renderLeadDealerPanel(res.recommended_dealer);
   } else {
-    body += `<section class="panel"><h3>Triage</h3><div class="action-row"><button class="btn btn-amber" id="runTriageBtn">Run triage</button></div></section>`;
+    body += `<section class="panel"><h3>Scoring</h3><p style="color:var(--steel); font-size:12.5px; margin-bottom:10px;">No pre-scored result found for this lead — it may have been added after the last scoring run. Score it now:</p><div class="action-row"><button class="btn btn-amber" id="runTriageBtn">Score this lead</button></div></section>`;
   }
 
   el.innerHTML = `
@@ -1007,6 +1382,35 @@ function selectLead(id) {
   renderLeadDetail();
 }
 
+/**
+ * Shared between runTriage() (live, on-demand calls — Simulate New
+ * Lead) and the init loop (pre-scored results baked in at build time).
+ * Same interpretation logic either way: the whole
+ * point is that a lead scored an hour before page load and a lead
+ * scored ten seconds ago via a live click should land in an identical
+ * status — "already handled," not "waiting for a click."
+ */
+function applyLeadResult(id, body, { isInitialLoad = false } = {}) {
+  leadState.results.set(id, body);
+  if (body.output && typeof body._elapsedMs === "number") leadFetchDurations.push(body._elapsedMs);
+
+  if (body.needs_human_input && !body.output) {
+    leadState.status.set(id, "awaiting_info");
+    addLeadLog(id, isInitialLoad ? "Needs dealer input before scoring could run" : "Scoring requested dealer input", body.human_question);
+  } else if (body.output && body.output.review_flag) {
+    leadState.status.set(id, "review_flagged");
+    addLeadLog(id, isInitialLoad ? "Pre-scored — flagged for review, not auto-sent" : "Scored — flagged for review, not auto-sent", `${body.output.scoring.lead_score} via ${body.provider || "?"} in ${body._elapsedMs}ms`);
+  } else if (body.output && body.auto_send) {
+    leadState.status.set(id, "auto_sent");
+    addLeadLog(id, isInitialLoad ? "Pre-scored — first-contact message already sent automatically" : "Scored — first-contact message sent automatically", `${body.output.scoring.lead_score} via ${body.provider || "?"} in ${body._elapsedMs}ms, confidence ${body.output.scoring.confidence}`);
+  } else if (body.output) {
+    leadState.status.set(id, "diagnosed");
+    addLeadLog(id, isInitialLoad ? "Pre-scored" : "Scored", `${body.output.scoring.lead_score} via ${body.provider || "?"} in ${body._elapsedMs}ms, confidence ${body.output.scoring.confidence}`);
+  } else {
+    leadState.status.set(id, "pending");
+  }
+}
+
 async function runTriage(id) {
   const url = workerUrl();
   if (!url) {
@@ -1015,9 +1419,23 @@ async function runTriage(id) {
     return;
   }
   leadState.status.set(id, "loading");
+  leadState.evalStep.set(id, 1);
   leadState.errors.delete(id);
   renderLeadQueue();
   renderLeadDetail();
+
+  // Advance the two genuinely-fast, no-AI stages on a short timer that
+  // approximates their real speed. Guarded so a stale timer from an
+  // earlier click (or a lead the dealer has since navigated away from)
+  // never overwrites a newer state.
+  const advanceIfStillLoading = (step) => {
+    if (leadState.status.get(id) === "loading") {
+      leadState.evalStep.set(id, step);
+      if (leadState.selectedId === id) renderLeadDetail();
+    }
+  };
+  const t1 = setTimeout(() => advanceIfStillLoading(2), 450);
+  const t2 = setTimeout(() => advanceIfStillLoading(3), 900);
 
   try {
     const startTime = performance.now();
@@ -1033,26 +1451,21 @@ async function runTriage(id) {
     // variable, realistic delay (and the exact number) is itself
     // evidence this is a live API call, not a pre-scripted response —
     // worth showing plainly for a judged submission, not hiding it.
-    body._clientElapsedMs = Math.round(performance.now() - startTime);
-    leadState.results.set(id, body);
-
-    if (body.needs_human_input && !body.output) {
-      leadState.status.set(id, "awaiting_info");
-      addLeadLog(id, "Triage requested dealer input", body.human_question);
-    } else if (body.output && body.output.review_flag) {
-      leadState.status.set(id, "review_flagged");
-      addLeadLog(id, "Triaged — flagged for review", `${body.output.triage.priority_tier} via ${body.provider || "?"} in ${body._clientElapsedMs}ms`);
-    } else if (body.output) {
-      leadState.status.set(id, "diagnosed");
-      addLeadLog(id, "Triaged", `${body.output.triage.priority_tier} via ${body.provider || "?"} in ${body._clientElapsedMs}ms, confidence ${body.output.triage.confidence}`);
-    } else {
-      leadState.status.set(id, "pending");
-    }
+    body._elapsedMs = Math.round(performance.now() - startTime);
+    clearTimeout(t1);
+    clearTimeout(t2);
+    leadState.evalStep.set(id, 4);
+    if (leadState.selectedId === id) renderLeadDetail();
+    await new Promise((r) => setTimeout(r, 350)); // brief, deliberate pause so "Validating" is actually visible, not instant-skipped
+    applyLeadResult(id, body);
   } catch (e) {
+    clearTimeout(t1);
+    clearTimeout(t2);
     leadState.status.set(id, "pending");
     leadState.errors.set(id, e.message + " — check the Worker URL is correct and the Worker is deployed/running.");
     addLeadLog(id, "Triage failed", e.message);
   }
+  renderLeadMetrics();
   renderLeadQueue();
   renderLeadDetail();
 }
@@ -1115,18 +1528,67 @@ function editLeadDraft(id) {
   addLeadLog(id, "Dealer opened draft for editing");
 }
 
+function simulateNewLead() {
+  const names = ["Rohan Mehta", "Priya Nair", "Arjun Singh", "Sneha Reddy", "Vikram Rao", "Ananya Iyer", "Karan Malhotra", "Divya Pillai"];
+  const vehicles = ["hatchback", "sedan", "suv", "ev"];
+  const sources = ["digital", "walk-in", "referral"];
+  const tiers = ["tier1", "tier2", "tier3"];
+  const customerTypes = ["new", "new", "new", "repeat", "referral"]; // weighted mostly new
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+  simulatedLeadCounter++;
+  const id = `LEAD-SIM-${simulatedLeadCounter}`;
+  const hasPhone = Math.random() > 0.15;
+  const hasEmail = Math.random() > 0.15 || !hasPhone; // avoid an unreachable lead most of the time
+  const record = {
+    lead_id: id,
+    customer_name: pick(names),
+    vehicle_category: pick(vehicles),
+    source: pick(sources),
+    qualified_at: new Date().toISOString(), // "just now" — a genuinely new lead, not backdated
+    city_tier: pick(tiers),
+    contact_phone_available: hasPhone,
+    contact_email_available: hasEmail,
+    contact_attempts: 0,
+    last_contact_attempt_at: null,
+    customer_type: pick(customerTypes),
+    test_drive_requested: false,
+    notes: []
+  };
+
+  simulatedLeads.push({ lead_id: id, flags: ["simulated_new_lead", "just_qualified"], record });
+  leadState.workingRecords.set(id, deepClone(record));
+  leadState.status.set(id, "pending");
+  addLeadLog(id, "New lead simulated (INTAKE)", `${record.customer_name} — ${record.vehicle_category}, ${record.source}, ${record.city_tier}`);
+  renderLeadQueue();
+  selectLead(id);
+  // Auto-trigger scoring immediately — matches the rest of the system:
+  // a lead is scored the instant it's captured, never sitting idle
+  // waiting for someone to click something.
+  runTriage(id);
+}
+
 function resetLeadSession() {
   leadState.workingRecords.clear();
   leadState.status.clear();
   leadState.results.clear();
   leadState.errors.clear();
+  leadState.evalStep.clear();
   leadState.log = [];
   leadState.selectedId = null;
+  simulatedLeads.length = 0;
+  leadFetchDurations = [];
   for (const l of FLAGGED_LEADS) {
     leadState.workingRecords.set(l.lead_id, deepClone(l.record));
-    leadState.status.set(l.lead_id, "pending");
+    const prescored = PRESCORED_RESULTS[l.lead_id];
+    if (prescored) {
+      applyLeadResult(l.lead_id, prescored, { isInitialLoad: true });
+    } else {
+      leadState.status.set(l.lead_id, "pending");
+    }
   }
   renderLeadStatusBoard();
+  renderLeadMetrics();
   renderLeadQueue();
   renderLeadDetail();
 }
@@ -1146,11 +1608,17 @@ document.getElementById("resetBtn").addEventListener("click", () => {
 });
 document.getElementById("tabBtnRetention").addEventListener("click", () => switchTab("retention"));
 document.getElementById("tabBtnLead").addEventListener("click", () => switchTab("lead"));
+document.getElementById("simulateLeadBtn").addEventListener("click", simulateNewLead);
+document.getElementById("leadSortSelect").addEventListener("change", (e) => {
+  leadSortMode = e.target.value;
+  renderLeadQueue();
+});
 
 renderAll();
 if (FLAGGED_CUSTOMERS.length) selectCustomer(FLAGGED_CUSTOMERS[0].customer_id);
 
 renderLeadStatusBoard();
+renderLeadMetrics();
 if (FLAGGED_LEADS.length) selectLead(FLAGGED_LEADS[0].lead_id);
 else { renderLeadQueue(); renderLeadDetail(); }
 </script>

@@ -1,0 +1,1694 @@
+{
+  "generated_at": "2026-08-10T06:36:50.684Z",
+  "worker_url": "https://asteron-retention-agent.aces4iimb.workers.dev",
+  "total_scored": 14,
+  "scored": [
+    {
+      "lead_id": "LEAD-3001",
+      "flags": [
+        "no_contact_method",
+        "high_loss_segment: tier1 city + SUV interest"
+      ],
+      "record": {
+        "lead_id": "LEAD-3001",
+        "vehicle_category": "suv",
+        "source": "digital",
+        "qualified_at": "2026-08-07T08:57:49.512Z",
+        "city_tier": "tier1",
+        "contact_phone_available": false,
+        "contact_email_available": false,
+        "contact_attempts": 0,
+        "last_contact_attempt_at": null,
+        "customer_type": "new",
+        "test_drive_requested": false,
+        "notes": []
+      },
+      "result": {
+        "ok": true,
+        "llm_called": false,
+        "provider": null,
+        "needs_human_input": true,
+        "human_question": "No phone or email on file for LEAD-3001. Do you have a way to reach this lead? (Phone / Email / Lead is unreachable)",
+        "record": {
+          "lead_id": {
+            "value": "LEAD-3001",
+            "status": "observed"
+          },
+          "vehicle_category": {
+            "value": "suv",
+            "status": "observed"
+          },
+          "source": {
+            "value": "digital",
+            "status": "observed"
+          },
+          "qualified_at": {
+            "value": "2026-08-07T08:57:49.512Z",
+            "status": "observed"
+          },
+          "city_tier": {
+            "value": "tier1",
+            "status": "observed"
+          },
+          "contact_phone_available": {
+            "value": false,
+            "status": "observed"
+          },
+          "contact_email_available": {
+            "value": false,
+            "status": "observed"
+          },
+          "contact_attempts": {
+            "value": 0,
+            "status": "observed"
+          },
+          "last_contact_attempt_at": {
+            "value": null,
+            "status": "missing"
+          },
+          "customer_type": {
+            "value": "new",
+            "status": "observed"
+          },
+          "test_drive_requested": {
+            "value": false,
+            "status": "observed"
+          },
+          "notes": {
+            "value": [],
+            "status": "observed"
+          },
+          "hours_since_qualified": {
+            "value": 69.6,
+            "status": "observed"
+          },
+          "expected_sla_hours": {
+            "value": 4,
+            "status": "inferred",
+            "basis": "Inferred from city_tier (\"tier1\") and vehicle_category (\"suv\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."
+          }
+        },
+        "recommended_dealer": null,
+        "auto_send": false,
+        "output": null,
+        "_elapsedMs": 1137
+      }
+    },
+    {
+      "lead_id": "LEAD-3002",
+      "flags": [
+        "no_contact_method"
+      ],
+      "record": {
+        "lead_id": "LEAD-3002",
+        "vehicle_category": "hatchback",
+        "source": "walk-in",
+        "qualified_at": "2026-08-07T05:57:49.513Z",
+        "city_tier": "tier2",
+        "contact_phone_available": false,
+        "contact_email_available": false,
+        "contact_attempts": 0,
+        "last_contact_attempt_at": null,
+        "customer_type": "new",
+        "test_drive_requested": false,
+        "notes": []
+      },
+      "result": {
+        "ok": true,
+        "llm_called": false,
+        "provider": null,
+        "needs_human_input": true,
+        "human_question": "No phone or email on file for LEAD-3002. Do you have a way to reach this lead? (Phone / Email / Lead is unreachable)",
+        "record": {
+          "lead_id": {
+            "value": "LEAD-3002",
+            "status": "observed"
+          },
+          "vehicle_category": {
+            "value": "hatchback",
+            "status": "observed"
+          },
+          "source": {
+            "value": "walk-in",
+            "status": "observed"
+          },
+          "qualified_at": {
+            "value": "2026-08-07T05:57:49.513Z",
+            "status": "observed"
+          },
+          "city_tier": {
+            "value": "tier2",
+            "status": "observed"
+          },
+          "contact_phone_available": {
+            "value": false,
+            "status": "observed"
+          },
+          "contact_email_available": {
+            "value": false,
+            "status": "observed"
+          },
+          "contact_attempts": {
+            "value": 0,
+            "status": "observed"
+          },
+          "last_contact_attempt_at": {
+            "value": null,
+            "status": "missing"
+          },
+          "customer_type": {
+            "value": "new",
+            "status": "observed"
+          },
+          "test_drive_requested": {
+            "value": false,
+            "status": "observed"
+          },
+          "notes": {
+            "value": [],
+            "status": "observed"
+          },
+          "hours_since_qualified": {
+            "value": 72.6,
+            "status": "observed"
+          },
+          "expected_sla_hours": {
+            "value": 24,
+            "status": "inferred",
+            "basis": "Inferred from city_tier (\"tier2\") and vehicle_category (\"hatchback\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."
+          }
+        },
+        "recommended_dealer": null,
+        "auto_send": false,
+        "output": null,
+        "_elapsedMs": 142
+      }
+    },
+    {
+      "lead_id": "LEAD-3003",
+      "flags": [
+        "high_loss_segment: tier1 city + SUV interest"
+      ],
+      "record": {
+        "lead_id": "LEAD-3003",
+        "vehicle_category": "suv",
+        "source": "digital",
+        "qualified_at": "2026-08-07T07:57:49.513Z",
+        "city_tier": "tier1",
+        "contact_phone_available": true,
+        "contact_email_available": true,
+        "contact_attempts": 0,
+        "last_contact_attempt_at": null,
+        "customer_type": "new",
+        "test_drive_requested": false,
+        "notes": []
+      },
+      "result": {
+        "ok": true,
+        "llm_called": true,
+        "provider": "groq-llama-3.3-70b",
+        "needs_human_input": false,
+        "human_question": null,
+        "record": {
+          "lead_id": {
+            "value": "LEAD-3003",
+            "status": "observed"
+          },
+          "vehicle_category": {
+            "value": "suv",
+            "status": "observed"
+          },
+          "source": {
+            "value": "digital",
+            "status": "observed"
+          },
+          "qualified_at": {
+            "value": "2026-08-07T07:57:49.513Z",
+            "status": "observed"
+          },
+          "city_tier": {
+            "value": "tier1",
+            "status": "observed"
+          },
+          "contact_phone_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_email_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_attempts": {
+            "value": 0,
+            "status": "observed"
+          },
+          "last_contact_attempt_at": {
+            "value": null,
+            "status": "missing"
+          },
+          "customer_type": {
+            "value": "new",
+            "status": "observed"
+          },
+          "test_drive_requested": {
+            "value": false,
+            "status": "observed"
+          },
+          "notes": {
+            "value": [],
+            "status": "observed"
+          },
+          "hours_since_qualified": {
+            "value": 70.6,
+            "status": "observed"
+          },
+          "expected_sla_hours": {
+            "value": 4,
+            "status": "inferred",
+            "basis": "Inferred from city_tier (\"tier1\") and vehicle_category (\"suv\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."
+          }
+        },
+        "recommended_dealer": {
+          "dealer_id": "AST-D-BLR-01",
+          "dealer_name": "Asteron Hub Whitefield",
+          "city": "Bengaluru",
+          "city_tier": "tier1",
+          "current_load": 2,
+          "sla_compliance_pct": 92,
+          "match_score": 95,
+          "rationale": "Matched to Asteron Hub Whitefield (Bengaluru) — same city tier (tier1), specializes in suv, 2 active leads right now, 92% historical SLA compliance."
+        },
+        "auto_send": true,
+        "output": {
+          "lead_id": "LEAD-3003",
+          "scoring": {
+            "lead_score": "medium",
+            "evidence": [
+              "Tier-1 city",
+              "SUV segment",
+              "No prior contact attempts",
+              "Within expected response window"
+            ],
+            "confidence": 100
+          },
+          "needs_human_input": false,
+          "human_question": null,
+          "recommended_action": {
+            "playbook_code": "standard_outreach",
+            "description": "Contact via the lead's preferred available channel within the expected response window."
+          },
+          "draft_message": {
+            "channel": "sms",
+            "text": "Thank you for your inquiry. Asteron Hub Whitefield will respond within 4 hours."
+          },
+          "review_flag": false
+        },
+        "validation_notes": [
+          "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"SUV segment\"]"
+        ],
+        "_elapsedMs": 925
+      }
+    },
+    {
+      "lead_id": "LEAD-3004",
+      "flags": [
+        "repeat_customer"
+      ],
+      "record": {
+        "lead_id": "LEAD-3004",
+        "vehicle_category": "sedan",
+        "source": "referral",
+        "qualified_at": "2026-08-07T02:57:49.513Z",
+        "city_tier": "tier2",
+        "contact_phone_available": true,
+        "contact_email_available": false,
+        "contact_attempts": 0,
+        "last_contact_attempt_at": null,
+        "customer_type": "repeat",
+        "test_drive_requested": false,
+        "notes": []
+      },
+      "result": {
+        "ok": true,
+        "llm_called": true,
+        "provider": "groq-llama-3.3-70b",
+        "needs_human_input": false,
+        "human_question": null,
+        "record": {
+          "lead_id": {
+            "value": "LEAD-3004",
+            "status": "observed"
+          },
+          "vehicle_category": {
+            "value": "sedan",
+            "status": "observed"
+          },
+          "source": {
+            "value": "referral",
+            "status": "observed"
+          },
+          "qualified_at": {
+            "value": "2026-08-07T02:57:49.513Z",
+            "status": "observed"
+          },
+          "city_tier": {
+            "value": "tier2",
+            "status": "observed"
+          },
+          "contact_phone_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_email_available": {
+            "value": false,
+            "status": "observed"
+          },
+          "contact_attempts": {
+            "value": 0,
+            "status": "observed"
+          },
+          "last_contact_attempt_at": {
+            "value": null,
+            "status": "missing"
+          },
+          "customer_type": {
+            "value": "repeat",
+            "status": "observed"
+          },
+          "test_drive_requested": {
+            "value": false,
+            "status": "observed"
+          },
+          "notes": {
+            "value": [],
+            "status": "observed"
+          },
+          "hours_since_qualified": {
+            "value": 75.6,
+            "status": "observed"
+          },
+          "expected_sla_hours": {
+            "value": 24,
+            "status": "inferred",
+            "basis": "Inferred from city_tier (\"tier2\") and vehicle_category (\"sedan\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."
+          }
+        },
+        "recommended_dealer": {
+          "dealer_id": "AST-D-KOC-01",
+          "dealer_name": "Asteron Coastal Kochi",
+          "city": "Kochi",
+          "city_tier": "tier2",
+          "current_load": 3,
+          "sla_compliance_pct": 85,
+          "match_score": 93,
+          "rationale": "Matched to Asteron Coastal Kochi (Kochi) — same city tier (tier2), specializes in sedan, 3 active leads right now, 85% historical SLA compliance."
+        },
+        "auto_send": true,
+        "output": {
+          "lead_id": "LEAD-3004",
+          "scoring": {
+            "lead_score": "medium",
+            "evidence": [
+              "Repeat customer",
+              "Referral source",
+              "Tier2 city",
+              "Within expected response window"
+            ],
+            "confidence": 100
+          },
+          "needs_human_input": false,
+          "human_question": null,
+          "recommended_action": {
+            "playbook_code": "standard_outreach",
+            "description": "Contact via the lead's preferred available channel within the expected response window."
+          },
+          "draft_message": {
+            "channel": "sms",
+            "text": "Thank you for your inquiry. Asteron Coastal Kochi will respond within 24 hours."
+          },
+          "review_flag": false
+        },
+        "validation_notes": [],
+        "_elapsedMs": 805
+      }
+    },
+    {
+      "lead_id": "LEAD-3005",
+      "flags": [
+        "referral_customer"
+      ],
+      "record": {
+        "lead_id": "LEAD-3005",
+        "vehicle_category": "ev",
+        "source": "referral",
+        "qualified_at": "2026-08-07T05:57:49.513Z",
+        "city_tier": "tier1",
+        "contact_phone_available": true,
+        "contact_email_available": true,
+        "contact_attempts": 0,
+        "last_contact_attempt_at": null,
+        "customer_type": "referral",
+        "test_drive_requested": false,
+        "notes": []
+      },
+      "result": {
+        "ok": true,
+        "llm_called": true,
+        "provider": "groq-llama-3.3-70b",
+        "needs_human_input": false,
+        "human_question": null,
+        "record": {
+          "lead_id": {
+            "value": "LEAD-3005",
+            "status": "observed"
+          },
+          "vehicle_category": {
+            "value": "ev",
+            "status": "observed"
+          },
+          "source": {
+            "value": "referral",
+            "status": "observed"
+          },
+          "qualified_at": {
+            "value": "2026-08-07T05:57:49.513Z",
+            "status": "observed"
+          },
+          "city_tier": {
+            "value": "tier1",
+            "status": "observed"
+          },
+          "contact_phone_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_email_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_attempts": {
+            "value": 0,
+            "status": "observed"
+          },
+          "last_contact_attempt_at": {
+            "value": null,
+            "status": "missing"
+          },
+          "customer_type": {
+            "value": "referral",
+            "status": "observed"
+          },
+          "test_drive_requested": {
+            "value": false,
+            "status": "observed"
+          },
+          "notes": {
+            "value": [],
+            "status": "observed"
+          },
+          "hours_since_qualified": {
+            "value": 72.6,
+            "status": "observed"
+          },
+          "expected_sla_hours": {
+            "value": 8,
+            "status": "inferred",
+            "basis": "Inferred from city_tier (\"tier1\") and vehicle_category (\"ev\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."
+          }
+        },
+        "recommended_dealer": {
+          "dealer_id": "AST-D-MUM-01",
+          "dealer_name": "Asteron Select Bandra",
+          "city": "Mumbai",
+          "city_tier": "tier1",
+          "current_load": 3,
+          "sla_compliance_pct": 88,
+          "match_score": 93,
+          "rationale": "Matched to Asteron Select Bandra (Mumbai) — same city tier (tier1), specializes in ev, 3 active leads right now, 88% historical SLA compliance."
+        },
+        "auto_send": true,
+        "output": {
+          "lead_id": "LEAD-3005",
+          "scoring": {
+            "lead_score": "high",
+            "evidence": [
+              "Tier-1 city",
+              "Referral customer",
+              "EV segment",
+              "No prior contact attempts"
+            ],
+            "confidence": 100
+          },
+          "needs_human_input": false,
+          "human_question": null,
+          "recommended_action": {
+            "playbook_code": "immediate_call",
+            "description": "Call the lead within the hour and offer a same-day test drive slot."
+          },
+          "draft_message": {
+            "channel": "call_brief",
+            "text": "Hello, this is Asteron Select Bandra. We've received your inquiry and will be in touch within the hour to discuss your EV interests."
+          },
+          "review_flag": false
+        },
+        "validation_notes": [
+          "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"EV segment\"]"
+        ],
+        "_elapsedMs": 934
+      }
+    },
+    {
+      "lead_id": "LEAD-3006",
+      "flags": [
+        "overdue: 26.0h since qualified, expected within 24h"
+      ],
+      "record": {
+        "lead_id": "LEAD-3006",
+        "vehicle_category": "hatchback",
+        "source": "digital",
+        "qualified_at": "2026-08-06T08:57:49.513Z",
+        "city_tier": "tier2",
+        "contact_phone_available": true,
+        "contact_email_available": true,
+        "contact_attempts": 0,
+        "last_contact_attempt_at": null,
+        "customer_type": "new",
+        "test_drive_requested": false,
+        "notes": []
+      },
+      "result": {
+        "ok": true,
+        "llm_called": true,
+        "provider": "groq-llama-3.3-70b",
+        "needs_human_input": false,
+        "human_question": null,
+        "record": {
+          "lead_id": {
+            "value": "LEAD-3006",
+            "status": "observed"
+          },
+          "vehicle_category": {
+            "value": "hatchback",
+            "status": "observed"
+          },
+          "source": {
+            "value": "digital",
+            "status": "observed"
+          },
+          "qualified_at": {
+            "value": "2026-08-06T08:57:49.513Z",
+            "status": "observed"
+          },
+          "city_tier": {
+            "value": "tier2",
+            "status": "observed"
+          },
+          "contact_phone_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_email_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_attempts": {
+            "value": 0,
+            "status": "observed"
+          },
+          "last_contact_attempt_at": {
+            "value": null,
+            "status": "missing"
+          },
+          "customer_type": {
+            "value": "new",
+            "status": "observed"
+          },
+          "test_drive_requested": {
+            "value": false,
+            "status": "observed"
+          },
+          "notes": {
+            "value": [],
+            "status": "observed"
+          },
+          "hours_since_qualified": {
+            "value": 93.6,
+            "status": "observed"
+          },
+          "expected_sla_hours": {
+            "value": 24,
+            "status": "inferred",
+            "basis": "Inferred from city_tier (\"tier2\") and vehicle_category (\"hatchback\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."
+          }
+        },
+        "recommended_dealer": {
+          "dealer_id": "AST-D-KOC-01",
+          "dealer_name": "Asteron Coastal Kochi",
+          "city": "Kochi",
+          "city_tier": "tier2",
+          "current_load": 3,
+          "sla_compliance_pct": 85,
+          "match_score": 93,
+          "rationale": "Matched to Asteron Coastal Kochi (Kochi) — same city tier (tier2), specializes in hatchback, 3 active leads right now, 85% historical SLA compliance."
+        },
+        "auto_send": true,
+        "output": {
+          "lead_id": "LEAD-3006",
+          "scoring": {
+            "lead_score": "medium",
+            "evidence": [
+              "New customer",
+              "Hatchback segment",
+              "Tier2 city",
+              "Within expected response window"
+            ],
+            "confidence": 100
+          },
+          "needs_human_input": false,
+          "human_question": null,
+          "recommended_action": {
+            "playbook_code": "standard_outreach",
+            "description": "Contact via the lead's preferred available channel within the expected response window."
+          },
+          "draft_message": {
+            "channel": "sms",
+            "text": "Thank you for your inquiry. Asteron Coastal Kochi will respond within 24 hours."
+          },
+          "review_flag": false
+        },
+        "validation_notes": [
+          "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"New customer\"]"
+        ],
+        "_elapsedMs": 861
+      }
+    },
+    {
+      "lead_id": "LEAD-3007",
+      "flags": [
+        "overdue: 9.0h since qualified, expected within 8h"
+      ],
+      "record": {
+        "lead_id": "LEAD-3007",
+        "vehicle_category": "sedan",
+        "source": "digital",
+        "qualified_at": "2026-08-07T01:57:49.513Z",
+        "city_tier": "tier1",
+        "contact_phone_available": true,
+        "contact_email_available": false,
+        "contact_attempts": 0,
+        "last_contact_attempt_at": null,
+        "customer_type": "new",
+        "test_drive_requested": false,
+        "notes": []
+      },
+      "result": {
+        "ok": true,
+        "llm_called": true,
+        "provider": "groq-llama-3.3-70b",
+        "needs_human_input": false,
+        "human_question": null,
+        "record": {
+          "lead_id": {
+            "value": "LEAD-3007",
+            "status": "observed"
+          },
+          "vehicle_category": {
+            "value": "sedan",
+            "status": "observed"
+          },
+          "source": {
+            "value": "digital",
+            "status": "observed"
+          },
+          "qualified_at": {
+            "value": "2026-08-07T01:57:49.513Z",
+            "status": "observed"
+          },
+          "city_tier": {
+            "value": "tier1",
+            "status": "observed"
+          },
+          "contact_phone_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_email_available": {
+            "value": false,
+            "status": "observed"
+          },
+          "contact_attempts": {
+            "value": 0,
+            "status": "observed"
+          },
+          "last_contact_attempt_at": {
+            "value": null,
+            "status": "missing"
+          },
+          "customer_type": {
+            "value": "new",
+            "status": "observed"
+          },
+          "test_drive_requested": {
+            "value": false,
+            "status": "observed"
+          },
+          "notes": {
+            "value": [],
+            "status": "observed"
+          },
+          "hours_since_qualified": {
+            "value": 76.6,
+            "status": "observed"
+          },
+          "expected_sla_hours": {
+            "value": 8,
+            "status": "inferred",
+            "basis": "Inferred from city_tier (\"tier1\") and vehicle_category (\"sedan\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."
+          }
+        },
+        "recommended_dealer": {
+          "dealer_id": "AST-D-BLR-02",
+          "dealer_name": "Asteron Motors Koramangala",
+          "city": "Bengaluru",
+          "city_tier": "tier1",
+          "current_load": 5,
+          "sla_compliance_pct": 74,
+          "match_score": 87,
+          "rationale": "Matched to Asteron Motors Koramangala (Bengaluru) — same city tier (tier1), specializes in sedan, 5 active leads right now, 74% historical SLA compliance."
+        },
+        "auto_send": true,
+        "output": {
+          "lead_id": "LEAD-3007",
+          "scoring": {
+            "lead_score": "medium",
+            "evidence": [
+              "Tier-1 city",
+              "New customer",
+              "No test drive requested",
+              "Within expected response window"
+            ],
+            "confidence": 100
+          },
+          "needs_human_input": false,
+          "human_question": null,
+          "recommended_action": {
+            "playbook_code": "standard_outreach",
+            "description": "Contact via the lead's preferred available channel within the expected response window."
+          },
+          "draft_message": {
+            "channel": "sms",
+            "text": "Thank you for your inquiry. Asteron Motors Koramangala will respond within 8 hours."
+          },
+          "review_flag": false
+        },
+        "validation_notes": [
+          "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"New customer\"]"
+        ],
+        "_elapsedMs": 965
+      }
+    },
+    {
+      "lead_id": "LEAD-3008",
+      "flags": [
+        "overdue: 25.0h since qualified, expected within 24h"
+      ],
+      "record": {
+        "lead_id": "LEAD-3008",
+        "vehicle_category": "suv",
+        "source": "walk-in",
+        "qualified_at": "2026-08-06T09:57:49.513Z",
+        "city_tier": "tier3",
+        "contact_phone_available": true,
+        "contact_email_available": true,
+        "contact_attempts": 0,
+        "last_contact_attempt_at": null,
+        "customer_type": "new",
+        "test_drive_requested": false,
+        "notes": []
+      },
+      "result": {
+        "ok": true,
+        "llm_called": true,
+        "provider": "gemini-3.6-flash",
+        "needs_human_input": false,
+        "human_question": null,
+        "record": {
+          "lead_id": {
+            "value": "LEAD-3008",
+            "status": "observed"
+          },
+          "vehicle_category": {
+            "value": "suv",
+            "status": "observed"
+          },
+          "source": {
+            "value": "walk-in",
+            "status": "observed"
+          },
+          "qualified_at": {
+            "value": "2026-08-06T09:57:49.513Z",
+            "status": "observed"
+          },
+          "city_tier": {
+            "value": "tier3",
+            "status": "observed"
+          },
+          "contact_phone_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_email_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_attempts": {
+            "value": 0,
+            "status": "observed"
+          },
+          "last_contact_attempt_at": {
+            "value": null,
+            "status": "missing"
+          },
+          "customer_type": {
+            "value": "new",
+            "status": "observed"
+          },
+          "test_drive_requested": {
+            "value": false,
+            "status": "observed"
+          },
+          "notes": {
+            "value": [],
+            "status": "observed"
+          },
+          "hours_since_qualified": {
+            "value": 92.6,
+            "status": "observed"
+          },
+          "expected_sla_hours": {
+            "value": 24,
+            "status": "inferred",
+            "basis": "Inferred from city_tier (\"tier3\") and vehicle_category (\"suv\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."
+          }
+        },
+        "recommended_dealer": {
+          "dealer_id": "AST-D-DDN-01",
+          "dealer_name": "Asteron Foothills Dehradun",
+          "city": "Dehradun",
+          "city_tier": "tier3",
+          "current_load": 1,
+          "sla_compliance_pct": 95,
+          "match_score": 68,
+          "rationale": "Matched to Asteron Foothills Dehradun (Dehradun) — same city tier (tier3), 1 active lead right now, 95% historical SLA compliance."
+        },
+        "auto_send": true,
+        "output": {
+          "lead_id": "LEAD-3008",
+          "scoring": {
+            "lead_score": "high",
+            "evidence": [
+              "Overdue lead: 92.6 hours elapsed against 24-hour expected SLA.",
+              "Walk-in SUV inquiry with zero prior contact attempts."
+            ],
+            "confidence": 85
+          },
+          "needs_human_input": false,
+          "human_question": null,
+          "recommended_action": {
+            "playbook_code": "immediate_call",
+            "description": "Call the lead within the hour and offer a same-day test drive slot."
+          },
+          "draft_message": {
+            "channel": "email",
+            "text": "Thank you for visiting Asteron Motors. We have received your SUV inquiry and assigned your request to Asteron Foothills Dehradun, who will be in touch shortly."
+          },
+          "review_flag": false
+        },
+        "validation_notes": [],
+        "_elapsedMs": 9291
+      }
+    },
+    {
+      "lead_id": "LEAD-3010",
+      "flags": [
+        "high_loss_segment: tier1 city + SUV interest"
+      ],
+      "record": {
+        "lead_id": "LEAD-3010",
+        "vehicle_category": "suv",
+        "source": "digital",
+        "qualified_at": "2026-08-07T08:57:49.513Z",
+        "city_tier": "tier1",
+        "contact_phone_available": true,
+        "contact_email_available": true,
+        "contact_attempts": 0,
+        "last_contact_attempt_at": null,
+        "customer_type": "new",
+        "test_drive_requested": true,
+        "notes": []
+      },
+      "result": {
+        "ok": true,
+        "llm_called": true,
+        "provider": "groq-llama-3.3-70b",
+        "needs_human_input": false,
+        "human_question": null,
+        "record": {
+          "lead_id": {
+            "value": "LEAD-3010",
+            "status": "observed"
+          },
+          "vehicle_category": {
+            "value": "suv",
+            "status": "observed"
+          },
+          "source": {
+            "value": "digital",
+            "status": "observed"
+          },
+          "qualified_at": {
+            "value": "2026-08-07T08:57:49.513Z",
+            "status": "observed"
+          },
+          "city_tier": {
+            "value": "tier1",
+            "status": "observed"
+          },
+          "contact_phone_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_email_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_attempts": {
+            "value": 0,
+            "status": "observed"
+          },
+          "last_contact_attempt_at": {
+            "value": null,
+            "status": "missing"
+          },
+          "customer_type": {
+            "value": "new",
+            "status": "observed"
+          },
+          "test_drive_requested": {
+            "value": true,
+            "status": "observed"
+          },
+          "notes": {
+            "value": [],
+            "status": "observed"
+          },
+          "hours_since_qualified": {
+            "value": 69.6,
+            "status": "observed"
+          },
+          "expected_sla_hours": {
+            "value": 4,
+            "status": "inferred",
+            "basis": "Inferred from city_tier (\"tier1\") and vehicle_category (\"suv\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."
+          }
+        },
+        "recommended_dealer": {
+          "dealer_id": "AST-D-BLR-01",
+          "dealer_name": "Asteron Hub Whitefield",
+          "city": "Bengaluru",
+          "city_tier": "tier1",
+          "current_load": 2,
+          "sla_compliance_pct": 92,
+          "match_score": 95,
+          "rationale": "Matched to Asteron Hub Whitefield (Bengaluru) — same city tier (tier1), specializes in suv, 2 active leads right now, 92% historical SLA compliance."
+        },
+        "auto_send": true,
+        "output": {
+          "lead_id": "LEAD-3010",
+          "scoring": {
+            "lead_score": "high",
+            "evidence": [
+              "Tier-1 city",
+              "SUV lead",
+              "Test drive requested",
+              "Zero contact attempts"
+            ],
+            "confidence": 100
+          },
+          "needs_human_input": false,
+          "human_question": null,
+          "recommended_action": {
+            "playbook_code": "immediate_call",
+            "description": "Call the lead within the hour and offer a same-day test drive slot."
+          },
+          "draft_message": {
+            "channel": "sms",
+            "text": "Thank you for your inquiry. Asteron Hub Whitefield will respond within 4 hours."
+          },
+          "review_flag": false
+        },
+        "validation_notes": [
+          "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"SUV lead\"]"
+        ],
+        "_elapsedMs": 802
+      }
+    },
+    {
+      "lead_id": "LEAD-3012",
+      "flags": [
+        "referral_customer"
+      ],
+      "record": {
+        "lead_id": "LEAD-3012",
+        "vehicle_category": "ev",
+        "source": "referral",
+        "qualified_at": "2026-08-07T07:57:49.513Z",
+        "city_tier": "tier2",
+        "contact_phone_available": true,
+        "contact_email_available": true,
+        "contact_attempts": 0,
+        "last_contact_attempt_at": null,
+        "customer_type": "referral",
+        "test_drive_requested": false,
+        "notes": []
+      },
+      "result": {
+        "ok": true,
+        "llm_called": true,
+        "provider": "gemini-3.6-flash",
+        "needs_human_input": false,
+        "human_question": null,
+        "record": {
+          "lead_id": {
+            "value": "LEAD-3012",
+            "status": "observed"
+          },
+          "vehicle_category": {
+            "value": "ev",
+            "status": "observed"
+          },
+          "source": {
+            "value": "referral",
+            "status": "observed"
+          },
+          "qualified_at": {
+            "value": "2026-08-07T07:57:49.513Z",
+            "status": "observed"
+          },
+          "city_tier": {
+            "value": "tier2",
+            "status": "observed"
+          },
+          "contact_phone_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_email_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_attempts": {
+            "value": 0,
+            "status": "observed"
+          },
+          "last_contact_attempt_at": {
+            "value": null,
+            "status": "missing"
+          },
+          "customer_type": {
+            "value": "referral",
+            "status": "observed"
+          },
+          "test_drive_requested": {
+            "value": false,
+            "status": "observed"
+          },
+          "notes": {
+            "value": [],
+            "status": "observed"
+          },
+          "hours_since_qualified": {
+            "value": 70.6,
+            "status": "observed"
+          },
+          "expected_sla_hours": {
+            "value": 24,
+            "status": "inferred",
+            "basis": "Inferred from city_tier (\"tier2\") and vehicle_category (\"ev\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."
+          }
+        },
+        "recommended_dealer": {
+          "dealer_id": "AST-D-MUM-01",
+          "dealer_name": "Asteron Select Bandra",
+          "city": "Mumbai",
+          "city_tier": "tier1",
+          "current_load": 3,
+          "sla_compliance_pct": 88,
+          "match_score": 68,
+          "rationale": "Matched to Asteron Select Bandra (Mumbai) — nearby tier (tier1 vs. lead's tier2), specializes in ev, 3 active leads right now, 88% historical SLA compliance."
+        },
+        "auto_send": true,
+        "output": {
+          "lead_id": "LEAD-3012",
+          "scoring": {
+            "lead_score": "high",
+            "evidence": [
+              "Referral customer.",
+              "Inquiry response time overdue against expected SLA window."
+            ],
+            "confidence": 85
+          },
+          "needs_human_input": false,
+          "human_question": null,
+          "recommended_action": {
+            "playbook_code": "immediate_call",
+            "description": "Call the lead within the hour and offer a same-day test drive slot."
+          },
+          "draft_message": {
+            "channel": "sms",
+            "text": "Hello! Thank you for reaching out to Asteron Motors. Your inquiry has been received by Asteron Select Bandra, and our team will contact you shortly."
+          },
+          "review_flag": false
+        },
+        "validation_notes": [
+          "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"Inquiry response time overdue against expected SLA window.\"]"
+        ],
+        "_elapsedMs": 7403
+      }
+    },
+    {
+      "lead_id": "LEAD-3013",
+      "flags": [
+        "stalled: 2 attempts, no test drive requested"
+      ],
+      "record": {
+        "lead_id": "LEAD-3013",
+        "vehicle_category": "hatchback",
+        "source": "digital",
+        "qualified_at": "2026-08-03T10:57:49.513Z",
+        "city_tier": "tier2",
+        "contact_phone_available": true,
+        "contact_email_available": true,
+        "contact_attempts": 2,
+        "last_contact_attempt_at": "2026-08-05T18:57:49.513Z",
+        "customer_type": "new",
+        "test_drive_requested": false,
+        "notes": [
+          "Attempt 1: no answer.",
+          "Attempt 2: asked to be contacted later, no follow-up since."
+        ]
+      },
+      "result": {
+        "ok": true,
+        "llm_called": true,
+        "provider": "gemini-3.6-flash",
+        "needs_human_input": false,
+        "human_question": null,
+        "record": {
+          "lead_id": {
+            "value": "LEAD-3013",
+            "status": "observed"
+          },
+          "vehicle_category": {
+            "value": "hatchback",
+            "status": "observed"
+          },
+          "source": {
+            "value": "digital",
+            "status": "observed"
+          },
+          "qualified_at": {
+            "value": "2026-08-03T10:57:49.513Z",
+            "status": "observed"
+          },
+          "city_tier": {
+            "value": "tier2",
+            "status": "observed"
+          },
+          "contact_phone_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_email_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_attempts": {
+            "value": 2,
+            "status": "observed"
+          },
+          "last_contact_attempt_at": {
+            "value": "2026-08-05T18:57:49.513Z",
+            "status": "observed"
+          },
+          "customer_type": {
+            "value": "new",
+            "status": "observed"
+          },
+          "test_drive_requested": {
+            "value": false,
+            "status": "observed"
+          },
+          "notes": {
+            "value": [
+              "Attempt 1: no answer.",
+              "Attempt 2: asked to be contacted later, no follow-up since."
+            ],
+            "status": "observed"
+          },
+          "hours_since_qualified": {
+            "value": 163.6,
+            "status": "observed"
+          },
+          "expected_sla_hours": {
+            "value": 24,
+            "status": "inferred",
+            "basis": "Inferred from city_tier (\"tier2\") and vehicle_category (\"hatchback\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."
+          }
+        },
+        "recommended_dealer": {
+          "dealer_id": "AST-D-KOC-01",
+          "dealer_name": "Asteron Coastal Kochi",
+          "city": "Kochi",
+          "city_tier": "tier2",
+          "current_load": 3,
+          "sla_compliance_pct": 85,
+          "match_score": 93,
+          "rationale": "Matched to Asteron Coastal Kochi (Kochi) — same city tier (tier2), specializes in hatchback, 3 active leads right now, 85% historical SLA compliance."
+        },
+        "auto_send": true,
+        "output": {
+          "lead_id": "LEAD-3013",
+          "scoring": {
+            "lead_score": "low",
+            "evidence": [
+              "Two contact attempts on record.",
+              "No test drive requested.",
+              "Customer requested follow-up later without recent engagement."
+            ],
+            "confidence": 100
+          },
+          "needs_human_input": false,
+          "human_question": null,
+          "recommended_action": {
+            "playbook_code": "nurture_sequence",
+            "description": "Move to a low-touch digital nurture sequence (email/SMS); re-engage promptly if interest signals increase."
+          },
+          "draft_message": {
+            "channel": "email",
+            "text": "Thank you for reaching out to Asteron Motors regarding your hatchback inquiry. Your message has been received by Asteron Coastal Kochi, and our team will be in touch with you shortly."
+          },
+          "review_flag": false
+        },
+        "validation_notes": [],
+        "_elapsedMs": 9650
+      }
+    },
+    {
+      "lead_id": "LEAD-3014",
+      "flags": [
+        "stalled: 3 attempts, no test drive requested"
+      ],
+      "record": {
+        "lead_id": "LEAD-3014",
+        "vehicle_category": "sedan",
+        "source": "digital",
+        "qualified_at": "2026-08-02T00:57:49.513Z",
+        "city_tier": "tier3",
+        "contact_phone_available": true,
+        "contact_email_available": true,
+        "contact_attempts": 3,
+        "last_contact_attempt_at": "2026-08-05T08:57:49.513Z",
+        "customer_type": "new",
+        "test_drive_requested": false,
+        "notes": [
+          "Attempt 1: no answer.",
+          "Attempt 2: no answer.",
+          "Attempt 3: said not ready to decide yet."
+        ]
+      },
+      "result": {
+        "ok": true,
+        "llm_called": true,
+        "provider": "groq-llama-3.3-70b",
+        "needs_human_input": false,
+        "human_question": null,
+        "record": {
+          "lead_id": {
+            "value": "LEAD-3014",
+            "status": "observed"
+          },
+          "vehicle_category": {
+            "value": "sedan",
+            "status": "observed"
+          },
+          "source": {
+            "value": "digital",
+            "status": "observed"
+          },
+          "qualified_at": {
+            "value": "2026-08-02T00:57:49.513Z",
+            "status": "observed"
+          },
+          "city_tier": {
+            "value": "tier3",
+            "status": "observed"
+          },
+          "contact_phone_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_email_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_attempts": {
+            "value": 3,
+            "status": "observed"
+          },
+          "last_contact_attempt_at": {
+            "value": "2026-08-05T08:57:49.513Z",
+            "status": "observed"
+          },
+          "customer_type": {
+            "value": "new",
+            "status": "observed"
+          },
+          "test_drive_requested": {
+            "value": false,
+            "status": "observed"
+          },
+          "notes": {
+            "value": [
+              "Attempt 1: no answer.",
+              "Attempt 2: no answer.",
+              "Attempt 3: said not ready to decide yet."
+            ],
+            "status": "observed"
+          },
+          "hours_since_qualified": {
+            "value": 197.6,
+            "status": "observed"
+          },
+          "expected_sla_hours": {
+            "value": 24,
+            "status": "inferred",
+            "basis": "Inferred from city_tier (\"tier3\") and vehicle_category (\"sedan\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."
+          }
+        },
+        "recommended_dealer": {
+          "dealer_id": "AST-D-DDN-01",
+          "dealer_name": "Asteron Foothills Dehradun",
+          "city": "Dehradun",
+          "city_tier": "tier3",
+          "current_load": 1,
+          "sla_compliance_pct": 95,
+          "match_score": 98,
+          "rationale": "Matched to Asteron Foothills Dehradun (Dehradun) — same city tier (tier3), specializes in sedan, 1 active lead right now, 95% historical SLA compliance."
+        },
+        "auto_send": true,
+        "output": {
+          "lead_id": "LEAD-3014",
+          "scoring": {
+            "lead_score": "low",
+            "evidence": [
+              "3 contact attempts with no test drive requested",
+              "Customer said not ready to decide yet",
+              "Hours since qualified (197.6) exceeds expected SLA hours (24)"
+            ],
+            "confidence": 85
+          },
+          "needs_human_input": false,
+          "human_question": null,
+          "recommended_action": {
+            "playbook_code": "nurture_sequence",
+            "description": "Move to a low-touch digital nurture sequence"
+          },
+          "draft_message": {
+            "channel": "sms",
+            "text": "Thank you for your inquiry. Asteron Foothills Dehradun will respond within 24 hours."
+          },
+          "review_flag": false
+        },
+        "validation_notes": [],
+        "_elapsedMs": 824
+      }
+    },
+    {
+      "lead_id": "LEAD-3015",
+      "flags": [
+        "stalled: 2 attempts, no test drive requested",
+        "high_loss_segment: tier1 city + SUV interest"
+      ],
+      "record": {
+        "lead_id": "LEAD-3015",
+        "vehicle_category": "suv",
+        "source": "digital",
+        "qualified_at": "2026-08-02T20:57:49.513Z",
+        "city_tier": "tier1",
+        "contact_phone_available": true,
+        "contact_email_available": true,
+        "contact_attempts": 2,
+        "last_contact_attempt_at": "2026-08-05T23:57:49.513Z",
+        "customer_type": "new",
+        "test_drive_requested": false,
+        "notes": [
+          "Attempt 1: no answer.",
+          "Attempt 2: said they'd already bought elsewhere, but didn't explicitly close the lead."
+        ]
+      },
+      "result": {
+        "ok": true,
+        "llm_called": true,
+        "provider": "gemini-3.6-flash",
+        "needs_human_input": false,
+        "human_question": null,
+        "record": {
+          "lead_id": {
+            "value": "LEAD-3015",
+            "status": "observed"
+          },
+          "vehicle_category": {
+            "value": "suv",
+            "status": "observed"
+          },
+          "source": {
+            "value": "digital",
+            "status": "observed"
+          },
+          "qualified_at": {
+            "value": "2026-08-02T20:57:49.513Z",
+            "status": "observed"
+          },
+          "city_tier": {
+            "value": "tier1",
+            "status": "observed"
+          },
+          "contact_phone_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_email_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_attempts": {
+            "value": 2,
+            "status": "observed"
+          },
+          "last_contact_attempt_at": {
+            "value": "2026-08-05T23:57:49.513Z",
+            "status": "observed"
+          },
+          "customer_type": {
+            "value": "new",
+            "status": "observed"
+          },
+          "test_drive_requested": {
+            "value": false,
+            "status": "observed"
+          },
+          "notes": {
+            "value": [
+              "Attempt 1: no answer.",
+              "Attempt 2: said they'd already bought elsewhere, but didn't explicitly close the lead."
+            ],
+            "status": "observed"
+          },
+          "hours_since_qualified": {
+            "value": 177.6,
+            "status": "observed"
+          },
+          "expected_sla_hours": {
+            "value": 4,
+            "status": "inferred",
+            "basis": "Inferred from city_tier (\"tier1\") and vehicle_category (\"suv\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."
+          }
+        },
+        "recommended_dealer": {
+          "dealer_id": "AST-D-BLR-01",
+          "dealer_name": "Asteron Hub Whitefield",
+          "city": "Bengaluru",
+          "city_tier": "tier1",
+          "current_load": 2,
+          "sla_compliance_pct": 92,
+          "match_score": 95,
+          "rationale": "Matched to Asteron Hub Whitefield (Bengaluru) — same city tier (tier1), specializes in suv, 2 active leads right now, 92% historical SLA compliance."
+        },
+        "auto_send": true,
+        "output": {
+          "lead_id": "LEAD-3015",
+          "scoring": {
+            "lead_score": "low",
+            "evidence": [
+              "Two contact attempts made with no test drive requested.",
+              "Customer stated they already bought elsewhere during contact attempt.",
+              "Direct disengagement signal takes priority over tier-1 SUV segment."
+            ],
+            "confidence": 100
+          },
+          "needs_human_input": false,
+          "human_question": null,
+          "recommended_action": {
+            "playbook_code": "nurture_sequence",
+            "description": "Move to a low-touch digital nurture sequence (email/SMS); re-engage promptly if interest signals increase."
+          },
+          "draft_message": {
+            "channel": "email",
+            "text": "Thank you for contacting Asteron Motors. Your SUV inquiry has been received and routed to Asteron Hub Whitefield. Please let us know if we can assist you with any future vehicle needs."
+          },
+          "review_flag": false
+        },
+        "validation_notes": [
+          "Note (non-blocking): 1 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"Direct disengagement signal takes priority over tier-1 SUV segment.\"]"
+        ],
+        "_elapsedMs": 11516
+      }
+    },
+    {
+      "lead_id": "LEAD-3016",
+      "flags": [
+        "high_loss_segment: tier1 city + SUV interest"
+      ],
+      "record": {
+        "lead_id": "LEAD-3016",
+        "vehicle_category": "suv",
+        "source": "walk-in",
+        "qualified_at": "2026-08-07T08:57:49.513Z",
+        "city_tier": "tier1",
+        "contact_phone_available": true,
+        "contact_email_available": false,
+        "contact_attempts": 0,
+        "last_contact_attempt_at": null,
+        "customer_type": "new",
+        "test_drive_requested": false,
+        "notes": []
+      },
+      "result": {
+        "ok": true,
+        "llm_called": true,
+        "provider": "groq-llama-3.3-70b",
+        "needs_human_input": false,
+        "human_question": null,
+        "record": {
+          "lead_id": {
+            "value": "LEAD-3016",
+            "status": "observed"
+          },
+          "vehicle_category": {
+            "value": "suv",
+            "status": "observed"
+          },
+          "source": {
+            "value": "walk-in",
+            "status": "observed"
+          },
+          "qualified_at": {
+            "value": "2026-08-07T08:57:49.513Z",
+            "status": "observed"
+          },
+          "city_tier": {
+            "value": "tier1",
+            "status": "observed"
+          },
+          "contact_phone_available": {
+            "value": true,
+            "status": "observed"
+          },
+          "contact_email_available": {
+            "value": false,
+            "status": "observed"
+          },
+          "contact_attempts": {
+            "value": 0,
+            "status": "observed"
+          },
+          "last_contact_attempt_at": {
+            "value": null,
+            "status": "missing"
+          },
+          "customer_type": {
+            "value": "new",
+            "status": "observed"
+          },
+          "test_drive_requested": {
+            "value": false,
+            "status": "observed"
+          },
+          "notes": {
+            "value": [],
+            "status": "observed"
+          },
+          "hours_since_qualified": {
+            "value": 69.7,
+            "status": "observed"
+          },
+          "expected_sla_hours": {
+            "value": 4,
+            "status": "inferred",
+            "basis": "Inferred from city_tier (\"tier1\") and vehicle_category (\"suv\") — tier-1 cities and SUVs are where the case data shows share loss is concentrated, so they get the tightest expected response windows."
+          }
+        },
+        "recommended_dealer": {
+          "dealer_id": "AST-D-BLR-01",
+          "dealer_name": "Asteron Hub Whitefield",
+          "city": "Bengaluru",
+          "city_tier": "tier1",
+          "current_load": 2,
+          "sla_compliance_pct": 92,
+          "match_score": 95,
+          "rationale": "Matched to Asteron Hub Whitefield (Bengaluru) — same city tier (tier1), specializes in suv, 2 active leads right now, 92% historical SLA compliance."
+        },
+        "auto_send": true,
+        "output": {
+          "lead_id": "LEAD-3016",
+          "scoring": {
+            "lead_score": "high",
+            "evidence": [
+              "Tier-1 city",
+              "SUV lead",
+              "Zero contact attempts",
+              "Recent qualification"
+            ],
+            "confidence": 100
+          },
+          "needs_human_input": false,
+          "human_question": null,
+          "recommended_action": {
+            "playbook_code": "immediate_call",
+            "description": "Call the lead within the hour and offer a same-day test drive slot."
+          },
+          "draft_message": {
+            "channel": "sms",
+            "text": "Thank you for your interest in Asteron Motors. Your inquiry has been received by Asteron Hub Whitefield. We will get back to you within 4 hours."
+          },
+          "review_flag": false
+        },
+        "validation_notes": [
+          "Note (non-blocking): 2 evidence item(s) used phrasing this check couldn't fully verify — not treated as fabrication on its own: [\"SUV lead\",\"Recent qualification\"]"
+        ],
+        "_elapsedMs": 951
+      }
+    }
+  ]
+}
