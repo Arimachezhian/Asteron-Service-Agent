@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-30T07:43:44.588Z",
-  "as_of_date": "2026-09-30",
+  "generated_at": "2026-10-01T08:03:09.675Z",
+  "as_of_date": "2026-10-01",
   "total_customers": 24,
   "flagged_count": 23,
   "flagged": [
@@ -51,7 +51,7 @@
     {
       "customer_id": "AST-20003",
       "flags": [
-        "service_overdue: 11mo since last service (expected every 6mo)"
+        "service_overdue: 12mo since last service (expected every 6mo)"
       ],
       "record": {
         "customer_id": "AST-20003",
@@ -73,8 +73,8 @@
     {
       "customer_id": "AST-20004",
       "flags": [
-        "service_overdue: 16mo since last service (expected every 6mo)",
-        "app_inactive_19mo"
+        "service_overdue: 17mo since last service (expected every 6mo)",
+        "app_inactive_20mo"
       ],
       "record": {
         "customer_id": "AST-20004",
@@ -399,7 +399,7 @@
     {
       "customer_id": "AST-20011",
       "flags": [
-        "never_serviced: 6mo since purchase, first service expected within 6mo",
+        "never_serviced: 7mo since purchase, first service expected within 6mo",
         "no_first_service_booked_at_delivery"
       ],
       "record": {
@@ -422,7 +422,7 @@
     {
       "customer_id": "AST-20012",
       "flags": [
-        "never_serviced: 9mo since purchase, first service expected within 6mo",
+        "never_serviced: 10mo since purchase, first service expected within 6mo",
         "no_first_service_booked_at_delivery"
       ],
       "record": {
@@ -445,7 +445,7 @@
     {
       "customer_id": "AST-20023",
       "flags": [
-        "never_serviced: 7mo since purchase, first service expected within 6mo",
+        "never_serviced: 8mo since purchase, first service expected within 6mo",
         "no_first_service_booked_at_delivery"
       ],
       "record": {
@@ -468,8 +468,8 @@
     {
       "customer_id": "AST-20015",
       "flags": [
-        "service_overdue: 17mo since last service (expected every 6mo)",
-        "app_inactive_21mo",
+        "service_overdue: 18mo since last service (expected every 6mo)",
+        "app_inactive_22mo",
         "has_complaint_on_record"
       ],
       "record": {
@@ -519,9 +519,9 @@
     {
       "customer_id": "AST-20013",
       "flags": [
-        "service_overdue: 20mo since last service (expected every 6mo)",
-        "app_inactive_22mo",
-        "warranty_expiring_in_1mo"
+        "service_overdue: 21mo since last service (expected every 6mo)",
+        "app_inactive_23mo",
+        "warranty_expiring_in_0mo"
       ],
       "record": {
         "customer_id": "AST-20013",
@@ -543,9 +543,9 @@
     {
       "customer_id": "AST-20014",
       "flags": [
-        "service_overdue: 25mo since last service (expected every 6mo)",
-        "app_inactive_27mo",
-        "warranty_expired_5mo_ago"
+        "service_overdue: 26mo since last service (expected every 6mo)",
+        "app_inactive_28mo",
+        "warranty_expired_6mo_ago"
       ],
       "record": {
         "customer_id": "AST-20014",
@@ -567,9 +567,9 @@
     {
       "customer_id": "AST-20021",
       "flags": [
-        "service_overdue: 19mo since last service (expected every 6mo)",
-        "app_inactive_20mo",
-        "warranty_expiring_in_2mo"
+        "service_overdue: 20mo since last service (expected every 6mo)",
+        "app_inactive_21mo",
+        "warranty_expiring_in_1mo"
       ],
       "record": {
         "customer_id": "AST-20021",
